@@ -8,6 +8,7 @@ Name | Type | Description | Notes
 **id** | **str** |  | 
 **asset_id** | **int** |  | 
 **amount** | **str** |  | 
+**fee** | **str** |  | 
 **timestamp** | **int** |  | 
 **type** | **str** |  | 
 **from_l1_address** | **str** |  | 

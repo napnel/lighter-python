@@ -17,22 +17,29 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, StrictInt, StrictStr
-from typing import Any, ClassVar, Dict, List, Optional
-from lighter.models.candlestick import Candlestick
+from pydantic import BaseModel, ConfigDict, Field, StrictFloat, StrictInt
+from typing import Any, ClassVar, Dict, List, Union
 from typing import Optional, Set
 from typing_extensions import Self
 
-class Candlesticks(BaseModel):
+class Candle(BaseModel):
     """
-    Candlesticks
+    Candle
     """ # noqa: E501
-    code: StrictInt
-    message: Optional[StrictStr] = None
-    resolution: StrictStr
-    candlesticks: List[Candlestick]
+    t: StrictInt = Field(description=" timestamp")
+    o: Union[StrictFloat, StrictInt] = Field(description=" open")
+    h: Union[StrictFloat, StrictInt] = Field(description=" high")
+    l: Union[StrictFloat, StrictInt] = Field(description=" low")
+    c: Union[StrictFloat, StrictInt] = Field(description=" close")
+    o: Union[StrictFloat, StrictInt] = Field(description=" open_raw", alias="O")
+    h: Union[StrictFloat, StrictInt] = Field(description=" high_raw", alias="H")
+    l: Union[StrictFloat, StrictInt] = Field(description=" low_raw", alias="L")
+    c: Union[StrictFloat, StrictInt] = Field(description=" close_raw", alias="C")
+    v: Union[StrictFloat, StrictInt] = Field(description=" volume0")
+    v: Union[StrictFloat, StrictInt] = Field(description=" volume1", alias="V")
+    i: StrictInt = Field(description=" last_trade_id")
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["code", "message", "resolution", "candlesticks"]
+    __properties: ClassVar[List[str]] = ["t", "o", "h", "l", "c", "O", "H", "L", "C", "v", "V", "i"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -52,7 +59,7 @@ class Candlesticks(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of Candlesticks from a JSON string"""
+        """Create an instance of Candle from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -75,13 +82,6 @@ class Candlesticks(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # override the default output from pydantic by calling `to_dict()` of each item in candlesticks (list)
-        _items = []
-        if self.candlesticks:
-            for _item in self.candlesticks:
-                if _item:
-                    _items.append(_item.to_dict())
-            _dict['candlesticks'] = _items
         # puts key-value pairs in additional_properties in the top level
         if self.additional_properties is not None:
             for _key, _value in self.additional_properties.items():
@@ -91,7 +91,7 @@ class Candlesticks(BaseModel):
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of Candlesticks from a dict"""
+        """Create an instance of Candle from a dict"""
         if obj is None:
             return None
 
@@ -99,10 +99,18 @@ class Candlesticks(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "code": obj.get("code"),
-            "message": obj.get("message"),
-            "resolution": obj.get("resolution"),
-            "candlesticks": [Candlestick.from_dict(_item) for _item in obj["candlesticks"]] if obj.get("candlesticks") is not None else None
+            "t": obj.get("t"),
+            "o": obj.get("o"),
+            "h": obj.get("h"),
+            "l": obj.get("l"),
+            "c": obj.get("c"),
+            "O": obj.get("O"),
+            "H": obj.get("H"),
+            "L": obj.get("L"),
+            "C": obj.get("C"),
+            "v": obj.get("v"),
+            "V": obj.get("V"),
+            "i": obj.get("i")
         })
         # store additional fields in additional_properties
         for _key in obj.keys():

@@ -26,13 +26,13 @@ class ReqGetDepositHistory(BaseModel):
     """
     ReqGetDepositHistory
     """ # noqa: E501
-    account_index: StrictInt
     auth: Optional[StrictStr] = Field(default=None, description=" made optional to support header auth clients")
+    account_index: StrictInt
     l1_address: StrictStr
     cursor: Optional[StrictStr] = None
     filter: Optional[StrictStr] = None
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["account_index", "auth", "l1_address", "cursor", "filter"]
+    __properties: ClassVar[List[str]] = ["auth", "account_index", "l1_address", "cursor", "filter"]
 
     @field_validator('filter')
     def filter_validate_enum(cls, value):
@@ -102,8 +102,8 @@ class ReqGetDepositHistory(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "account_index": obj.get("account_index"),
             "auth": obj.get("auth"),
+            "account_index": obj.get("account_index"),
             "l1_address": obj.get("l1_address"),
             "cursor": obj.get("cursor"),
             "filter": obj.get("filter")

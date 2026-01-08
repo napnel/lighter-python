@@ -17,20 +17,31 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, StrictBool, StrictInt, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List, Optional
+from typing_extensions import Annotated
 from typing import Optional, Set
 from typing_extensions import Self
 
-class RespUpdateKickback(BaseModel):
+class ReqGetCandles(BaseModel):
     """
-    RespUpdateKickback
+    ReqGetCandles
     """ # noqa: E501
-    code: StrictInt
-    message: Optional[StrictStr] = None
-    success: StrictBool
+    market_id: StrictInt
+    resolution: StrictStr
+    start_timestamp: Annotated[int, Field(le=5000000000000, strict=True)]
+    end_timestamp: Annotated[int, Field(le=5000000000000, strict=True)]
+    count_back: StrictInt
+    set_timestamp_to_end: Optional[StrictBool] = False
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["code", "message", "success"]
+    __properties: ClassVar[List[str]] = ["market_id", "resolution", "start_timestamp", "end_timestamp", "count_back", "set_timestamp_to_end"]
+
+    @field_validator('resolution')
+    def resolution_validate_enum(cls, value):
+        """Validates the enum"""
+        if value not in set(['1m', '5m', '15m', '30m', '1h', '4h', '12h', '1d', '1w']):
+            raise ValueError("must be one of enum values ('1m', '5m', '15m', '30m', '1h', '4h', '12h', '1d', '1w')")
+        return value
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -50,7 +61,7 @@ class RespUpdateKickback(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of RespUpdateKickback from a JSON string"""
+        """Create an instance of ReqGetCandles from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -82,7 +93,7 @@ class RespUpdateKickback(BaseModel):
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of RespUpdateKickback from a dict"""
+        """Create an instance of ReqGetCandles from a dict"""
         if obj is None:
             return None
 
@@ -90,9 +101,12 @@ class RespUpdateKickback(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "code": obj.get("code"),
-            "message": obj.get("message"),
-            "success": obj.get("success")
+            "market_id": obj.get("market_id"),
+            "resolution": obj.get("resolution"),
+            "start_timestamp": obj.get("start_timestamp"),
+            "end_timestamp": obj.get("end_timestamp"),
+            "count_back": obj.get("count_back"),
+            "set_timestamp_to_end": obj.get("set_timestamp_to_end") if obj.get("set_timestamp_to_end") is not None else False
         })
         # store additional fields in additional_properties
         for _key in obj.keys():

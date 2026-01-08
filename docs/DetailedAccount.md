@@ -12,10 +12,12 @@ Name | Type | Description | Notes
 **l1_address** | **str** |  | 
 **cancel_all_time** | **int** |  | 
 **total_order_count** | **int** |  | 
+**total_isolated_order_count** | **int** |  | 
 **pending_order_count** | **int** |  | 
 **available_balance** | **str** |  | 
 **status** | **int** |  | 
 **collateral** | **str** |  | 
+**transaction_time** | **int** |  | 
 **account_index** | **int** |  | 
 **name** | **str** |  | 
 **description** | **str** |  | 

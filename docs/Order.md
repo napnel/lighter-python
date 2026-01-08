@@ -38,6 +38,7 @@ Name | Type | Description | Notes
 **timestamp** | **int** |  | 
 **created_at** | **int** |  | 
 **updated_at** | **int** |  | 
+**transaction_time** | **int** |  | 
 
 ## Example
 

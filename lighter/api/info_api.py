@@ -16,8 +16,9 @@ from pydantic import validate_call, Field, StrictFloat, StrictStr, StrictInt
 from typing import Any, Dict, List, Optional, Tuple, Union
 from typing_extensions import Annotated
 
-from pydantic import StrictInt, StrictStr
+from pydantic import Field, StrictInt, StrictStr
 from typing import Optional
+from typing_extensions import Annotated
 from lighter.models.resp_withdrawal_delay import RespWithdrawalDelay
 from lighter.models.transfer_fee_info import TransferFeeInfo
 
@@ -39,12 +40,11 @@ class InfoApi:
         self.api_client = api_client
 
 
-    @validate_call
     async def transfer_fee_info(
         self,
         account_index: StrictInt,
-        authorization: Optional[StrictStr] = None,
-        auth: Optional[StrictStr] = None,
+        authorization: Annotated[Optional[StrictStr], Field(description=" make required after integ is done")] = None,
+        auth: Annotated[Optional[StrictStr], Field(description=" made optional to support header auth clients")] = None,
         to_account_index: Optional[StrictInt] = None,
         _request_timeout: Union[
             None,
@@ -65,9 +65,9 @@ class InfoApi:
 
         :param account_index: (required)
         :type account_index: int
-        :param authorization:
+        :param authorization:  make required after integ is done
         :type authorization: str
-        :param auth:
+        :param auth:  made optional to support header auth clients
         :type auth: str
         :param to_account_index:
         :type to_account_index: int
@@ -119,12 +119,11 @@ class InfoApi:
         ).data
 
 
-    @validate_call
     async def transfer_fee_info_with_http_info(
         self,
         account_index: StrictInt,
-        authorization: Optional[StrictStr] = None,
-        auth: Optional[StrictStr] = None,
+        authorization: Annotated[Optional[StrictStr], Field(description=" make required after integ is done")] = None,
+        auth: Annotated[Optional[StrictStr], Field(description=" made optional to support header auth clients")] = None,
         to_account_index: Optional[StrictInt] = None,
         _request_timeout: Union[
             None,
@@ -145,9 +144,9 @@ class InfoApi:
 
         :param account_index: (required)
         :type account_index: int
-        :param authorization:
+        :param authorization:  make required after integ is done
         :type authorization: str
-        :param auth:
+        :param auth:  made optional to support header auth clients
         :type auth: str
         :param to_account_index:
         :type to_account_index: int
@@ -199,12 +198,11 @@ class InfoApi:
         )
 
 
-    @validate_call
     async def transfer_fee_info_without_preload_content(
         self,
         account_index: StrictInt,
-        authorization: Optional[StrictStr] = None,
-        auth: Optional[StrictStr] = None,
+        authorization: Annotated[Optional[StrictStr], Field(description=" make required after integ is done")] = None,
+        auth: Annotated[Optional[StrictStr], Field(description=" made optional to support header auth clients")] = None,
         to_account_index: Optional[StrictInt] = None,
         _request_timeout: Union[
             None,
@@ -225,9 +223,9 @@ class InfoApi:
 
         :param account_index: (required)
         :type account_index: int
-        :param authorization:
+        :param authorization:  make required after integ is done
         :type authorization: str
-        :param auth:
+        :param auth:  made optional to support header auth clients
         :type auth: str
         :param to_account_index:
         :type to_account_index: int
@@ -301,6 +299,10 @@ class InfoApi:
 
         # process the path parameters
         # process the query parameters
+        if authorization is not None:
+            
+            _query_params.append(('authorization', authorization))
+            
         if auth is not None:
             
             _query_params.append(('auth', auth))
@@ -314,8 +316,6 @@ class InfoApi:
             _query_params.append(('to_account_index', to_account_index))
             
         # process the header parameters
-        if authorization is not None:
-            _header_params['authorization'] = authorization
         # process the form parameters
         # process the body parameter
 
@@ -351,7 +351,6 @@ class InfoApi:
 
 
 
-    @validate_call
     async def withdrawal_delay(
         self,
         _request_timeout: Union[
@@ -415,7 +414,6 @@ class InfoApi:
         ).data
 
 
-    @validate_call
     async def withdrawal_delay_with_http_info(
         self,
         _request_timeout: Union[
@@ -479,7 +477,6 @@ class InfoApi:
         )
 
 
-    @validate_call
     async def withdrawal_delay_without_preload_content(
         self,
         _request_timeout: Union[

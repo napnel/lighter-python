@@ -106,7 +106,14 @@
           {
             "name": "authorization",
             "description": " make required after integ is done",
-            "in": "header",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "auth",
+            "description": " made optional to support header auth clients",
+            "in": "query",
             "required": false,
             "type": "string"
           },
@@ -123,13 +130,6 @@
             "required": true,
             "type": "integer",
             "format": "int16"
-          },
-          {
-            "name": "auth",
-            "description": " made optional to support header auth clients",
-            "in": "query",
-            "required": false,
-            "type": "string"
           }
         ],
         "tags": [
@@ -163,7 +163,7 @@
           {
             "name": "authorization",
             "description": " make required after integ is done",
-            "in": "header",
+            "in": "query",
             "required": false,
             "type": "string"
           },
@@ -248,18 +248,18 @@
         },
         "parameters": [
           {
-            "name": "authorization",
-            "description": " make required after integ is done",
-            "in": "header",
-            "required": false,
-            "type": "string"
-          },
-          {
             "name": "account_index",
             "in": "query",
             "required": true,
             "type": "integer",
             "format": "int64"
+          },
+          {
+            "name": "authorization",
+            "description": " make required after integ is done",
+            "in": "query",
+            "required": false,
+            "type": "string"
           },
           {
             "name": "auth",
@@ -355,12 +355,6 @@
         },
         "parameters": [
           {
-            "name": "authorization",
-            "in": "header",
-            "required": false,
-            "type": "string"
-          },
-          {
             "name": "index",
             "in": "query",
             "required": false,
@@ -392,6 +386,20 @@
             "type": "string"
           },
           {
+            "name": "authorization",
+            "description": " make required after integ is done",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "auth",
+            "description": " made optional to support header auth clients",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
             "name": "types",
             "in": "query",
             "required": false,
@@ -400,12 +408,6 @@
               "type": "integer",
               "format": "uint8"
             }
-          },
-          {
-            "name": "auth",
-            "in": "query",
-            "required": false,
-            "type": "string"
           }
         ],
         "tags": [
@@ -773,15 +775,15 @@
         "description": "Get if next bridge is fast"
       }
     },
-    "/api/v1/candlesticks": {
+    "/api/v1/candles": {
       "get": {
-        "summary": "candlesticks",
-        "operationId": "candlesticks",
+        "summary": "candles",
+        "operationId": "candles",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/Candlesticks"
+              "$ref": "#/definitions/Candles"
             }
           },
           "400": {
@@ -856,7 +858,7 @@
         "consumes": [
           "multipart/form-data"
         ],
-        "description": "Get candlesticks"
+        "description": "Get candles (optimized with shortened fields and smaller response size)"
       }
     },
     "/api/v1/changeAccountTier": {
@@ -949,7 +951,14 @@
           {
             "name": "authorization",
             "description": " make required after integ is done",
-            "in": "header",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "auth",
+            "description": " made optional to support header auth clients",
+            "in": "query",
             "required": false,
             "type": "string"
           },
@@ -959,13 +968,6 @@
             "required": true,
             "type": "integer",
             "format": "int64"
-          },
-          {
-            "name": "auth",
-            "description": " made optional to support header auth clients",
-            "in": "query",
-            "required": false,
-            "type": "string"
           },
           {
             "name": "l1_address",
@@ -1045,12 +1047,14 @@
         "parameters": [
           {
             "name": "authorization",
-            "in": "header",
+            "description": " make required after integ is done",
+            "in": "query",
             "required": false,
             "type": "string"
           },
           {
             "name": "auth",
+            "description": " made optional to support header auth clients",
             "in": "query",
             "required": false,
             "type": "string"
@@ -1113,6 +1117,143 @@
           "bridge"
         ],
         "description": "Get fast bridge info"
+      }
+    },
+    "/api/v1/fastwithdraw": {
+      "post": {
+        "summary": "fastwithdraw",
+        "operationId": "fastwithdraw",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/ResultCode"
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/ResultCode"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "authorization",
+            "description": " make required after integ is done",
+            "in": "header",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ReqFastwithdraw"
+            }
+          }
+        ],
+        "tags": [
+          "bridge"
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "description": "Fast withdraw"
+      }
+    },
+    "/api/v1/fastwithdraw/info": {
+      "get": {
+        "summary": "fastwithdraw_info",
+        "operationId": "fastwithdraw_info",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/RespGetFastwithdrawalInfo"
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/ResultCode"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "authorization",
+            "description": " make required after integ is done",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "auth",
+            "description": " made optional to support header auth clients",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "account_index",
+            "in": "query",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "bridge"
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "description": "Get fast withdraw info"
+      }
+    },
+    "/api/v1/faucet": {
+      "get": {
+        "summary": "faucet",
+        "operationId": "faucet",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/ResultCode"
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/ResultCode"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "l1_address",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "do_l1_transfer",
+            "in": "query",
+            "required": true,
+            "type": "boolean",
+            "format": "boolean",
+            "default": "false"
+          }
+        ],
+        "tags": [
+          "account"
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "description": "Request funds from faucet"
       }
     },
     "/api/v1/funding-rates": {
@@ -1281,7 +1422,7 @@
           {
             "name": "authorization",
             "description": " make required after integ is done",
-            "in": "header",
+            "in": "query",
             "required": false,
             "type": "string"
           },
@@ -1583,12 +1724,14 @@
         "parameters": [
           {
             "name": "authorization",
-            "in": "header",
+            "description": " make required after integ is done",
+            "in": "query",
             "required": false,
             "type": "string"
           },
           {
             "name": "auth",
+            "description": " made optional to support header auth clients",
             "in": "query",
             "required": false,
             "type": "string"
@@ -1686,12 +1829,14 @@
         "parameters": [
           {
             "name": "authorization",
-            "in": "header",
+            "description": " make required after integ is done",
+            "in": "query",
             "required": false,
             "type": "string"
           },
           {
             "name": "auth",
+            "description": " made optional to support header auth clients",
             "in": "query",
             "required": false,
             "type": "string"
@@ -1769,12 +1914,14 @@
         "parameters": [
           {
             "name": "authorization",
-            "in": "header",
+            "description": " make required after integ is done",
+            "in": "query",
             "required": false,
             "type": "string"
           },
           {
             "name": "auth",
+            "description": " made optional to support header auth clients",
             "in": "query",
             "required": false,
             "type": "string"
@@ -1869,144 +2016,6 @@
         "description": "Get recent trades"
       }
     },
-    "/api/v1/referral/kickback/update": {
-      "post": {
-        "summary": "referral_kickback_update",
-        "operationId": "referral_kickback_update",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/RespUpdateKickback"
-            }
-          },
-          "400": {
-            "description": "Bad request",
-            "schema": {
-              "$ref": "#/definitions/ResultCode"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "authorization",
-            "description": " make required after integ is done",
-            "in": "header",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/ReqUpdateKickback"
-            }
-          }
-        ],
-        "tags": [
-          "referral"
-        ],
-        "consumes": [
-          "multipart/form-data"
-        ],
-        "description": "Update kickback percentage for referral rewards"
-      }
-    },
-    "/api/v1/referral/points": {
-      "get": {
-        "summary": "referral_points",
-        "operationId": "referral_points",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/ReferralPoints"
-            }
-          },
-          "400": {
-            "description": "Bad request",
-            "schema": {
-              "$ref": "#/definitions/ResultCode"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "authorization",
-            "description": " make required after integ is done",
-            "in": "header",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "name": "auth",
-            "description": " made optional to support header auth clients",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "name": "account_index",
-            "in": "query",
-            "required": true,
-            "type": "integer",
-            "format": "int64"
-          }
-        ],
-        "tags": [
-          "referral"
-        ],
-        "consumes": [
-          "multipart/form-data"
-        ],
-        "description": "Get referral points"
-      }
-    },
-    "/api/v1/referral/update": {
-      "post": {
-        "summary": "referral_update",
-        "operationId": "referral_update",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/RespUpdateReferralCode"
-            }
-          },
-          "400": {
-            "description": "Bad request",
-            "schema": {
-              "$ref": "#/definitions/ResultCode"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "authorization",
-            "description": " make required after integ is done",
-            "in": "header",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/ReqUpdateReferralCode"
-            }
-          }
-        ],
-        "tags": [
-          "referral"
-        ],
-        "consumes": [
-          "multipart/form-data"
-        ],
-        "description": "Update referral code (allowed once per account)"
-      }
-    },
     "/api/v1/sendTx": {
       "post": {
         "summary": "sendTx",
@@ -2081,6 +2090,135 @@
         "description": "You need to sign the transaction body before sending it to the server. More details can be found in the Get Started docs: [Get Started For Programmers](https://apidocs.lighter.xyz/docs/get-started-for-programmers)"
       }
     },
+    "/api/v1/tokens": {
+      "get": {
+        "summary": "tokens",
+        "operationId": "tokens",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/RespGetApiTokens"
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/ResultCode"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "authorization",
+            "description": " make required after integ is done",
+            "in": "header",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "account_index",
+            "in": "query",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "account"
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "description": "Get api tokens of an account"
+      }
+    },
+    "/api/v1/tokens/create": {
+      "post": {
+        "summary": "tokens_create",
+        "operationId": "tokens_create",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/RespPostApiToken"
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/ResultCode"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ReqPostApiToken"
+            }
+          }
+        ],
+        "tags": [
+          "account"
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "description": "Create api token"
+      }
+    },
+    "/api/v1/tokens/revoke": {
+      "post": {
+        "summary": "tokens_revoke",
+        "operationId": "tokens_revoke",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/RespRevokeApiToken"
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/ResultCode"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ReqRevokeApiToken"
+            }
+          }
+        ],
+        "tags": [
+          "account"
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "description": "Revoke api token"
+      }
+    },
     "/api/v1/trades": {
       "get": {
         "summary": "trades",
@@ -2102,12 +2240,14 @@
         "parameters": [
           {
             "name": "authorization",
-            "in": "header",
+            "description": " make required after integ is done",
+            "in": "query",
             "required": false,
             "type": "string"
           },
           {
             "name": "auth",
+            "description": " made optional to support header auth clients",
             "in": "query",
             "required": false,
             "type": "string"
@@ -2253,7 +2393,14 @@
           {
             "name": "authorization",
             "description": " make required after integ is done",
-            "in": "header",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "auth",
+            "description": " made optional to support header auth clients",
+            "in": "query",
             "required": false,
             "type": "string"
           },
@@ -2263,13 +2410,6 @@
             "required": true,
             "type": "integer",
             "format": "int64"
-          },
-          {
-            "name": "auth",
-            "description": " made optional to support header auth clients",
-            "in": "query",
-            "required": false,
-            "type": "string"
           },
           {
             "name": "cursor",
@@ -2308,12 +2448,14 @@
         "parameters": [
           {
             "name": "authorization",
-            "in": "header",
+            "description": " make required after integ is done",
+            "in": "query",
             "required": false,
             "type": "string"
           },
           {
             "name": "auth",
+            "description": " made optional to support header auth clients",
             "in": "query",
             "required": false,
             "type": "string"
@@ -2490,7 +2632,14 @@
           {
             "name": "authorization",
             "description": " make required after integ is done",
-            "in": "header",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "auth",
+            "description": " made optional to support header auth clients",
+            "in": "query",
             "required": false,
             "type": "string"
           },
@@ -2500,13 +2649,6 @@
             "required": true,
             "type": "integer",
             "format": "int64"
-          },
-          {
-            "name": "auth",
-            "description": " made optional to support header auth clients",
-            "in": "query",
-            "required": false,
-            "type": "string"
           },
           {
             "name": "cursor",
@@ -2620,6 +2762,11 @@
           "format": "int64",
           "example": "100"
         },
+        "total_isolated_order_count": {
+          "type": "integer",
+          "format": "int64",
+          "example": "100"
+        },
         "pending_order_count": {
           "type": "integer",
           "format": "int64",
@@ -2637,6 +2784,11 @@
         "collateral": {
           "type": "string",
           "example": "46342"
+        },
+        "transaction_time": {
+          "type": "integer",
+          "format": "int64",
+          "example": "1257894000000000"
         }
       },
       "title": "Account",
@@ -2647,10 +2799,12 @@
         "l1_address",
         "cancel_all_time",
         "total_order_count",
+        "total_isolated_order_count",
         "pending_order_count",
         "available_balance",
         "status",
-        "collateral"
+        "collateral",
+        "transaction_time"
       ]
     },
     "AccountApiKeys": {
@@ -3219,6 +3373,11 @@
         },
         "public_key": {
           "type": "string"
+        },
+        "transaction_time": {
+          "type": "integer",
+          "format": "int64",
+          "example": "1257894000000000"
         }
       },
       "title": "ApiKey",
@@ -3226,7 +3385,53 @@
         "account_index",
         "api_key_index",
         "nonce",
-        "public_key"
+        "public_key",
+        "transaction_time"
+      ]
+    },
+    "ApiToken": {
+      "type": "object",
+      "properties": {
+        "token_id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "api_token": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "account_index": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "expiry": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "sub_account_access": {
+          "type": "boolean",
+          "format": "boolean"
+        },
+        "revoked": {
+          "type": "boolean",
+          "format": "boolean"
+        },
+        "scopes": {
+          "type": "string"
+        }
+      },
+      "title": "ApiToken",
+      "required": [
+        "token_id",
+        "api_token",
+        "name",
+        "account_index",
+        "expiry",
+        "sub_account_access",
+        "revoked",
+        "scopes"
       ]
     },
     "Asset": {
@@ -3311,6 +3516,19 @@
       "required": [
         "code",
         "asset_details"
+      ]
+    },
+    "Auth": {
+      "type": "object",
+      "properties": {
+        "auth": {
+          "type": "string",
+          "description": " made optional to support header auth clients"
+        }
+      },
+      "title": "Auth",
+      "required": [
+        "auth"
       ]
     },
     "Block": {
@@ -3522,87 +3740,99 @@
         "explorer"
       ]
     },
-    "Candlestick": {
+    "Candle": {
       "type": "object",
       "properties": {
-        "timestamp": {
+        "t": {
           "type": "integer",
           "format": "int64",
-          "example": "1640995200"
+          "example": "1640995200",
+          "description": " timestamp"
         },
-        "open": {
+        "o": {
           "type": "number",
           "format": "double",
-          "example": "3024.66"
+          "example": "3024.66",
+          "description": " open"
         },
-        "high": {
+        "h": {
           "type": "number",
           "format": "double",
-          "example": "3034.66"
+          "example": "3034.66",
+          "description": " high"
         },
-        "low": {
+        "l": {
           "type": "number",
           "format": "double",
-          "example": "3014.66"
+          "example": "3014.66",
+          "description": " low"
         },
-        "close": {
+        "c": {
           "type": "number",
           "format": "double",
-          "example": "3024.66"
+          "example": "3024.66",
+          "description": " close"
         },
-        "open_raw": {
+        "O": {
           "type": "number",
           "format": "double",
-          "example": "3024.66"
+          "example": "3024.66",
+          "description": " open_raw"
         },
-        "high_raw": {
+        "H": {
           "type": "number",
           "format": "double",
-          "example": "3034.66"
+          "example": "3034.66",
+          "description": " high_raw"
         },
-        "low_raw": {
+        "L": {
           "type": "number",
           "format": "double",
-          "example": "3014.66"
+          "example": "3014.66",
+          "description": " low_raw"
         },
-        "close_raw": {
+        "C": {
           "type": "number",
           "format": "double",
-          "example": "3024.66"
+          "example": "3024.66",
+          "description": " close_raw"
         },
-        "volume0": {
+        "v": {
           "type": "number",
           "format": "double",
-          "example": "235.25"
+          "example": "235.25",
+          "description": " volume0"
         },
-        "volume1": {
+        "V": {
           "type": "number",
           "format": "double",
-          "example": "93566.25"
+          "example": "93566.25",
+          "description": " volume1"
         },
-        "last_trade_id": {
+        "i": {
           "type": "integer",
           "format": "int64",
-          "example": "1"
+          "example": "1",
+          "description": " last_trade_id"
         }
       },
-      "title": "Candlestick",
+      "title": "Candle",
       "required": [
-        "timestamp",
-        "open",
-        "high",
-        "low",
-        "close",
-        "open_raw",
-        "high_raw",
-        "low_raw",
-        "close_raw",
-        "volume0",
-        "volume1",
-        "last_trade_id"
+        "t",
+        "o",
+        "h",
+        "l",
+        "c",
+        "O",
+        "H",
+        "L",
+        "C",
+        "v",
+        "V",
+        "i"
       ]
     },
-    "Candlesticks": {
+    "Candles": {
       "type": "object",
       "properties": {
         "code": {
@@ -3613,22 +3843,24 @@
         "message": {
           "type": "string"
         },
-        "resolution": {
+        "r": {
           "type": "string",
-          "example": "15m"
+          "example": "15m",
+          "description": " resolution"
         },
-        "candlesticks": {
+        "c": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/Candlestick"
-          }
+            "$ref": "#/definitions/Candle"
+          },
+          "description": " candles"
         }
       },
-      "title": "Candlesticks",
+      "title": "Candles",
       "required": [
         "code",
-        "resolution",
-        "candlesticks"
+        "r",
+        "c"
       ]
     },
     "ContractAddress": {
@@ -3807,6 +4039,11 @@
           "format": "int64",
           "example": "100"
         },
+        "total_isolated_order_count": {
+          "type": "integer",
+          "format": "int64",
+          "example": "100"
+        },
         "pending_order_count": {
           "type": "integer",
           "format": "int64",
@@ -3824,6 +4061,11 @@
         "collateral": {
           "type": "string",
           "example": "46342"
+        },
+        "transaction_time": {
+          "type": "integer",
+          "format": "int64",
+          "example": "1257894000000000"
         },
         "account_index": {
           "type": "integer",
@@ -3882,10 +4124,12 @@
         "l1_address",
         "cancel_all_time",
         "total_order_count",
+        "total_isolated_order_count",
         "pending_order_count",
         "available_balance",
         "status",
         "collateral",
+        "transaction_time",
         "account_index",
         "name",
         "description",
@@ -4103,6 +4347,11 @@
           "format": "uint8",
           "example": "0"
         },
+        "transaction_time": {
+          "type": "integer",
+          "format": "int64",
+          "example": "1257894000000000"
+        },
         "committed_at": {
           "type": "integer",
           "format": "int64",
@@ -4133,6 +4382,7 @@
         "sequence_index",
         "parent_hash",
         "api_key_index",
+        "transaction_time",
         "committed_at",
         "verified_at"
       ]
@@ -4376,6 +4626,10 @@
         },
         "maker_fee": {
           "type": "string"
+        },
+        "transaction_time": {
+          "type": "integer",
+          "format": "int64"
         }
       },
       "title": "LiqTrade",
@@ -4383,7 +4637,8 @@
         "price",
         "size",
         "taker_fee",
-        "maker_fee"
+        "maker_fee",
+        "transaction_time"
       ]
     },
     "Liquidation": {
@@ -4733,6 +4988,11 @@
           "type": "integer",
           "format": "int64",
           "example": "1640995200"
+        },
+        "transaction_time": {
+          "type": "integer",
+          "format": "int64",
+          "example": "1257894000000000"
         }
       },
       "title": "Order",
@@ -4769,7 +5029,8 @@
         "block_height",
         "timestamp",
         "created_at",
-        "updated_at"
+        "updated_at",
+        "transaction_time"
       ]
     },
     "OrderBook": {
@@ -4910,6 +5171,46 @@
         "bids",
         "offset",
         "nonce"
+      ]
+    },
+    "OrderBookDepthWithBeginNonce": {
+      "type": "object",
+      "properties": {
+        "asks": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/PriceLevel"
+          }
+        },
+        "bids": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/PriceLevel"
+          }
+        },
+        "offset": {
+          "type": "integer",
+          "format": "int64",
+          "example": "0"
+        },
+        "nonce": {
+          "type": "integer",
+          "format": "int64",
+          "example": "0"
+        },
+        "begin_nonce": {
+          "type": "integer",
+          "format": "int64",
+          "example": "0"
+        }
+      },
+      "title": "OrderBookDepthWithBeginNonce",
+      "required": [
+        "asks",
+        "bids",
+        "offset",
+        "nonce",
+        "begin_nonce"
       ]
     },
     "OrderBookDetails": {
@@ -5722,91 +6023,6 @@
         "entry_usdc"
       ]
     },
-    "ReferralPointEntry": {
-      "type": "object",
-      "properties": {
-        "l1_address": {
-          "type": "string"
-        },
-        "total_points": {
-          "type": "number",
-          "format": "float",
-          "example": "1000.01"
-        },
-        "week_points": {
-          "type": "number",
-          "format": "float",
-          "example": "1000.01"
-        },
-        "total_reward_points": {
-          "type": "number",
-          "format": "float",
-          "example": "200"
-        },
-        "week_reward_points": {
-          "type": "number",
-          "format": "float",
-          "example": "200"
-        },
-        "reward_point_multiplier": {
-          "type": "string",
-          "example": "0.1"
-        }
-      },
-      "title": "ReferralPointEntry",
-      "required": [
-        "l1_address",
-        "total_points",
-        "week_points",
-        "total_reward_points",
-        "week_reward_points",
-        "reward_point_multiplier"
-      ]
-    },
-    "ReferralPoints": {
-      "type": "object",
-      "properties": {
-        "referrals": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/ReferralPointEntry"
-          }
-        },
-        "user_total_points": {
-          "type": "number",
-          "format": "float",
-          "example": "1000"
-        },
-        "user_last_week_points": {
-          "type": "number",
-          "format": "float",
-          "example": "1000"
-        },
-        "user_total_referral_reward_points": {
-          "type": "number",
-          "format": "float",
-          "example": "1000"
-        },
-        "user_last_week_referral_reward_points": {
-          "type": "number",
-          "format": "float",
-          "example": "1000"
-        },
-        "reward_point_multiplier": {
-          "type": "string",
-          "example": "0.1"
-        }
-      },
-      "title": "ReferralPoints",
-      "required": [
-        "referrals",
-        "user_total_points",
-        "user_last_week_points",
-        "user_total_referral_reward_points",
-        "user_last_week_referral_reward_points",
-        "reward_point_multiplier"
-      ]
-    },
     "ReqAckNotif": {
       "type": "object",
       "properties": {
@@ -5850,11 +6066,30 @@
         "new_tier"
       ]
     },
+    "ReqDoFaucet": {
+      "type": "object",
+      "properties": {
+        "l1_address": {
+          "type": "string"
+        },
+        "do_l1_transfer": {
+          "type": "boolean",
+          "format": "boolean",
+          "default": "false"
+        }
+      },
+      "title": "ReqDoFaucet",
+      "required": [
+        "l1_address",
+        "do_l1_transfer"
+      ]
+    },
     "ReqExportData": {
       "type": "object",
       "properties": {
         "auth": {
-          "type": "string"
+          "type": "string",
+          "description": " made optional to support header auth clients"
         },
         "account_index": {
           "type": "integer",
@@ -5877,6 +6112,26 @@
       "title": "ReqExportData",
       "required": [
         "type"
+      ]
+    },
+    "ReqFastwithdraw": {
+      "type": "object",
+      "properties": {
+        "tx_info": {
+          "type": "string"
+        },
+        "to_address": {
+          "type": "string"
+        },
+        "auth": {
+          "type": "string",
+          "description": " made optional to support header auth clients"
+        }
+      },
+      "title": "ReqFastwithdraw",
+      "required": [
+        "tx_info",
+        "to_address"
       ]
     },
     "ReqGetAccount": {
@@ -5902,6 +6157,10 @@
     "ReqGetAccountActiveOrders": {
       "type": "object",
       "properties": {
+        "auth": {
+          "type": "string",
+          "description": " made optional to support header auth clients"
+        },
         "account_index": {
           "type": "integer",
           "format": "int64"
@@ -5909,10 +6168,6 @@
         "market_id": {
           "type": "integer",
           "format": "int16"
-        },
-        "auth": {
-          "type": "string",
-          "description": " made optional to support header auth clients"
         }
       },
       "title": "ReqGetAccountActiveOrders",
@@ -6035,7 +6290,8 @@
       "type": "object",
       "properties": {
         "auth": {
-          "type": "string"
+          "type": "string",
+          "description": " made optional to support header auth clients"
         },
         "by": {
           "type": "string",
@@ -6109,18 +6365,32 @@
         "value": {
           "type": "string"
         },
+        "auth": {
+          "type": "string",
+          "description": " made optional to support header auth clients"
+        },
         "types": {
           "type": "array",
           "items": {
             "type": "integer",
             "format": "uint8"
           }
-        },
-        "auth": {
-          "type": "string"
         }
       },
       "title": "ReqGetAccountTxs"
+    },
+    "ReqGetApiTokens": {
+      "type": "object",
+      "properties": {
+        "account_index": {
+          "type": "integer",
+          "format": "int64"
+        }
+      },
+      "title": "ReqGetApiTokens",
+      "required": [
+        "account_index"
+      ]
     },
     "ReqGetAssetDetails": {
       "type": "object",
@@ -6204,7 +6474,7 @@
         "value"
       ]
     },
-    "ReqGetCandlesticks": {
+    "ReqGetCandles": {
       "type": "object",
       "properties": {
         "market_id": {
@@ -6245,7 +6515,7 @@
           "default": "false"
         }
       },
-      "title": "ReqGetCandlesticks",
+      "title": "ReqGetCandles",
       "required": [
         "market_id",
         "resolution",
@@ -6257,13 +6527,13 @@
     "ReqGetDepositHistory": {
       "type": "object",
       "properties": {
-        "account_index": {
-          "type": "integer",
-          "format": "int64"
-        },
         "auth": {
           "type": "string",
           "description": " made optional to support header auth clients"
+        },
+        "account_index": {
+          "type": "integer",
+          "format": "int64"
         },
         "l1_address": {
           "type": "string"
@@ -6293,13 +6563,13 @@
     "ReqGetFastWithdrawInfo": {
       "type": "object",
       "properties": {
-        "account_index": {
-          "type": "integer",
-          "format": "int64"
-        },
         "auth": {
           "type": "string",
           "description": " made optional to support header auth clients"
+        },
+        "account_index": {
+          "type": "integer",
+          "format": "int64"
         }
       },
       "title": "ReqGetFastWithdrawInfo",
@@ -6344,6 +6614,14 @@
         "end_timestamp",
         "count_back"
       ]
+    },
+    "ReqGetGeckoContracts": {
+      "type": "object",
+      "title": "ReqGetGeckoContracts"
+    },
+    "ReqGetGeckoTickers": {
+      "type": "object",
+      "title": "ReqGetGeckoTickers"
     },
     "ReqGetL1Metadata": {
       "type": "object",
@@ -6499,7 +6777,8 @@
       "type": "object",
       "properties": {
         "auth": {
-          "type": "string"
+          "type": "string",
+          "description": " made optional to support header auth clients"
         },
         "account_index": {
           "type": "integer",
@@ -6539,7 +6818,8 @@
       "type": "object",
       "properties": {
         "auth": {
-          "type": "string"
+          "type": "string",
+          "description": " made optional to support header auth clients"
         },
         "filter": {
           "type": "string",
@@ -6652,28 +6932,12 @@
         "limit"
       ]
     },
-    "ReqGetReferralPoints": {
+    "ReqGetTrades": {
       "type": "object",
       "properties": {
         "auth": {
           "type": "string",
           "description": " made optional to support header auth clients"
-        },
-        "account_index": {
-          "type": "integer",
-          "format": "int64"
-        }
-      },
-      "title": "ReqGetReferralPoints",
-      "required": [
-        "account_index"
-      ]
-    },
-    "ReqGetTrades": {
-      "type": "object",
-      "properties": {
-        "auth": {
-          "type": "string"
         },
         "market_id": {
           "type": "integer",
@@ -6759,7 +7023,8 @@
       "type": "object",
       "properties": {
         "auth": {
-          "type": "string"
+          "type": "string",
+          "description": " made optional to support header auth clients"
         },
         "account_index": {
           "type": "integer",
@@ -6779,13 +7044,13 @@
     "ReqGetTransferHistory": {
       "type": "object",
       "properties": {
-        "account_index": {
-          "type": "integer",
-          "format": "int64"
-        },
         "auth": {
           "type": "string",
           "description": " made optional to support header auth clients"
+        },
+        "account_index": {
+          "type": "integer",
+          "format": "int64"
         },
         "cursor": {
           "type": "string"
@@ -6819,13 +7084,13 @@
     "ReqGetWithdrawHistory": {
       "type": "object",
       "properties": {
-        "account_index": {
-          "type": "integer",
-          "format": "int64"
-        },
         "auth": {
           "type": "string",
           "description": " made optional to support header auth clients"
+        },
+        "account_index": {
+          "type": "integer",
+          "format": "int64"
         },
         "cursor": {
           "type": "string"
@@ -6841,6 +7106,56 @@
       },
       "title": "ReqGetWithdrawHistory",
       "required": [
+        "account_index"
+      ]
+    },
+    "ReqPostApiToken": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "account_index": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "expiry": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "sub_account_access": {
+          "type": "boolean",
+          "format": "boolean"
+        },
+        "scopes": {
+          "type": "string",
+          "example": "read.*",
+          "default": "read.*"
+        }
+      },
+      "title": "ReqPostApiToken",
+      "required": [
+        "name",
+        "account_index",
+        "expiry",
+        "sub_account_access"
+      ]
+    },
+    "ReqRevokeApiToken": {
+      "type": "object",
+      "properties": {
+        "token_id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "account_index": {
+          "type": "integer",
+          "format": "int64"
+        }
+      },
+      "title": "ReqRevokeApiToken",
+      "required": [
+        "token_id",
         "account_index"
       ]
     },
@@ -6882,50 +7197,6 @@
         "tx_infos"
       ]
     },
-    "ReqUpdateKickback": {
-      "type": "object",
-      "properties": {
-        "auth": {
-          "type": "string",
-          "description": " made optional to support header auth clients"
-        },
-        "account_index": {
-          "type": "integer",
-          "format": "int64"
-        },
-        "kickback_percentage": {
-          "type": "number",
-          "format": "double",
-          "maximum": 100
-        }
-      },
-      "title": "ReqUpdateKickback",
-      "required": [
-        "account_index",
-        "kickback_percentage"
-      ]
-    },
-    "ReqUpdateReferralCode": {
-      "type": "object",
-      "properties": {
-        "auth": {
-          "type": "string",
-          "description": " made optional to support header auth clients"
-        },
-        "account_index": {
-          "type": "integer",
-          "format": "int64"
-        },
-        "new_referral_code": {
-          "type": "string"
-        }
-      },
-      "title": "ReqUpdateReferralCode",
-      "required": [
-        "account_index",
-        "new_referral_code"
-      ]
-    },
     "RespChangeAccountTier": {
       "type": "object",
       "properties": {
@@ -6941,6 +7212,30 @@
       "title": "RespChangeAccountTier",
       "required": [
         "code"
+      ]
+    },
+    "RespGetApiTokens": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32",
+          "example": "200"
+        },
+        "message": {
+          "type": "string"
+        },
+        "api_tokens": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ApiToken"
+          }
+        }
+      },
+      "title": "RespGetApiTokens",
+      "required": [
+        "code",
+        "api_tokens"
       ]
     },
     "RespGetBridgesByL1Addr": {
@@ -6988,6 +7283,36 @@
         "fast_bridge_limit"
       ]
     },
+    "RespGetFastwithdrawalInfo": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32",
+          "example": "200"
+        },
+        "message": {
+          "type": "string"
+        },
+        "to_account_index": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "withdraw_limit": {
+          "type": "string"
+        },
+        "max_withdrawal_amount": {
+          "type": "string"
+        }
+      },
+      "title": "RespGetFastwithdrawalInfo",
+      "required": [
+        "code",
+        "to_account_index",
+        "withdraw_limit",
+        "max_withdrawal_amount"
+      ]
+    },
     "RespGetIsNextBridgeFast": {
       "type": "object",
       "properties": {
@@ -7008,6 +7333,60 @@
       "required": [
         "code",
         "is_next_bridge_fast"
+      ]
+    },
+    "RespPostApiToken": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32",
+          "example": "200"
+        },
+        "message": {
+          "type": "string"
+        },
+        "token_id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "api_token": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "account_index": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "expiry": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "sub_account_access": {
+          "type": "boolean",
+          "format": "boolean"
+        },
+        "revoked": {
+          "type": "boolean",
+          "format": "boolean"
+        },
+        "scopes": {
+          "type": "string"
+        }
+      },
+      "title": "RespPostApiToken",
+      "required": [
+        "code",
+        "token_id",
+        "api_token",
+        "name",
+        "account_index",
+        "expiry",
+        "sub_account_access",
+        "revoked",
+        "scopes"
       ]
     },
     "RespPublicPoolsMetadata": {
@@ -7032,6 +7411,33 @@
       "required": [
         "code",
         "public_pools"
+      ]
+    },
+    "RespRevokeApiToken": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32",
+          "example": "200"
+        },
+        "message": {
+          "type": "string"
+        },
+        "token_id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "revoked": {
+          "type": "boolean",
+          "format": "boolean"
+        }
+      },
+      "title": "RespRevokeApiToken",
+      "required": [
+        "code",
+        "token_id",
+        "revoked"
       ]
     },
     "RespSendTx": {
@@ -7100,52 +7506,6 @@
         "tx_hash",
         "predicted_execution_time_ms",
         "volume_quota_remaining"
-      ]
-    },
-    "RespUpdateKickback": {
-      "type": "object",
-      "properties": {
-        "code": {
-          "type": "integer",
-          "format": "int32",
-          "example": "200"
-        },
-        "message": {
-          "type": "string"
-        },
-        "success": {
-          "type": "boolean",
-          "format": "boolean",
-          "example": "true"
-        }
-      },
-      "title": "RespUpdateKickback",
-      "required": [
-        "code",
-        "success"
-      ]
-    },
-    "RespUpdateReferralCode": {
-      "type": "object",
-      "properties": {
-        "code": {
-          "type": "integer",
-          "format": "int32",
-          "example": "200"
-        },
-        "message": {
-          "type": "string"
-        },
-        "success": {
-          "type": "boolean",
-          "format": "boolean",
-          "example": "true"
-        }
-      },
-      "title": "RespUpdateReferralCode",
-      "required": [
-        "code",
-        "success"
       ]
     },
     "RespWithdrawalDelay": {
@@ -7284,6 +7644,11 @@
           "type": "integer",
           "format": "int64",
           "example": "1640995200"
+        },
+        "transaction_time": {
+          "type": "integer",
+          "format": "int64",
+          "example": "1257894000000000"
         }
       },
       "title": "SimpleOrder",
@@ -7294,7 +7659,8 @@
         "initial_base_amount",
         "remaining_base_amount",
         "price",
-        "order_expiry"
+        "order_expiry",
+        "transaction_time"
       ]
     },
     "SpotMarketStats": {
@@ -7727,6 +8093,11 @@
           "type": "boolean",
           "format": "boolean",
           "example": "true"
+        },
+        "transaction_time": {
+          "type": "integer",
+          "format": "int64",
+          "example": "1257894000000000"
         }
       },
       "title": "Trade",
@@ -7756,7 +8127,8 @@
         "maker_position_size_before",
         "maker_entry_quote_before",
         "maker_initial_margin_fraction_before",
-        "maker_position_sign_changed"
+        "maker_position_sign_changed",
+        "transaction_time"
       ]
     },
     "Trades": {
@@ -7851,6 +8223,10 @@
           "type": "string",
           "example": "0.1"
         },
+        "fee": {
+          "type": "string",
+          "example": "3"
+        },
         "timestamp": {
           "type": "integer",
           "format": "int64",
@@ -7910,6 +8286,7 @@
         "id",
         "asset_id",
         "amount",
+        "fee",
         "timestamp",
         "type",
         "from_l1_address",
@@ -8000,6 +8377,11 @@
           "type": "integer",
           "format": "uint8",
           "example": "0"
+        },
+        "transaction_time": {
+          "type": "integer",
+          "format": "int64",
+          "example": "1257894000000000"
         }
       },
       "title": "Tx",
@@ -8019,7 +8401,8 @@
         "executed_at",
         "sequence_index",
         "parent_hash",
-        "api_key_index"
+        "api_key_index",
+        "transaction_time"
       ]
     },
     "TxHash": {

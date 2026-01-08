@@ -17,22 +17,27 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, StrictInt, StrictStr
-from typing import Any, ClassVar, Dict, List
+from pydantic import BaseModel, ConfigDict, StrictBool, StrictInt, StrictStr
+from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
 
-class ApiKey(BaseModel):
+class RespPostApiToken(BaseModel):
     """
-    ApiKey
+    RespPostApiToken
     """ # noqa: E501
+    code: StrictInt
+    message: Optional[StrictStr] = None
+    token_id: StrictInt
+    api_token: StrictStr
+    name: StrictStr
     account_index: StrictInt
-    api_key_index: StrictInt
-    nonce: StrictInt
-    public_key: StrictStr
-    transaction_time: StrictInt
+    expiry: StrictInt
+    sub_account_access: StrictBool
+    revoked: StrictBool
+    scopes: StrictStr
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["account_index", "api_key_index", "nonce", "public_key", "transaction_time"]
+    __properties: ClassVar[List[str]] = ["code", "message", "token_id", "api_token", "name", "account_index", "expiry", "sub_account_access", "revoked", "scopes"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -52,7 +57,7 @@ class ApiKey(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of ApiKey from a JSON string"""
+        """Create an instance of RespPostApiToken from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -84,7 +89,7 @@ class ApiKey(BaseModel):
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of ApiKey from a dict"""
+        """Create an instance of RespPostApiToken from a dict"""
         if obj is None:
             return None
 
@@ -92,11 +97,16 @@ class ApiKey(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
+            "code": obj.get("code"),
+            "message": obj.get("message"),
+            "token_id": obj.get("token_id"),
+            "api_token": obj.get("api_token"),
+            "name": obj.get("name"),
             "account_index": obj.get("account_index"),
-            "api_key_index": obj.get("api_key_index"),
-            "nonce": obj.get("nonce"),
-            "public_key": obj.get("public_key"),
-            "transaction_time": obj.get("transaction_time")
+            "expiry": obj.get("expiry"),
+            "sub_account_access": obj.get("sub_account_access"),
+            "revoked": obj.get("revoked"),
+            "scopes": obj.get("scopes")
         })
         # store additional fields in additional_properties
         for _key in obj.keys():

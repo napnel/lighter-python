@@ -27,7 +27,7 @@ class ReqGetPositionFunding(BaseModel):
     """
     ReqGetPositionFunding
     """ # noqa: E501
-    auth: Optional[StrictStr] = None
+    auth: Optional[StrictStr] = Field(default=None, description=" made optional to support header auth clients")
     account_index: StrictInt
     market_id: Optional[StrictInt] = None
     cursor: Optional[StrictStr] = None

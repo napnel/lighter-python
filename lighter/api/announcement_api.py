@@ -36,7 +36,6 @@ class AnnouncementApi:
         self.api_client = api_client
 
 
-    @validate_call
     async def announcement(
         self,
         _request_timeout: Union[
@@ -100,7 +99,6 @@ class AnnouncementApi:
         ).data
 
 
-    @validate_call
     async def announcement_with_http_info(
         self,
         _request_timeout: Union[
@@ -164,7 +162,6 @@ class AnnouncementApi:
         )
 
 
-    @validate_call
     async def announcement_without_preload_content(
         self,
         _request_timeout: Union[

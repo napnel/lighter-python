@@ -29,6 +29,7 @@ class TransferHistoryItem(BaseModel):
     id: StrictStr
     asset_id: StrictInt
     amount: StrictStr
+    fee: StrictStr
     timestamp: StrictInt
     type: StrictStr
     from_l1_address: StrictStr
@@ -39,7 +40,7 @@ class TransferHistoryItem(BaseModel):
     to_route: StrictStr
     tx_hash: StrictStr
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["id", "asset_id", "amount", "timestamp", "type", "from_l1_address", "to_l1_address", "from_account_index", "to_account_index", "from_route", "to_route", "tx_hash"]
+    __properties: ClassVar[List[str]] = ["id", "asset_id", "amount", "fee", "timestamp", "type", "from_l1_address", "to_l1_address", "from_account_index", "to_account_index", "from_route", "to_route", "tx_hash"]
 
     @field_validator('type')
     def type_validate_enum(cls, value):
@@ -123,6 +124,7 @@ class TransferHistoryItem(BaseModel):
             "id": obj.get("id"),
             "asset_id": obj.get("asset_id"),
             "amount": obj.get("amount"),
+            "fee": obj.get("fee"),
             "timestamp": obj.get("timestamp"),
             "type": obj.get("type"),
             "from_l1_address": obj.get("from_l1_address"),

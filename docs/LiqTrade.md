@@ -9,6 +9,7 @@ Name | Type | Description | Notes
 **size** | **str** |  | 
 **taker_fee** | **str** |  | 
 **maker_fee** | **str** |  | 
+**transaction_time** | **int** |  | 
 
 ## Example
 

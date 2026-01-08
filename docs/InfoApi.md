@@ -36,8 +36,8 @@ async with lighter.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = lighter.InfoApi(api_client)
     account_index = 56 # int | 
-    authorization = 'authorization_example' # str |  (optional)
-    auth = 'auth_example' # str |  (optional)
+    authorization = 'authorization_example' # str |  make required after integ is done (optional)
+    auth = 'auth_example' # str |  made optional to support header auth clients (optional)
     to_account_index = -1 # int |  (optional) (default to -1)
 
     try:
@@ -57,8 +57,8 @@ async with lighter.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **account_index** | **int**|  | 
- **authorization** | **str**|  | [optional] 
- **auth** | **str**|  | [optional] 
+ **authorization** | **str**|  make required after integ is done | [optional] 
+ **auth** | **str**|  made optional to support header auth clients | [optional] 
  **to_account_index** | **int**|  | [optional] [default to -1]
 
 ### Return type

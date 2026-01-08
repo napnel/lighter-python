@@ -17,29 +17,21 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, StrictFloat, StrictInt
-from typing import Any, ClassVar, Dict, List, Union
+from pydantic import BaseModel, ConfigDict, StrictBool, StrictInt, StrictStr
+from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
 
-class Candlestick(BaseModel):
+class RespRevokeApiToken(BaseModel):
     """
-    Candlestick
+    RespRevokeApiToken
     """ # noqa: E501
-    timestamp: StrictInt
-    open: Union[StrictFloat, StrictInt]
-    high: Union[StrictFloat, StrictInt]
-    low: Union[StrictFloat, StrictInt]
-    close: Union[StrictFloat, StrictInt]
-    open_raw: Union[StrictFloat, StrictInt]
-    high_raw: Union[StrictFloat, StrictInt]
-    low_raw: Union[StrictFloat, StrictInt]
-    close_raw: Union[StrictFloat, StrictInt]
-    volume0: Union[StrictFloat, StrictInt]
-    volume1: Union[StrictFloat, StrictInt]
-    last_trade_id: StrictInt
+    code: StrictInt
+    message: Optional[StrictStr] = None
+    token_id: StrictInt
+    revoked: StrictBool
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["timestamp", "open", "high", "low", "close", "open_raw", "high_raw", "low_raw", "close_raw", "volume0", "volume1", "last_trade_id"]
+    __properties: ClassVar[List[str]] = ["code", "message", "token_id", "revoked"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -59,7 +51,7 @@ class Candlestick(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of Candlestick from a JSON string"""
+        """Create an instance of RespRevokeApiToken from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -91,7 +83,7 @@ class Candlestick(BaseModel):
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of Candlestick from a dict"""
+        """Create an instance of RespRevokeApiToken from a dict"""
         if obj is None:
             return None
 
@@ -99,18 +91,10 @@ class Candlestick(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "timestamp": obj.get("timestamp"),
-            "open": obj.get("open"),
-            "high": obj.get("high"),
-            "low": obj.get("low"),
-            "close": obj.get("close"),
-            "open_raw": obj.get("open_raw"),
-            "high_raw": obj.get("high_raw"),
-            "low_raw": obj.get("low_raw"),
-            "close_raw": obj.get("close_raw"),
-            "volume0": obj.get("volume0"),
-            "volume1": obj.get("volume1"),
-            "last_trade_id": obj.get("last_trade_id")
+            "code": obj.get("code"),
+            "message": obj.get("message"),
+            "token_id": obj.get("token_id"),
+            "revoked": obj.get("revoked")
         })
         # store additional fields in additional_properties
         for _key in obj.keys():

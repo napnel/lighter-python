@@ -5,7 +5,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**auth** | **str** |  | [optional] 
+**auth** | **str** |  made optional to support header auth clients | [optional] 
 **by** | **str** |  | 
 **value** | **str** |  | 
 **resolution** | **str** |  | 

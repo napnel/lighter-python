@@ -5,7 +5,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**auth** | **str** |  | [optional] 
+**auth** | **str** |  made optional to support header auth clients | [optional] 
 **account_index** | **int** |  | [optional] [default to -1]
 **market_id** | **int** |  | [optional] 
 **type** | **str** |  | 

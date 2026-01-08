@@ -5,9 +5,9 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
+**auth** | **str** |  made optional to support header auth clients | [optional] 
 **account_index** | **int** |  | 
 **market_id** | **int** |  | 
-**auth** | **str** |  made optional to support header auth clients | [optional] 
 
 ## Example
 

@@ -125,7 +125,6 @@ class OrderApi:
         ).data
 
 
-    @validate_call
     async def account_active_orders_with_http_info(
         self,
         account_index: StrictInt,
@@ -205,7 +204,6 @@ class OrderApi:
         )
 
 
-    @validate_call
     async def account_active_orders_without_preload_content(
         self,
         account_index: StrictInt,
@@ -307,6 +305,14 @@ class OrderApi:
 
         # process the path parameters
         # process the query parameters
+        if authorization is not None:
+            
+            _query_params.append(('authorization', authorization))
+            
+        if auth is not None:
+            
+            _query_params.append(('auth', auth))
+            
         if account_index is not None:
             
             _query_params.append(('account_index', account_index))
@@ -315,13 +321,7 @@ class OrderApi:
             
             _query_params.append(('market_id', market_id))
             
-        if auth is not None:
-            
-            _query_params.append(('auth', auth))
-            
         # process the header parameters
-        if authorization is not None:
-            _header_params['authorization'] = authorization
         # process the form parameters
         # process the body parameter
 
@@ -357,7 +357,6 @@ class OrderApi:
 
 
 
-    @validate_call
     async def account_inactive_orders(
         self,
         account_index: StrictInt,
@@ -453,7 +452,6 @@ class OrderApi:
         ).data
 
 
-    @validate_call
     async def account_inactive_orders_with_http_info(
         self,
         account_index: StrictInt,
@@ -549,7 +547,6 @@ class OrderApi:
         )
 
 
-    @validate_call
     async def account_inactive_orders_without_preload_content(
         self,
         account_index: StrictInt,
@@ -671,6 +668,10 @@ class OrderApi:
 
         # process the path parameters
         # process the query parameters
+        if authorization is not None:
+            
+            _query_params.append(('authorization', authorization))
+            
         if auth is not None:
             
             _query_params.append(('auth', auth))
@@ -700,8 +701,6 @@ class OrderApi:
             _query_params.append(('limit', limit))
             
         # process the header parameters
-        if authorization is not None:
-            _header_params['authorization'] = authorization
         # process the form parameters
         # process the body parameter
 
@@ -737,7 +736,6 @@ class OrderApi:
 
 
 
-    @validate_call
     async def asset_details(
         self,
         asset_id: Optional[StrictInt] = None,
@@ -998,7 +996,6 @@ class OrderApi:
 
 
 
-    @validate_call
     async def exchange_stats(
         self,
         _request_timeout: Union[
@@ -1062,7 +1059,6 @@ class OrderApi:
         ).data
 
 
-    @validate_call
     async def exchange_stats_with_http_info(
         self,
         _request_timeout: Union[
@@ -1126,7 +1122,6 @@ class OrderApi:
         )
 
 
-    @validate_call
     async def exchange_stats_without_preload_content(
         self,
         _request_timeout: Union[
@@ -1244,12 +1239,11 @@ class OrderApi:
 
 
 
-    @validate_call
     async def export(
         self,
         type: StrictStr,
-        authorization: Optional[StrictStr] = None,
-        auth: Optional[StrictStr] = None,
+        authorization: Annotated[Optional[StrictStr], Field(description=" make required after integ is done")] = None,
+        auth: Annotated[Optional[StrictStr], Field(description=" made optional to support header auth clients")] = None,
         account_index: Optional[StrictInt] = None,
         market_id: Optional[StrictInt] = None,
         _request_timeout: Union[
@@ -1271,9 +1265,9 @@ class OrderApi:
 
         :param type: (required)
         :type type: str
-        :param authorization:
+        :param authorization:  make required after integ is done
         :type authorization: str
-        :param auth:
+        :param auth:  made optional to support header auth clients
         :type auth: str
         :param account_index:
         :type account_index: int
@@ -1328,12 +1322,11 @@ class OrderApi:
         ).data
 
 
-    @validate_call
     async def export_with_http_info(
         self,
         type: StrictStr,
-        authorization: Optional[StrictStr] = None,
-        auth: Optional[StrictStr] = None,
+        authorization: Annotated[Optional[StrictStr], Field(description=" make required after integ is done")] = None,
+        auth: Annotated[Optional[StrictStr], Field(description=" made optional to support header auth clients")] = None,
         account_index: Optional[StrictInt] = None,
         market_id: Optional[StrictInt] = None,
         _request_timeout: Union[
@@ -1355,9 +1348,9 @@ class OrderApi:
 
         :param type: (required)
         :type type: str
-        :param authorization:
+        :param authorization:  make required after integ is done
         :type authorization: str
-        :param auth:
+        :param auth:  made optional to support header auth clients
         :type auth: str
         :param account_index:
         :type account_index: int
@@ -1412,12 +1405,11 @@ class OrderApi:
         )
 
 
-    @validate_call
     async def export_without_preload_content(
         self,
         type: StrictStr,
-        authorization: Optional[StrictStr] = None,
-        auth: Optional[StrictStr] = None,
+        authorization: Annotated[Optional[StrictStr], Field(description=" make required after integ is done")] = None,
+        auth: Annotated[Optional[StrictStr], Field(description=" made optional to support header auth clients")] = None,
         account_index: Optional[StrictInt] = None,
         market_id: Optional[StrictInt] = None,
         _request_timeout: Union[
@@ -1439,9 +1431,9 @@ class OrderApi:
 
         :param type: (required)
         :type type: str
-        :param authorization:
+        :param authorization:  make required after integ is done
         :type authorization: str
-        :param auth:
+        :param auth:  made optional to support header auth clients
         :type auth: str
         :param account_index:
         :type account_index: int
@@ -1519,6 +1511,10 @@ class OrderApi:
 
         # process the path parameters
         # process the query parameters
+        if authorization is not None:
+            
+            _query_params.append(('authorization', authorization))
+            
         if auth is not None:
             
             _query_params.append(('auth', auth))
@@ -1536,8 +1532,6 @@ class OrderApi:
             _query_params.append(('type', type))
             
         # process the header parameters
-        if authorization is not None:
-            _header_params['authorization'] = authorization
         # process the form parameters
         # process the body parameter
 
@@ -1573,7 +1567,6 @@ class OrderApi:
 
 
 
-    @validate_call
     async def order_book_details(
         self,
         market_id: Optional[StrictInt] = None,
@@ -1645,7 +1638,6 @@ class OrderApi:
         ).data
 
 
-    @validate_call
     async def order_book_details_with_http_info(
         self,
         market_id: Optional[StrictInt] = None,
@@ -1717,7 +1709,6 @@ class OrderApi:
         )
 
 
-    @validate_call
     async def order_book_details_without_preload_content(
         self,
         market_id: Optional[StrictInt] = None,
@@ -1853,7 +1844,6 @@ class OrderApi:
 
 
 
-    @validate_call
     async def order_book_orders(
         self,
         market_id: StrictInt,
@@ -1925,7 +1915,6 @@ class OrderApi:
         ).data
 
 
-    @validate_call
     async def order_book_orders_with_http_info(
         self,
         market_id: StrictInt,
@@ -1997,7 +1986,6 @@ class OrderApi:
         )
 
 
-    @validate_call
     async def order_book_orders_without_preload_content(
         self,
         market_id: StrictInt,
@@ -2133,7 +2121,6 @@ class OrderApi:
 
 
 
-    @validate_call
     async def order_books(
         self,
         market_id: Optional[StrictInt] = None,
@@ -2205,7 +2192,6 @@ class OrderApi:
         ).data
 
 
-    @validate_call
     async def order_books_with_http_info(
         self,
         market_id: Optional[StrictInt] = None,
@@ -2277,7 +2263,6 @@ class OrderApi:
         )
 
 
-    @validate_call
     async def order_books_without_preload_content(
         self,
         market_id: Optional[StrictInt] = None,
@@ -2413,7 +2398,6 @@ class OrderApi:
 
 
 
-    @validate_call
     async def recent_trades(
         self,
         market_id: StrictInt,
@@ -2485,7 +2469,6 @@ class OrderApi:
         ).data
 
 
-    @validate_call
     async def recent_trades_with_http_info(
         self,
         market_id: StrictInt,
@@ -2557,7 +2540,6 @@ class OrderApi:
         )
 
 
-    @validate_call
     async def recent_trades_without_preload_content(
         self,
         market_id: StrictInt,
@@ -2693,13 +2675,12 @@ class OrderApi:
 
 
 
-    @validate_call
     async def trades(
         self,
         sort_by: StrictStr,
         limit: Annotated[int, Field(le=100, strict=True, ge=1)],
-        authorization: Optional[StrictStr] = None,
-        auth: Optional[StrictStr] = None,
+        authorization: Annotated[Optional[StrictStr], Field(description=" make required after integ is done")] = None,
+        auth: Annotated[Optional[StrictStr], Field(description=" made optional to support header auth clients")] = None,
         market_id: Optional[StrictInt] = None,
         account_index: Optional[StrictInt] = None,
         order_index: Optional[StrictInt] = None,
@@ -2731,9 +2712,9 @@ class OrderApi:
         :type sort_by: str
         :param limit: (required)
         :type limit: int
-        :param authorization:
+        :param authorization:  make required after integ is done
         :type authorization: str
-        :param auth:
+        :param auth:  made optional to support header auth clients
         :type auth: str
         :param market_id:
         :type market_id: int
@@ -2813,13 +2794,12 @@ class OrderApi:
         ).data
 
 
-    @validate_call
     async def trades_with_http_info(
         self,
         sort_by: StrictStr,
         limit: Annotated[int, Field(le=100, strict=True, ge=1)],
-        authorization: Optional[StrictStr] = None,
-        auth: Optional[StrictStr] = None,
+        authorization: Annotated[Optional[StrictStr], Field(description=" make required after integ is done")] = None,
+        auth: Annotated[Optional[StrictStr], Field(description=" made optional to support header auth clients")] = None,
         market_id: Optional[StrictInt] = None,
         account_index: Optional[StrictInt] = None,
         order_index: Optional[StrictInt] = None,
@@ -2851,9 +2831,9 @@ class OrderApi:
         :type sort_by: str
         :param limit: (required)
         :type limit: int
-        :param authorization:
+        :param authorization:  make required after integ is done
         :type authorization: str
-        :param auth:
+        :param auth:  made optional to support header auth clients
         :type auth: str
         :param market_id:
         :type market_id: int
@@ -2933,13 +2913,12 @@ class OrderApi:
         )
 
 
-    @validate_call
     async def trades_without_preload_content(
         self,
         sort_by: StrictStr,
         limit: Annotated[int, Field(le=100, strict=True, ge=1)],
-        authorization: Optional[StrictStr] = None,
-        auth: Optional[StrictStr] = None,
+        authorization: Annotated[Optional[StrictStr], Field(description=" make required after integ is done")] = None,
+        auth: Annotated[Optional[StrictStr], Field(description=" made optional to support header auth clients")] = None,
         market_id: Optional[StrictInt] = None,
         account_index: Optional[StrictInt] = None,
         order_index: Optional[StrictInt] = None,
@@ -2971,9 +2950,9 @@ class OrderApi:
         :type sort_by: str
         :param limit: (required)
         :type limit: int
-        :param authorization:
+        :param authorization:  make required after integ is done
         :type authorization: str
-        :param auth:
+        :param auth:  made optional to support header auth clients
         :type auth: str
         :param market_id:
         :type market_id: int
@@ -3085,6 +3064,10 @@ class OrderApi:
 
         # process the path parameters
         # process the query parameters
+        if authorization is not None:
+            
+            _query_params.append(('authorization', authorization))
+            
         if auth is not None:
             
             _query_params.append(('auth', auth))
@@ -3138,8 +3121,6 @@ class OrderApi:
             _query_params.append(('aggregate', aggregate))
             
         # process the header parameters
-        if authorization is not None:
-            _header_params['authorization'] = authorization
         # process the form parameters
         # process the body parameter
 

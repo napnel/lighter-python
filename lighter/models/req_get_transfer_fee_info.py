@@ -17,7 +17,7 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, StrictInt, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
@@ -26,7 +26,7 @@ class ReqGetTransferFeeInfo(BaseModel):
     """
     ReqGetTransferFeeInfo
     """ # noqa: E501
-    auth: Optional[StrictStr] = None
+    auth: Optional[StrictStr] = Field(default=None, description=" made optional to support header auth clients")
     account_index: StrictInt
     to_account_index: Optional[StrictInt] = -1
     additional_properties: Dict[str, Any] = {}

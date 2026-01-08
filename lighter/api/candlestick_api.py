@@ -19,7 +19,7 @@ from typing_extensions import Annotated
 from pydantic import Field, StrictBool, StrictInt, StrictStr, field_validator
 from typing import Optional
 from typing_extensions import Annotated
-from lighter.models.candlesticks import Candlesticks
+from lighter.models.candles import Candles
 from lighter.models.fundings import Fundings
 
 from lighter.api_client import ApiClient, RequestSerialized
@@ -40,8 +40,7 @@ class CandlestickApi:
         self.api_client = api_client
 
 
-    @validate_call
-    async def candlesticks(
+    async def candles(
         self,
         market_id: StrictInt,
         resolution: StrictStr,
@@ -61,10 +60,10 @@ class CandlestickApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> Candlesticks:
-        """candlesticks
+    ) -> Candles:
+        """candles
 
-        Get candlesticks
+        Get candles (optimized with shortened fields and smaller response size)
 
         :param market_id: (required)
         :type market_id: int
@@ -100,7 +99,7 @@ class CandlestickApi:
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._candlesticks_serialize(
+        _param = self._candles_serialize(
             market_id=market_id,
             resolution=resolution,
             start_timestamp=start_timestamp,
@@ -114,7 +113,7 @@ class CandlestickApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "Candlesticks",
+            '200': "Candles",
             '400': "ResultCode",
         }
         response_data = await self.api_client.call_api(
@@ -128,8 +127,7 @@ class CandlestickApi:
         ).data
 
 
-    @validate_call
-    async def candlesticks_with_http_info(
+    async def candles_with_http_info(
         self,
         market_id: StrictInt,
         resolution: StrictStr,
@@ -149,10 +147,10 @@ class CandlestickApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[Candlesticks]:
-        """candlesticks
+    ) -> ApiResponse[Candles]:
+        """candles
 
-        Get candlesticks
+        Get candles (optimized with shortened fields and smaller response size)
 
         :param market_id: (required)
         :type market_id: int
@@ -188,7 +186,7 @@ class CandlestickApi:
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._candlesticks_serialize(
+        _param = self._candles_serialize(
             market_id=market_id,
             resolution=resolution,
             start_timestamp=start_timestamp,
@@ -202,7 +200,7 @@ class CandlestickApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "Candlesticks",
+            '200': "Candles",
             '400': "ResultCode",
         }
         response_data = await self.api_client.call_api(
@@ -216,8 +214,7 @@ class CandlestickApi:
         )
 
 
-    @validate_call
-    async def candlesticks_without_preload_content(
+    async def candles_without_preload_content(
         self,
         market_id: StrictInt,
         resolution: StrictStr,
@@ -238,9 +235,9 @@ class CandlestickApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """candlesticks
+        """candles
 
-        Get candlesticks
+        Get candles (optimized with shortened fields and smaller response size)
 
         :param market_id: (required)
         :type market_id: int
@@ -276,7 +273,7 @@ class CandlestickApi:
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._candlesticks_serialize(
+        _param = self._candles_serialize(
             market_id=market_id,
             resolution=resolution,
             start_timestamp=start_timestamp,
@@ -290,7 +287,7 @@ class CandlestickApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "Candlesticks",
+            '200': "Candles",
             '400': "ResultCode",
         }
         response_data = await self.api_client.call_api(
@@ -300,7 +297,7 @@ class CandlestickApi:
         return response_data.response
 
 
-    def _candlesticks_serialize(
+    def _candles_serialize(
         self,
         market_id,
         resolution,
@@ -372,7 +369,7 @@ class CandlestickApi:
 
         return self.api_client.param_serialize(
             method='GET',
-            resource_path='/api/v1/candlesticks',
+            resource_path='/api/v1/candles',
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,
@@ -388,7 +385,6 @@ class CandlestickApi:
 
 
 
-    @validate_call
     async def fundings(
         self,
         market_id: StrictInt,
@@ -472,7 +468,6 @@ class CandlestickApi:
         ).data
 
 
-    @validate_call
     async def fundings_with_http_info(
         self,
         market_id: StrictInt,
@@ -556,7 +551,6 @@ class CandlestickApi:
         )
 
 
-    @validate_call
     async def fundings_without_preload_content(
         self,
         market_id: StrictInt,

@@ -27,7 +27,7 @@ class ReqGetAccountPnL(BaseModel):
     """
     ReqGetAccountPnL
     """ # noqa: E501
-    auth: Optional[StrictStr] = None
+    auth: Optional[StrictStr] = Field(default=None, description=" made optional to support header auth clients")
     by: StrictStr
     value: StrictStr
     resolution: StrictStr

@@ -18,21 +18,21 @@ import re  # noqa: F401
 import json
 
 from pydantic import BaseModel, ConfigDict, StrictInt, StrictStr
-from typing import Any, ClassVar, Dict, List
+from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
 
-class ApiKey(BaseModel):
+class RespGetFastwithdrawalInfo(BaseModel):
     """
-    ApiKey
+    RespGetFastwithdrawalInfo
     """ # noqa: E501
-    account_index: StrictInt
-    api_key_index: StrictInt
-    nonce: StrictInt
-    public_key: StrictStr
-    transaction_time: StrictInt
+    code: StrictInt
+    message: Optional[StrictStr] = None
+    to_account_index: StrictInt
+    withdraw_limit: StrictStr
+    max_withdrawal_amount: StrictStr
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["account_index", "api_key_index", "nonce", "public_key", "transaction_time"]
+    __properties: ClassVar[List[str]] = ["code", "message", "to_account_index", "withdraw_limit", "max_withdrawal_amount"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -52,7 +52,7 @@ class ApiKey(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of ApiKey from a JSON string"""
+        """Create an instance of RespGetFastwithdrawalInfo from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -84,7 +84,7 @@ class ApiKey(BaseModel):
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of ApiKey from a dict"""
+        """Create an instance of RespGetFastwithdrawalInfo from a dict"""
         if obj is None:
             return None
 
@@ -92,11 +92,11 @@ class ApiKey(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "account_index": obj.get("account_index"),
-            "api_key_index": obj.get("api_key_index"),
-            "nonce": obj.get("nonce"),
-            "public_key": obj.get("public_key"),
-            "transaction_time": obj.get("transaction_time")
+            "code": obj.get("code"),
+            "message": obj.get("message"),
+            "to_account_index": obj.get("to_account_index"),
+            "withdraw_limit": obj.get("withdraw_limit"),
+            "max_withdrawal_amount": obj.get("max_withdrawal_amount")
         })
         # store additional fields in additional_properties
         for _key in obj.keys():

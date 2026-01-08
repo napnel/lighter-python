@@ -26,11 +26,11 @@ class ReqGetTransferHistory(BaseModel):
     """
     ReqGetTransferHistory
     """ # noqa: E501
-    account_index: StrictInt
     auth: Optional[StrictStr] = Field(default=None, description=" made optional to support header auth clients")
+    account_index: StrictInt
     cursor: Optional[StrictStr] = None
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["account_index", "auth", "cursor"]
+    __properties: ClassVar[List[str]] = ["auth", "account_index", "cursor"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -90,8 +90,8 @@ class ReqGetTransferHistory(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "account_index": obj.get("account_index"),
             "auth": obj.get("auth"),
+            "account_index": obj.get("account_index"),
             "cursor": obj.get("cursor")
         })
         # store additional fields in additional_properties

@@ -26,10 +26,10 @@ class ReqGetFastWithdrawInfo(BaseModel):
     """
     ReqGetFastWithdrawInfo
     """ # noqa: E501
-    account_index: StrictInt
     auth: Optional[StrictStr] = Field(default=None, description=" made optional to support header auth clients")
+    account_index: StrictInt
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["account_index", "auth"]
+    __properties: ClassVar[List[str]] = ["auth", "account_index"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -89,8 +89,8 @@ class ReqGetFastWithdrawInfo(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "account_index": obj.get("account_index"),
-            "auth": obj.get("auth")
+            "auth": obj.get("auth"),
+            "account_index": obj.get("account_index")
         })
         # store additional fields in additional_properties
         for _key in obj.keys():

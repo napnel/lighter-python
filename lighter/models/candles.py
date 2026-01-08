@@ -17,24 +17,22 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, StrictFloat, StrictInt, StrictStr
-from typing import Any, ClassVar, Dict, List, Union
-from lighter.models.referral_point_entry import ReferralPointEntry
+from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
+from typing import Any, ClassVar, Dict, List, Optional
+from lighter.models.candle import Candle
 from typing import Optional, Set
 from typing_extensions import Self
 
-class ReferralPoints(BaseModel):
+class Candles(BaseModel):
     """
-    ReferralPoints
+    Candles
     """ # noqa: E501
-    referrals: List[ReferralPointEntry]
-    user_total_points: Union[StrictFloat, StrictInt]
-    user_last_week_points: Union[StrictFloat, StrictInt]
-    user_total_referral_reward_points: Union[StrictFloat, StrictInt]
-    user_last_week_referral_reward_points: Union[StrictFloat, StrictInt]
-    reward_point_multiplier: StrictStr
+    code: StrictInt
+    message: Optional[StrictStr] = None
+    r: StrictStr = Field(description=" resolution")
+    c: List[Candle] = Field(description=" candles")
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["referrals", "user_total_points", "user_last_week_points", "user_total_referral_reward_points", "user_last_week_referral_reward_points", "reward_point_multiplier"]
+    __properties: ClassVar[List[str]] = ["code", "message", "r", "c"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -54,7 +52,7 @@ class ReferralPoints(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of ReferralPoints from a JSON string"""
+        """Create an instance of Candles from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -77,13 +75,13 @@ class ReferralPoints(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # override the default output from pydantic by calling `to_dict()` of each item in referrals (list)
+        # override the default output from pydantic by calling `to_dict()` of each item in c (list)
         _items = []
-        if self.referrals:
-            for _item in self.referrals:
+        if self.c:
+            for _item in self.c:
                 if _item:
                     _items.append(_item.to_dict())
-            _dict['referrals'] = _items
+            _dict['c'] = _items
         # puts key-value pairs in additional_properties in the top level
         if self.additional_properties is not None:
             for _key, _value in self.additional_properties.items():
@@ -93,7 +91,7 @@ class ReferralPoints(BaseModel):
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of ReferralPoints from a dict"""
+        """Create an instance of Candles from a dict"""
         if obj is None:
             return None
 
@@ -101,12 +99,10 @@ class ReferralPoints(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "referrals": [ReferralPointEntry.from_dict(_item) for _item in obj["referrals"]] if obj.get("referrals") is not None else None,
-            "user_total_points": obj.get("user_total_points"),
-            "user_last_week_points": obj.get("user_last_week_points"),
-            "user_total_referral_reward_points": obj.get("user_total_referral_reward_points"),
-            "user_last_week_referral_reward_points": obj.get("user_last_week_referral_reward_points"),
-            "reward_point_multiplier": obj.get("reward_point_multiplier")
+            "code": obj.get("code"),
+            "message": obj.get("message"),
+            "r": obj.get("r"),
+            "c": [Candle.from_dict(_item) for _item in obj["c"]] if obj.get("c") is not None else None
         })
         # store additional fields in additional_properties
         for _key in obj.keys():

@@ -5,8 +5,8 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**account_index** | **int** |  | 
 **auth** | **str** |  made optional to support header auth clients | [optional] 
+**account_index** | **int** |  | 
 **cursor** | **str** |  | [optional] 
 
 ## Example

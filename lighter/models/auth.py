@@ -17,23 +17,18 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, StrictFloat, StrictInt, StrictStr
-from typing import Any, ClassVar, Dict, List, Union
+from pydantic import BaseModel, ConfigDict, Field, StrictStr
+from typing import Any, ClassVar, Dict, List
 from typing import Optional, Set
 from typing_extensions import Self
 
-class ReferralPointEntry(BaseModel):
+class Auth(BaseModel):
     """
-    ReferralPointEntry
+    Auth
     """ # noqa: E501
-    l1_address: StrictStr
-    total_points: Union[StrictFloat, StrictInt]
-    week_points: Union[StrictFloat, StrictInt]
-    total_reward_points: Union[StrictFloat, StrictInt]
-    week_reward_points: Union[StrictFloat, StrictInt]
-    reward_point_multiplier: StrictStr
+    auth: StrictStr = Field(description=" made optional to support header auth clients")
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["l1_address", "total_points", "week_points", "total_reward_points", "week_reward_points", "reward_point_multiplier"]
+    __properties: ClassVar[List[str]] = ["auth"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -53,7 +48,7 @@ class ReferralPointEntry(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of ReferralPointEntry from a JSON string"""
+        """Create an instance of Auth from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -85,7 +80,7 @@ class ReferralPointEntry(BaseModel):
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of ReferralPointEntry from a dict"""
+        """Create an instance of Auth from a dict"""
         if obj is None:
             return None
 
@@ -93,12 +88,7 @@ class ReferralPointEntry(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "l1_address": obj.get("l1_address"),
-            "total_points": obj.get("total_points"),
-            "week_points": obj.get("week_points"),
-            "total_reward_points": obj.get("total_reward_points"),
-            "week_reward_points": obj.get("week_reward_points"),
-            "reward_point_multiplier": obj.get("reward_point_multiplier")
+            "auth": obj.get("auth")
         })
         # store additional fields in additional_properties
         for _key in obj.keys():

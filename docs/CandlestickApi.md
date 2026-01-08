@@ -4,23 +4,23 @@ All URIs are relative to *https://mainnet.zklighter.elliot.ai*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**candlesticks**](CandlestickApi.md#candlesticks) | **GET** /api/v1/candlesticks | candlesticks
+[**candles**](CandlestickApi.md#candles) | **GET** /api/v1/candles | candles
 [**fundings**](CandlestickApi.md#fundings) | **GET** /api/v1/fundings | fundings
 
 
-# **candlesticks**
-> Candlesticks candlesticks(market_id, resolution, start_timestamp, end_timestamp, count_back, set_timestamp_to_end=set_timestamp_to_end)
+# **candles**
+> Candles candles(market_id, resolution, start_timestamp, end_timestamp, count_back, set_timestamp_to_end=set_timestamp_to_end)
 
-candlesticks
+candles
 
-Get candlesticks
+Get candles (optimized with shortened fields and smaller response size)
 
 ### Example
 
 
 ```python
 import lighter
-from lighter.models.candlesticks import Candlesticks
+from lighter.models.candles import Candles
 from lighter.rest import ApiException
 from pprint import pprint
 
@@ -43,12 +43,12 @@ async with lighter.ApiClient(configuration) as api_client:
     set_timestamp_to_end = False # bool |  (optional) (default to False)
 
     try:
-        # candlesticks
-        api_response = await api_instance.candlesticks(market_id, resolution, start_timestamp, end_timestamp, count_back, set_timestamp_to_end=set_timestamp_to_end)
-        print("The response of CandlestickApi->candlesticks:\n")
+        # candles
+        api_response = await api_instance.candles(market_id, resolution, start_timestamp, end_timestamp, count_back, set_timestamp_to_end=set_timestamp_to_end)
+        print("The response of CandlestickApi->candles:\n")
         pprint(api_response)
     except Exception as e:
-        print("Exception when calling CandlestickApi->candlesticks: %s\n" % e)
+        print("Exception when calling CandlestickApi->candles: %s\n" % e)
 ```
 
 
@@ -67,7 +67,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**Candlesticks**](Candlesticks.md)
+[**Candles**](Candles.md)
 
 ### Authorization
 

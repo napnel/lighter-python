@@ -39,7 +39,6 @@ class NotificationApi:
         self.api_client = api_client
 
 
-    @validate_call
     async def notification_ack(
         self,
         notif_id: StrictStr,
@@ -119,7 +118,6 @@ class NotificationApi:
         ).data
 
 
-    @validate_call
     async def notification_ack_with_http_info(
         self,
         notif_id: StrictStr,
@@ -199,7 +197,6 @@ class NotificationApi:
         )
 
 
-    @validate_call
     async def notification_ack_without_preload_content(
         self,
         notif_id: StrictStr,

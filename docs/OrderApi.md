@@ -336,8 +336,8 @@ async with lighter.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = lighter.OrderApi(api_client)
     type = 'type_example' # str | 
-    authorization = 'authorization_example' # str |  (optional)
-    auth = 'auth_example' # str |  (optional)
+    authorization = 'authorization_example' # str |  make required after integ is done (optional)
+    auth = 'auth_example' # str |  made optional to support header auth clients (optional)
     account_index = -1 # int |  (optional) (default to -1)
     market_id = 255 # int |  (optional) (default to 255)
 
@@ -358,8 +358,8 @@ async with lighter.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **type** | **str**|  | 
- **authorization** | **str**|  | [optional] 
- **auth** | **str**|  | [optional] 
+ **authorization** | **str**|  make required after integ is done | [optional] 
+ **auth** | **str**|  made optional to support header auth clients | [optional] 
  **account_index** | **int**|  | [optional] [default to -1]
  **market_id** | **int**|  | [optional] [default to 255]
 
@@ -698,8 +698,8 @@ async with lighter.ApiClient(configuration) as api_client:
     api_instance = lighter.OrderApi(api_client)
     sort_by = 'sort_by_example' # str | 
     limit = 56 # int | 
-    authorization = 'authorization_example' # str |  (optional)
-    auth = 'auth_example' # str |  (optional)
+    authorization = 'authorization_example' # str |  make required after integ is done (optional)
+    auth = 'auth_example' # str |  made optional to support header auth clients (optional)
     market_id = 255 # int |  (optional) (default to 255)
     account_index = -1 # int |  (optional) (default to -1)
     order_index = 56 # int |  (optional)
@@ -729,8 +729,8 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **sort_by** | **str**|  | 
  **limit** | **int**|  | 
- **authorization** | **str**|  | [optional] 
- **auth** | **str**|  | [optional] 
+ **authorization** | **str**|  make required after integ is done | [optional] 
+ **auth** | **str**|  made optional to support header auth clients | [optional] 
  **market_id** | **int**|  | [optional] [default to 255]
  **account_index** | **int**|  | [optional] [default to -1]
  **order_index** | **int**|  | [optional] 

@@ -17,19 +17,21 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
+from pydantic import BaseModel, ConfigDict, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
+from lighter.models.api_token import ApiToken
 from typing import Optional, Set
 from typing_extensions import Self
 
-class ReqGetReferralPoints(BaseModel):
+class RespGetApiTokens(BaseModel):
     """
-    ReqGetReferralPoints
+    RespGetApiTokens
     """ # noqa: E501
-    auth: Optional[StrictStr] = Field(default=None, description=" made optional to support header auth clients")
-    account_index: StrictInt
+    code: StrictInt
+    message: Optional[StrictStr] = None
+    api_tokens: List[ApiToken]
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["auth", "account_index"]
+    __properties: ClassVar[List[str]] = ["code", "message", "api_tokens"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -49,7 +51,7 @@ class ReqGetReferralPoints(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of ReqGetReferralPoints from a JSON string"""
+        """Create an instance of RespGetApiTokens from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -72,6 +74,13 @@ class ReqGetReferralPoints(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # override the default output from pydantic by calling `to_dict()` of each item in api_tokens (list)
+        _items = []
+        if self.api_tokens:
+            for _item in self.api_tokens:
+                if _item:
+                    _items.append(_item.to_dict())
+            _dict['api_tokens'] = _items
         # puts key-value pairs in additional_properties in the top level
         if self.additional_properties is not None:
             for _key, _value in self.additional_properties.items():
@@ -81,7 +90,7 @@ class ReqGetReferralPoints(BaseModel):
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of ReqGetReferralPoints from a dict"""
+        """Create an instance of RespGetApiTokens from a dict"""
         if obj is None:
             return None
 
@@ -89,8 +98,9 @@ class ReqGetReferralPoints(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "auth": obj.get("auth"),
-            "account_index": obj.get("account_index")
+            "code": obj.get("code"),
+            "message": obj.get("message"),
+            "api_tokens": [ApiToken.from_dict(_item) for _item in obj["api_tokens"]] if obj.get("api_tokens") is not None else None
         })
         # store additional fields in additional_properties
         for _key in obj.keys():

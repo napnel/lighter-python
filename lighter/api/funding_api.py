@@ -36,7 +36,6 @@ class FundingApi:
         self.api_client = api_client
 
 
-    @validate_call
     async def funding_rates(
         self,
         _request_timeout: Union[
@@ -100,7 +99,6 @@ class FundingApi:
         ).data
 
 
-    @validate_call
     async def funding_rates_with_http_info(
         self,
         _request_timeout: Union[
@@ -164,7 +162,6 @@ class FundingApi:
         )
 
 
-    @validate_call
     async def funding_rates_without_preload_content(
         self,
         _request_timeout: Union[

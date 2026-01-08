@@ -31,6 +31,7 @@ Name | Type | Description | Notes
 **maker_entry_quote_before** | **str** |  | 
 **maker_initial_margin_fraction_before** | **int** |  | 
 **maker_position_sign_changed** | **bool** |  | 
+**transaction_time** | **int** |  | 
 
 ## Example
 

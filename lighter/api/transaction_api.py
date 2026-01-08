@@ -46,16 +46,15 @@ class TransactionApi:
         self.api_client = api_client
 
 
-    @validate_call
     async def account_txs(
         self,
         limit: Annotated[int, Field(le=100, strict=True, ge=1)],
         by: StrictStr,
         value: StrictStr,
-        authorization: Optional[StrictStr] = None,
         index: Optional[StrictInt] = None,
+        authorization: Annotated[Optional[StrictStr], Field(description=" make required after integ is done")] = None,
+        auth: Annotated[Optional[StrictStr], Field(description=" made optional to support header auth clients")] = None,
         types: Optional[List[StrictInt]] = None,
-        auth: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -79,14 +78,14 @@ class TransactionApi:
         :type by: str
         :param value: (required)
         :type value: str
-        :param authorization:
-        :type authorization: str
         :param index:
         :type index: int
+        :param authorization:  make required after integ is done
+        :type authorization: str
+        :param auth:  made optional to support header auth clients
+        :type auth: str
         :param types:
         :type types: List[int]
-        :param auth:
-        :type auth: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -113,10 +112,10 @@ class TransactionApi:
             limit=limit,
             by=by,
             value=value,
-            authorization=authorization,
             index=index,
-            types=types,
+            authorization=authorization,
             auth=auth,
+            types=types,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -138,16 +137,15 @@ class TransactionApi:
         ).data
 
 
-    @validate_call
     async def account_txs_with_http_info(
         self,
         limit: Annotated[int, Field(le=100, strict=True, ge=1)],
         by: StrictStr,
         value: StrictStr,
-        authorization: Optional[StrictStr] = None,
         index: Optional[StrictInt] = None,
+        authorization: Annotated[Optional[StrictStr], Field(description=" make required after integ is done")] = None,
+        auth: Annotated[Optional[StrictStr], Field(description=" made optional to support header auth clients")] = None,
         types: Optional[List[StrictInt]] = None,
-        auth: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -171,14 +169,14 @@ class TransactionApi:
         :type by: str
         :param value: (required)
         :type value: str
-        :param authorization:
-        :type authorization: str
         :param index:
         :type index: int
+        :param authorization:  make required after integ is done
+        :type authorization: str
+        :param auth:  made optional to support header auth clients
+        :type auth: str
         :param types:
         :type types: List[int]
-        :param auth:
-        :type auth: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -205,10 +203,10 @@ class TransactionApi:
             limit=limit,
             by=by,
             value=value,
-            authorization=authorization,
             index=index,
-            types=types,
+            authorization=authorization,
             auth=auth,
+            types=types,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -230,16 +228,15 @@ class TransactionApi:
         )
 
 
-    @validate_call
     async def account_txs_without_preload_content(
         self,
         limit: Annotated[int, Field(le=100, strict=True, ge=1)],
         by: StrictStr,
         value: StrictStr,
-        authorization: Optional[StrictStr] = None,
         index: Optional[StrictInt] = None,
+        authorization: Annotated[Optional[StrictStr], Field(description=" make required after integ is done")] = None,
+        auth: Annotated[Optional[StrictStr], Field(description=" made optional to support header auth clients")] = None,
         types: Optional[List[StrictInt]] = None,
-        auth: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -263,14 +260,14 @@ class TransactionApi:
         :type by: str
         :param value: (required)
         :type value: str
-        :param authorization:
-        :type authorization: str
         :param index:
         :type index: int
+        :param authorization:  make required after integ is done
+        :type authorization: str
+        :param auth:  made optional to support header auth clients
+        :type auth: str
         :param types:
         :type types: List[int]
-        :param auth:
-        :type auth: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -297,10 +294,10 @@ class TransactionApi:
             limit=limit,
             by=by,
             value=value,
-            authorization=authorization,
             index=index,
-            types=types,
+            authorization=authorization,
             auth=auth,
+            types=types,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -323,10 +320,10 @@ class TransactionApi:
         limit,
         by,
         value,
-        authorization,
         index,
-        types,
+        authorization,
         auth,
+        types,
         _request_auth,
         _content_type,
         _headers,
@@ -364,17 +361,19 @@ class TransactionApi:
             
             _query_params.append(('value', value))
             
-        if types is not None:
+        if authorization is not None:
             
-            _query_params.append(('types', types))
+            _query_params.append(('authorization', authorization))
             
         if auth is not None:
             
             _query_params.append(('auth', auth))
             
+        if types is not None:
+            
+            _query_params.append(('types', types))
+            
         # process the header parameters
-        if authorization is not None:
-            _header_params['authorization'] = authorization
         # process the form parameters
         # process the body parameter
 
@@ -410,7 +409,6 @@ class TransactionApi:
 
 
 
-    @validate_call
     async def block_txs(
         self,
         by: StrictStr,
@@ -482,7 +480,6 @@ class TransactionApi:
         ).data
 
 
-    @validate_call
     async def block_txs_with_http_info(
         self,
         by: StrictStr,
@@ -554,7 +551,6 @@ class TransactionApi:
         )
 
 
-    @validate_call
     async def block_txs_without_preload_content(
         self,
         by: StrictStr,
@@ -690,7 +686,6 @@ class TransactionApi:
 
 
 
-    @validate_call
     async def deposit_history(
         self,
         account_index: StrictInt,
@@ -778,7 +773,6 @@ class TransactionApi:
         ).data
 
 
-    @validate_call
     async def deposit_history_with_http_info(
         self,
         account_index: StrictInt,
@@ -866,7 +860,6 @@ class TransactionApi:
         )
 
 
-    @validate_call
     async def deposit_history_without_preload_content(
         self,
         account_index: StrictInt,
@@ -978,13 +971,17 @@ class TransactionApi:
 
         # process the path parameters
         # process the query parameters
-        if account_index is not None:
+        if authorization is not None:
             
-            _query_params.append(('account_index', account_index))
+            _query_params.append(('authorization', authorization))
             
         if auth is not None:
             
             _query_params.append(('auth', auth))
+            
+        if account_index is not None:
+            
+            _query_params.append(('account_index', account_index))
             
         if l1_address is not None:
             
@@ -999,8 +996,6 @@ class TransactionApi:
             _query_params.append(('filter', filter))
             
         # process the header parameters
-        if authorization is not None:
-            _header_params['authorization'] = authorization
         # process the form parameters
         # process the body parameter
 
@@ -1036,7 +1031,6 @@ class TransactionApi:
 
 
 
-    @validate_call
     async def next_nonce(
         self,
         account_index: StrictInt,
@@ -1108,7 +1102,6 @@ class TransactionApi:
         ).data
 
 
-    @validate_call
     async def next_nonce_with_http_info(
         self,
         account_index: StrictInt,
@@ -1180,7 +1173,6 @@ class TransactionApi:
         )
 
 
-    @validate_call
     async def next_nonce_without_preload_content(
         self,
         account_index: StrictInt,
@@ -1316,7 +1308,6 @@ class TransactionApi:
 
 
 
-    @validate_call
     async def send_tx(
         self,
         tx_type: StrictInt,
@@ -1392,7 +1383,6 @@ class TransactionApi:
         ).data
 
 
-    @validate_call
     async def send_tx_with_http_info(
         self,
         tx_type: StrictInt,
@@ -1468,7 +1458,6 @@ class TransactionApi:
         )
 
 
-    @validate_call
     async def send_tx_without_preload_content(
         self,
         tx_type: StrictInt,
@@ -1620,7 +1609,6 @@ class TransactionApi:
 
 
 
-    @validate_call
     async def send_tx_batch(
         self,
         tx_types: StrictStr,
@@ -1692,7 +1680,6 @@ class TransactionApi:
         ).data
 
 
-    @validate_call
     async def send_tx_batch_with_http_info(
         self,
         tx_types: StrictStr,
@@ -1764,7 +1751,6 @@ class TransactionApi:
         )
 
 
-    @validate_call
     async def send_tx_batch_without_preload_content(
         self,
         tx_types: StrictStr,
@@ -1909,7 +1895,6 @@ class TransactionApi:
 
 
 
-    @validate_call
     async def transfer_history(
         self,
         account_index: StrictInt,
@@ -1989,7 +1974,6 @@ class TransactionApi:
         ).data
 
 
-    @validate_call
     async def transfer_history_with_http_info(
         self,
         account_index: StrictInt,
@@ -2069,7 +2053,6 @@ class TransactionApi:
         )
 
 
-    @validate_call
     async def transfer_history_without_preload_content(
         self,
         account_index: StrictInt,
@@ -2171,21 +2154,23 @@ class TransactionApi:
 
         # process the path parameters
         # process the query parameters
-        if account_index is not None:
+        if authorization is not None:
             
-            _query_params.append(('account_index', account_index))
+            _query_params.append(('authorization', authorization))
             
         if auth is not None:
             
             _query_params.append(('auth', auth))
+            
+        if account_index is not None:
+            
+            _query_params.append(('account_index', account_index))
             
         if cursor is not None:
             
             _query_params.append(('cursor', cursor))
             
         # process the header parameters
-        if authorization is not None:
-            _header_params['authorization'] = authorization
         # process the form parameters
         # process the body parameter
 
@@ -2221,7 +2206,6 @@ class TransactionApi:
 
 
 
-    @validate_call
     async def tx(
         self,
         by: StrictStr,
@@ -2293,7 +2277,6 @@ class TransactionApi:
         ).data
 
 
-    @validate_call
     async def tx_with_http_info(
         self,
         by: StrictStr,
@@ -2365,7 +2348,6 @@ class TransactionApi:
         )
 
 
-    @validate_call
     async def tx_without_preload_content(
         self,
         by: StrictStr,
@@ -2501,7 +2483,6 @@ class TransactionApi:
 
 
 
-    @validate_call
     async def tx_from_l1_tx_hash(
         self,
         hash: StrictStr,
@@ -2569,7 +2550,6 @@ class TransactionApi:
         ).data
 
 
-    @validate_call
     async def tx_from_l1_tx_hash_with_http_info(
         self,
         hash: StrictStr,
@@ -2637,7 +2617,6 @@ class TransactionApi:
         )
 
 
-    @validate_call
     async def tx_from_l1_tx_hash_without_preload_content(
         self,
         hash: StrictStr,
@@ -2764,7 +2743,6 @@ class TransactionApi:
 
 
 
-    @validate_call
     async def txs(
         self,
         limit: Annotated[int, Field(le=100, strict=True, ge=1)],
@@ -2836,7 +2814,6 @@ class TransactionApi:
         ).data
 
 
-    @validate_call
     async def txs_with_http_info(
         self,
         limit: Annotated[int, Field(le=100, strict=True, ge=1)],
@@ -2908,7 +2885,6 @@ class TransactionApi:
         )
 
 
-    @validate_call
     async def txs_without_preload_content(
         self,
         limit: Annotated[int, Field(le=100, strict=True, ge=1)],
@@ -3044,7 +3020,6 @@ class TransactionApi:
 
 
 
-    @validate_call
     async def withdraw_history(
         self,
         account_index: StrictInt,
@@ -3128,7 +3103,6 @@ class TransactionApi:
         ).data
 
 
-    @validate_call
     async def withdraw_history_with_http_info(
         self,
         account_index: StrictInt,
@@ -3212,7 +3186,6 @@ class TransactionApi:
         )
 
 
-    @validate_call
     async def withdraw_history_without_preload_content(
         self,
         account_index: StrictInt,
@@ -3319,13 +3292,17 @@ class TransactionApi:
 
         # process the path parameters
         # process the query parameters
-        if account_index is not None:
+        if authorization is not None:
             
-            _query_params.append(('account_index', account_index))
+            _query_params.append(('authorization', authorization))
             
         if auth is not None:
             
             _query_params.append(('auth', auth))
+            
+        if account_index is not None:
+            
+            _query_params.append(('account_index', account_index))
             
         if cursor is not None:
             
@@ -3336,8 +3313,6 @@ class TransactionApi:
             _query_params.append(('filter', filter))
             
         # process the header parameters
-        if authorization is not None:
-            _header_params['authorization'] = authorization
         # process the form parameters
         # process the body parameter
 

@@ -1,4 +1,4 @@
-# ReqGetCandlesticks
+# ReqGetCandles
 
 
 ## Properties
@@ -15,19 +15,19 @@ Name | Type | Description | Notes
 ## Example
 
 ```python
-from lighter.models.req_get_candlesticks import ReqGetCandlesticks
+from lighter.models.req_get_candles import ReqGetCandles
 
 # TODO update the JSON string below
 json = "{}"
-# create an instance of ReqGetCandlesticks from a JSON string
-req_get_candlesticks_instance = ReqGetCandlesticks.from_json(json)
+# create an instance of ReqGetCandles from a JSON string
+req_get_candles_instance = ReqGetCandles.from_json(json)
 # print the JSON string representation of the object
-print(ReqGetCandlesticks.to_json())
+print(ReqGetCandles.to_json())
 
 # convert the object into a dict
-req_get_candlesticks_dict = req_get_candlesticks_instance.to_dict()
-# create an instance of ReqGetCandlesticks from a dict
-req_get_candlesticks_from_dict = ReqGetCandlesticks.from_dict(req_get_candlesticks_dict)
+req_get_candles_dict = req_get_candles_instance.to_dict()
+# create an instance of ReqGetCandles from a dict
+req_get_candles_from_dict = ReqGetCandles.from_dict(req_get_candles_dict)
 ```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 
