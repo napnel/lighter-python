@@ -111,7 +111,7 @@ class PublicPoolInfo(BaseModel):
         if not isinstance(obj, dict):
             return cls.model_validate(obj)
 
-        _obj = cls.model_validate({
+        _obj = cls.model_construct(**{
             "status": obj.get("status"),
             "operator_fee": obj.get("operator_fee"),
             "min_operator_share_rate": obj.get("min_operator_share_rate"),

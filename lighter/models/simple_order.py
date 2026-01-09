@@ -94,7 +94,7 @@ class SimpleOrder(BaseModel):
         if not isinstance(obj, dict):
             return cls.model_validate(obj)
 
-        _obj = cls.model_validate({
+        _obj = cls.model_construct(**{
             "order_index": obj.get("order_index"),
             "order_id": obj.get("order_id"),
             "owner_account_index": obj.get("owner_account_index"),

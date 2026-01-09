@@ -107,7 +107,7 @@ class OrderBookDepth(BaseModel):
         if not isinstance(obj, dict):
             return cls.model_validate(obj)
 
-        _obj = cls.model_validate({
+        _obj = cls.model_construct(**{
             "code": obj.get("code"),
             "message": obj.get("message"),
             "asks": [PriceLevel.from_dict(_item) for _item in obj["asks"]] if obj.get("asks") is not None else None,

@@ -88,7 +88,7 @@ class ReqGetL1Metadata(BaseModel):
         if not isinstance(obj, dict):
             return cls.model_validate(obj)
 
-        _obj = cls.model_validate({
+        _obj = cls.model_construct(**{
             "auth": obj.get("auth"),
             "l1_address": obj.get("l1_address")
         })

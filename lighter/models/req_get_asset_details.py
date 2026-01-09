@@ -87,7 +87,7 @@ class ReqGetAssetDetails(BaseModel):
         if not isinstance(obj, dict):
             return cls.model_validate(obj)
 
-        _obj = cls.model_validate({
+        _obj = cls.model_construct(**{
             "asset_id": obj.get("asset_id")
         })
         # store additional fields in additional_properties

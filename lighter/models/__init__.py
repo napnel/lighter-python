@@ -33,14 +33,11 @@ from lighter.models.api_token import ApiToken
 from lighter.models.asset import Asset
 from lighter.models.asset_details import AssetDetails
 from lighter.models.auth import Auth
-from lighter.models.block import Block
-from lighter.models.blocks import Blocks
 from lighter.models.bridge import Bridge
 from lighter.models.bridge_supported_network import BridgeSupportedNetwork
 from lighter.models.candle import Candle
 from lighter.models.candles import Candles
 from lighter.models.contract_address import ContractAddress
-from lighter.models.current_height import CurrentHeight
 from lighter.models.cursor import Cursor
 from lighter.models.daily_return import DailyReturn
 from lighter.models.deposit_history import DepositHistory
@@ -148,12 +145,11 @@ from lighter.models.trades import Trades
 from lighter.models.transfer_fee_info import TransferFeeInfo
 from lighter.models.transfer_history import TransferHistory
 from lighter.models.transfer_history_item import TransferHistoryItem
-from lighter.models.tx import Tx
 from lighter.models.tx_hash import TxHash
 from lighter.models.tx_hashes import TxHashes
-from lighter.models.txs import Txs
 from lighter.models.validator_info import ValidatorInfo
 from lighter.models.withdraw_history import WithdrawHistory
 from lighter.models.withdraw_history_item import WithdrawHistoryItem
 from lighter.models.zk_lighter_info import ZkLighterInfo
+
 from lighter.models.ws_account_assets import WSAccountAssets

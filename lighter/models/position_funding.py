@@ -100,7 +100,7 @@ class PositionFunding(BaseModel):
         if not isinstance(obj, dict):
             return cls.model_validate(obj)
 
-        _obj = cls.model_validate({
+        _obj = cls.model_construct(**{
             "timestamp": obj.get("timestamp"),
             "market_id": obj.get("market_id"),
             "funding_id": obj.get("funding_id"),

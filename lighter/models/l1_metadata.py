@@ -89,7 +89,7 @@ class L1Metadata(BaseModel):
         if not isinstance(obj, dict):
             return cls.model_validate(obj)
 
-        _obj = cls.model_validate({
+        _obj = cls.model_construct(**{
             "l1_address": obj.get("l1_address"),
             "can_invite": obj.get("can_invite"),
             "referral_points_percentage": obj.get("referral_points_percentage")

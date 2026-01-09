@@ -91,7 +91,7 @@ class MarketConfig(BaseModel):
         if not isinstance(obj, dict):
             return cls.model_validate(obj)
 
-        _obj = cls.model_validate({
+        _obj = cls.model_construct(**{
             "market_margin_mode": obj.get("market_margin_mode"),
             "insurance_fund_account_index": obj.get("insurance_fund_account_index"),
             "liquidation_mode": obj.get("liquidation_mode"),

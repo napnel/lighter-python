@@ -105,7 +105,7 @@ class LiquidationInfo(BaseModel):
         if not isinstance(obj, dict):
             return cls.model_validate(obj)
 
-        _obj = cls.model_validate({
+        _obj = cls.model_construct(**{
             "positions": [AccountPosition.from_dict(_item) for _item in obj["positions"]] if obj.get("positions") is not None else None,
             "risk_info_before": RiskInfo.from_dict(obj["risk_info_before"]) if obj.get("risk_info_before") is not None else None,
             "risk_info_after": RiskInfo.from_dict(obj["risk_info_after"]) if obj.get("risk_info_after") is not None else None,

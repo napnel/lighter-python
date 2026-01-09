@@ -91,7 +91,7 @@ class LiqTrade(BaseModel):
         if not isinstance(obj, dict):
             return cls.model_validate(obj)
 
-        _obj = cls.model_validate({
+        _obj = cls.model_construct(**{
             "price": obj.get("price"),
             "size": obj.get("size"),
             "taker_fee": obj.get("taker_fee"),

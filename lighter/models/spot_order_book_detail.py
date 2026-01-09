@@ -125,7 +125,7 @@ class SpotOrderBookDetail(BaseModel):
         if not isinstance(obj, dict):
             return cls.model_validate(obj)
 
-        _obj = cls.model_validate({
+        _obj = cls.model_construct(**{
             "symbol": obj.get("symbol"),
             "market_id": obj.get("market_id"),
             "market_type": obj.get("market_type"),

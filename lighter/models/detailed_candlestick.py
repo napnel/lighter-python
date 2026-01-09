@@ -99,7 +99,7 @@ class DetailedCandlestick(BaseModel):
         if not isinstance(obj, dict):
             return cls.model_validate(obj)
 
-        _obj = cls.model_validate({
+        _obj = cls.model_construct(**{
             "timestamp": obj.get("timestamp"),
             "open": obj.get("open"),
             "high": obj.get("high"),

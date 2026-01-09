@@ -101,7 +101,7 @@ class AccountStats(BaseModel):
         if not isinstance(obj, dict):
             return cls.model_validate(obj)
 
-        _obj = cls.model_validate({
+        _obj = cls.model_construct(**{
             "collateral": obj.get("collateral"),
             "portfolio_value": obj.get("portfolio_value"),
             "leverage": obj.get("leverage"),

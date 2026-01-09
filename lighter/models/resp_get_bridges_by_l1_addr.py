@@ -97,7 +97,7 @@ class RespGetBridgesByL1Addr(BaseModel):
         if not isinstance(obj, dict):
             return cls.model_validate(obj)
 
-        _obj = cls.model_validate({
+        _obj = cls.model_construct(**{
             "code": obj.get("code"),
             "message": obj.get("message"),
             "bridges": [Bridge.from_dict(_item) for _item in obj["bridges"]] if obj.get("bridges") is not None else None

@@ -88,7 +88,7 @@ class ReqGetFastWithdrawInfo(BaseModel):
         if not isinstance(obj, dict):
             return cls.model_validate(obj)
 
-        _obj = cls.model_validate({
+        _obj = cls.model_construct(**{
             "auth": obj.get("auth"),
             "account_index": obj.get("account_index")
         })

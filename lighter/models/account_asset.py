@@ -90,7 +90,7 @@ class AccountAsset(BaseModel):
         if not isinstance(obj, dict):
             return cls.model_validate(obj)
 
-        _obj = cls.model_validate({
+        _obj = cls.model_construct(**{
             "symbol": obj.get("symbol"),
             "asset_id": obj.get("asset_id"),
             "balance": obj.get("balance"),

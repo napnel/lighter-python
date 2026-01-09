@@ -92,7 +92,7 @@ class RiskParameters(BaseModel):
         if not isinstance(obj, dict):
             return cls.model_validate(obj)
 
-        _obj = cls.model_validate({
+        _obj = cls.model_construct(**{
             "market_id": obj.get("market_id"),
             "collateral": obj.get("collateral"),
             "total_account_value": obj.get("total_account_value"),

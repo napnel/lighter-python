@@ -137,7 +137,7 @@ class ReqGetTrades(BaseModel):
         if not isinstance(obj, dict):
             return cls.model_validate(obj)
 
-        _obj = cls.model_validate({
+        _obj = cls.model_construct(**{
             "auth": obj.get("auth"),
             "market_id": obj.get("market_id"),
             "account_index": obj.get("account_index") if obj.get("account_index") is not None else -1,

@@ -107,7 +107,7 @@ class WithdrawHistoryItem(BaseModel):
         if not isinstance(obj, dict):
             return cls.model_validate(obj)
 
-        _obj = cls.model_validate({
+        _obj = cls.model_construct(**{
             "id": obj.get("id"),
             "asset_id": obj.get("asset_id"),
             "amount": obj.get("amount"),

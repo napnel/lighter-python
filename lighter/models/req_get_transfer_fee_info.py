@@ -89,7 +89,7 @@ class ReqGetTransferFeeInfo(BaseModel):
         if not isinstance(obj, dict):
             return cls.model_validate(obj)
 
-        _obj = cls.model_validate({
+        _obj = cls.model_construct(**{
             "auth": obj.get("auth"),
             "account_index": obj.get("account_index"),
             "to_account_index": obj.get("to_account_index") if obj.get("to_account_index") is not None else -1

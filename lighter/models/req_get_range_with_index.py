@@ -89,7 +89,7 @@ class ReqGetRangeWithIndex(BaseModel):
         if not isinstance(obj, dict):
             return cls.model_validate(obj)
 
-        _obj = cls.model_validate({
+        _obj = cls.model_construct(**{
             "index": obj.get("index"),
             "limit": obj.get("limit")
         })

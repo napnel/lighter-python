@@ -98,7 +98,7 @@ class Candle(BaseModel):
         if not isinstance(obj, dict):
             return cls.model_validate(obj)
 
-        _obj = cls.model_validate({
+        _obj = cls.model_construct(**{
             "t": obj.get("t"),
             "o": obj.get("o"),
             "h": obj.get("h"),

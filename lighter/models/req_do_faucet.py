@@ -88,7 +88,7 @@ class ReqDoFaucet(BaseModel):
         if not isinstance(obj, dict):
             return cls.model_validate(obj)
 
-        _obj = cls.model_validate({
+        _obj = cls.model_construct(**{
             "l1_address": obj.get("l1_address"),
             "do_l1_transfer": obj.get("do_l1_transfer") if obj.get("do_l1_transfer") is not None else False
         })

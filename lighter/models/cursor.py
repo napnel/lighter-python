@@ -87,7 +87,7 @@ class Cursor(BaseModel):
         if not isinstance(obj, dict):
             return cls.model_validate(obj)
 
-        _obj = cls.model_validate({
+        _obj = cls.model_construct(**{
             "next_cursor": obj.get("next_cursor")
         })
         # store additional fields in additional_properties

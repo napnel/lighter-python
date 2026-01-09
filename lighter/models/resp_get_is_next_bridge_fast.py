@@ -89,7 +89,7 @@ class RespGetIsNextBridgeFast(BaseModel):
         if not isinstance(obj, dict):
             return cls.model_validate(obj)
 
-        _obj = cls.model_validate({
+        _obj = cls.model_construct(**{
             "code": obj.get("code"),
             "message": obj.get("message"),
             "is_next_bridge_fast": obj.get("is_next_bridge_fast")

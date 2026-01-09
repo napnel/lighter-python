@@ -96,7 +96,7 @@ class Ticker(BaseModel):
         if not isinstance(obj, dict):
             return cls.model_validate(obj)
 
-        _obj = cls.model_validate({
+        _obj = cls.model_construct(**{
             "s": obj.get("s"),
             "a": PriceLevel.from_dict(obj["a"]) if obj.get("a") is not None else None,
             "b": PriceLevel.from_dict(obj["b"]) if obj.get("b") is not None else None

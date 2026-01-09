@@ -99,7 +99,7 @@ class ReqGetFundings(BaseModel):
         if not isinstance(obj, dict):
             return cls.model_validate(obj)
 
-        _obj = cls.model_validate({
+        _obj = cls.model_construct(**{
             "market_id": obj.get("market_id"),
             "resolution": obj.get("resolution"),
             "start_timestamp": obj.get("start_timestamp"),

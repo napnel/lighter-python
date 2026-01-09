@@ -87,7 +87,7 @@ class Auth(BaseModel):
         if not isinstance(obj, dict):
             return cls.model_validate(obj)
 
-        _obj = cls.model_validate({
+        _obj = cls.model_construct(**{
             "auth": obj.get("auth")
         })
         # store additional fields in additional_properties

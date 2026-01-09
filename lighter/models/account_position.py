@@ -102,7 +102,7 @@ class AccountPosition(BaseModel):
         if not isinstance(obj, dict):
             return cls.model_validate(obj)
 
-        _obj = cls.model_validate({
+        _obj = cls.model_construct(**{
             "market_id": obj.get("market_id"),
             "symbol": obj.get("symbol"),
             "initial_margin_fraction": obj.get("initial_margin_fraction"),

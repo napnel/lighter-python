@@ -94,7 +94,7 @@ class AccountTradeStats(BaseModel):
         if not isinstance(obj, dict):
             return cls.model_validate(obj)
 
-        _obj = cls.model_validate({
+        _obj = cls.model_construct(**{
             "daily_trades_count": obj.get("daily_trades_count"),
             "daily_volume": obj.get("daily_volume"),
             "weekly_trades_count": obj.get("weekly_trades_count"),

@@ -106,7 +106,7 @@ class OrderBookDepthWithBeginNonce(BaseModel):
         if not isinstance(obj, dict):
             return cls.model_validate(obj)
 
-        _obj = cls.model_validate({
+        _obj = cls.model_construct(**{
             "asks": [PriceLevel.from_dict(_item) for _item in obj["asks"]] if obj.get("asks") is not None else None,
             "bids": [PriceLevel.from_dict(_item) for _item in obj["bids"]] if obj.get("bids") is not None else None,
             "offset": obj.get("offset"),

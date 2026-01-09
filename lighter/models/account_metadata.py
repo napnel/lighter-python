@@ -91,7 +91,7 @@ class AccountMetadata(BaseModel):
         if not isinstance(obj, dict):
             return cls.model_validate(obj)
 
-        _obj = cls.model_validate({
+        _obj = cls.model_construct(**{
             "account_index": obj.get("account_index"),
             "name": obj.get("name"),
             "description": obj.get("description"),

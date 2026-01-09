@@ -95,7 +95,7 @@ class ReqGetBlock(BaseModel):
         if not isinstance(obj, dict):
             return cls.model_validate(obj)
 
-        _obj = cls.model_validate({
+        _obj = cls.model_construct(**{
             "by": obj.get("by"),
             "value": obj.get("value")
         })

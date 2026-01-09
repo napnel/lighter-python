@@ -21,23 +21,15 @@ async def account_apis(client: lighter.ApiClient):
     await print_api(account_instance.account, by="l1_address", value=L1_ADDRESS)
     await print_api(account_instance.account, by="index", value=str(ACCOUNT_INDEX))
     await print_api(account_instance.accounts_by_l1_address, l1_address=L1_ADDRESS)
-    await print_api(account_instance.apikeys, account_index=ACCOUNT_INDEX, api_key_index=1)
-    await print_api(account_instance.public_pools, filter="all", limit=1, index=0)
+    await print_api(account_instance.apikeys, account_index=ACCOUNT_INDEX, api_key_index=3)
 
-
-async def block_apis(client: lighter.ApiClient):
-    logging.info("BLOCK APIS")
-    block_instance = lighter.BlockApi(client)
-    await print_api(block_instance.block, by="height", value="1")
-    await print_api(block_instance.blocks, index=0, limit=2, sort="asc")
-    await print_api(block_instance.current_height)
 
 
 async def candlestick_apis(client: lighter.ApiClient):
     logging.info("CANDLESTICK APIS")
     candlestick_instance = lighter.CandlestickApi(client)
     await print_api(
-        candlestick_instance.candlesticks,
+        candlestick_instance.candles,
         market_id=0,
         resolution="1h",
         start_timestamp=int(datetime.datetime.now().timestamp() - 60 * 60 * 24),
@@ -66,15 +58,7 @@ async def order_apis(client: lighter.ApiClient):
 async def transaction_apis(client: lighter.ApiClient):
     logging.info("TRANSACTION APIS")
     transaction_instance = lighter.TransactionApi(client)
-    await print_api(transaction_instance.block_txs, by="block_height", value="1")
-    await print_api(
-        transaction_instance.next_nonce,
-        account_index=int(ACCOUNT_INDEX),
-        api_key_index=0,
-    )
-    # use with a valid sequence index
-    # await print_api(transaction_instance.tx, by="sequence_index", value="5")
-    await print_api(transaction_instance.txs, index=0, limit=2)
+    # ....
     
 async def funding_apis(client: lighter.ApiClient):
     logging.info("FUNDING APIS")
@@ -84,7 +68,6 @@ async def funding_apis(client: lighter.ApiClient):
 async def main():
     client = lighter.ApiClient(configuration=lighter.Configuration(host="https://testnet.zklighter.elliot.ai"))
     await account_apis(client)
-    await block_apis(client)
     await candlestick_apis(client)
     await order_apis(client)
     await transaction_apis(client)

@@ -120,7 +120,7 @@ class Trade(BaseModel):
         if not isinstance(obj, dict):
             return cls.model_validate(obj)
 
-        _obj = cls.model_validate({
+        _obj = cls.model_construct(**{
             "trade_id": obj.get("trade_id"),
             "tx_hash": obj.get("tx_hash"),
             "type": obj.get("type"),

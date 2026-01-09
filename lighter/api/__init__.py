@@ -3,7 +3,6 @@
 # import apis into api package
 from lighter.api.account_api import AccountApi
 from lighter.api.announcement_api import AnnouncementApi
-from lighter.api.block_api import BlockApi
 from lighter.api.bridge_api import BridgeApi
 from lighter.api.candlestick_api import CandlestickApi
 from lighter.api.funding_api import FundingApi

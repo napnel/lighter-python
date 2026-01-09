@@ -97,7 +97,7 @@ class AccountMetadatas(BaseModel):
         if not isinstance(obj, dict):
             return cls.model_validate(obj)
 
-        _obj = cls.model_validate({
+        _obj = cls.model_construct(**{
             "code": obj.get("code"),
             "message": obj.get("message"),
             "account_metadatas": [AccountMetadata.from_dict(_item) for _item in obj["account_metadatas"]] if obj.get("account_metadatas") is not None else None

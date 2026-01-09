@@ -19,9 +19,6 @@ docs/ApiToken.md
 docs/Asset.md
 docs/AssetDetails.md
 docs/Auth.md
-docs/Block.md
-docs/BlockApi.md
-docs/Blocks.md
 docs/Bridge.md
 docs/BridgeApi.md
 docs/BridgeSupportedNetwork.md
@@ -29,7 +26,6 @@ docs/Candle.md
 docs/Candles.md
 docs/CandlestickApi.md
 docs/ContractAddress.md
-docs/CurrentHeight.md
 docs/Cursor.md
 docs/DailyReturn.md
 docs/DepositHistory.md
@@ -143,10 +139,8 @@ docs/TransactionApi.md
 docs/TransferFeeInfo.md
 docs/TransferHistory.md
 docs/TransferHistoryItem.md
-docs/Tx.md
 docs/TxHash.md
 docs/TxHashes.md
-docs/Txs.md
 docs/ValidatorInfo.md
 docs/WithdrawHistory.md
 docs/WithdrawHistoryItem.md
@@ -156,7 +150,6 @@ lighter/__init__.py
 lighter/api/__init__.py
 lighter/api/account_api.py
 lighter/api/announcement_api.py
-lighter/api/block_api.py
 lighter/api/bridge_api.py
 lighter/api/candlestick_api.py
 lighter/api/funding_api.py
@@ -189,14 +182,11 @@ lighter/models/api_token.py
 lighter/models/asset.py
 lighter/models/asset_details.py
 lighter/models/auth.py
-lighter/models/block.py
-lighter/models/blocks.py
 lighter/models/bridge.py
 lighter/models/bridge_supported_network.py
 lighter/models/candle.py
 lighter/models/candles.py
 lighter/models/contract_address.py
-lighter/models/current_height.py
 lighter/models/cursor.py
 lighter/models/daily_return.py
 lighter/models/deposit_history.py
@@ -304,10 +294,8 @@ lighter/models/trades.py
 lighter/models/transfer_fee_info.py
 lighter/models/transfer_history.py
 lighter/models/transfer_history_item.py
-lighter/models/tx.py
 lighter/models/tx_hash.py
 lighter/models/tx_hashes.py
-lighter/models/txs.py
 lighter/models/validator_info.py
 lighter/models/withdraw_history.py
 lighter/models/withdraw_history_item.py
@@ -317,5 +305,4 @@ lighter/rest.py
 setup.cfg
 test-requirements.txt
 test/__init__.py
-test/test_req_do_faucet.py
 tox.ini

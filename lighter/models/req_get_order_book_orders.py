@@ -89,7 +89,7 @@ class ReqGetOrderBookOrders(BaseModel):
         if not isinstance(obj, dict):
             return cls.model_validate(obj)
 
-        _obj = cls.model_validate({
+        _obj = cls.model_construct(**{
             "market_id": obj.get("market_id"),
             "limit": obj.get("limit")
         })

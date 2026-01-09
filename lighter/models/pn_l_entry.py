@@ -97,7 +97,7 @@ class PnLEntry(BaseModel):
         if not isinstance(obj, dict):
             return cls.model_validate(obj)
 
-        _obj = cls.model_validate({
+        _obj = cls.model_construct(**{
             "timestamp": obj.get("timestamp"),
             "trade_pnl": obj.get("trade_pnl"),
             "trade_spot_pnl": obj.get("trade_spot_pnl"),
