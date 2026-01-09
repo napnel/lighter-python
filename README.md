@@ -74,11 +74,6 @@ Class | Method | HTTP request | Description
 *AccountApi* | [**accounts_by_l1_address**](docs/AccountApi.md#accounts_by_l1_address) | **GET** /api/v1/accountsByL1Address | accountsByL1Address
 *AccountApi* | [**apikeys**](docs/AccountApi.md#apikeys) | **GET** /api/v1/apikeys | apikeys
 *AccountApi* | [**pnl**](docs/AccountApi.md#pnl) | **GET** /api/v1/pnl | pnl
-*AccountApi* | [**public_pools**](docs/AccountApi.md#public_pools) | **GET** /api/v1/publicPools | publicPools
-*BlockApi* | [**block**](docs/BlockApi.md#block) | **GET** /api/v1/block | block
-*BlockApi* | [**blocks**](docs/BlockApi.md#blocks) | **GET** /api/v1/blocks | blocks
-*BlockApi* | [**current_height**](docs/BlockApi.md#current_height) | **GET** /api/v1/currentHeight | currentHeight
-*CandlestickApi* | [**candlesticks**](docs/CandlestickApi.md#candlesticks) | **GET** /api/v1/candlesticks | candlesticks
 *CandlestickApi* | [**fundings**](docs/CandlestickApi.md#fundings) | **GET** /api/v1/fundings | fundings
 *OrderApi* | [**account_inactive_orders**](docs/OrderApi.md#account_inactive_orders) | **GET** /api/v1/accountInactiveOrders | accountInactiveOrders
 *OrderApi* | [**exchange_stats**](docs/OrderApi.md#exchange_stats) | **GET** /api/v1/exchangeStats | exchangeStats
@@ -89,13 +84,10 @@ Class | Method | HTTP request | Description
 *OrderApi* | [**trades**](docs/OrderApi.md#trades) | **GET** /api/v1/trades | trades
 *RootApi* | [**info**](docs/RootApi.md#info) | **GET** /info | info
 *RootApi* | [**status**](docs/RootApi.md#status) | **GET** / | status
-*TransactionApi* | [**account_txs**](docs/TransactionApi.md#account_txs) | **GET** /api/v1/accountTxs | accountTxs
-*TransactionApi* | [**block_txs**](docs/TransactionApi.md#block_txs) | **GET** /api/v1/blockTxs | blockTxs
 *TransactionApi* | [**deposit_history**](docs/TransactionApi.md#deposit_history) | **GET** /api/v1/deposit/history | deposit_history
 *TransactionApi* | [**next_nonce**](docs/TransactionApi.md#next_nonce) | **GET** /api/v1/nextNonce | nextNonce
 *TransactionApi* | [**send_tx**](docs/TransactionApi.md#send_tx) | **POST** /api/v1/sendTx | sendTx
 *TransactionApi* | [**send_tx_batch**](docs/TransactionApi.md#send_tx_batch) | **POST** /api/v1/sendTxBatch | sendTxBatch
-*TransactionApi* | [**tx**](docs/TransactionApi.md#tx) | **GET** /api/v1/tx | tx
 *TransactionApi* | [**tx_from_l1_tx_hash**](docs/TransactionApi.md#tx_from_l1_tx_hash) | **GET** /api/v1/txFromL1TxHash | txFromL1TxHash
 *TransactionApi* | [**txs**](docs/TransactionApi.md#txs) | **GET** /api/v1/txs | txs
 *TransactionApi* | [**withdraw_history**](docs/TransactionApi.md#withdraw_history) | **GET** /api/v1/withdraw/history | withdraw_history
@@ -111,13 +103,8 @@ Class | Method | HTTP request | Description
  - [AccountPosition](docs/AccountPosition.md)
  - [AccountStats](docs/AccountStats.md)
  - [ApiKey](docs/ApiKey.md)
- - [Block](docs/Block.md)
- - [Blocks](docs/Blocks.md)
  - [BridgeSupportedNetwork](docs/BridgeSupportedNetwork.md)
- - [Candlestick](docs/Candlestick.md)
- - [Candlesticks](docs/Candlesticks.md)
  - [ContractAddress](docs/ContractAddress.md)
- - [CurrentHeight](docs/CurrentHeight.md)
  - [Cursor](docs/Cursor.md)
  - [DepositHistory](docs/DepositHistory.md)
  - [DepositHistoryItem](docs/DepositHistoryItem.md)
@@ -181,10 +168,8 @@ Class | Method | HTTP request | Description
  - [Ticker](docs/Ticker.md)
  - [Trade](docs/Trade.md)
  - [Trades](docs/Trades.md)
- - [Tx](docs/Tx.md)
  - [TxHash](docs/TxHash.md)
  - [TxHashes](docs/TxHashes.md)
- - [Txs](docs/Txs.md)
  - [ValidatorInfo](docs/ValidatorInfo.md)
  - [WithdrawHistory](docs/WithdrawHistory.md)
  - [WithdrawHistoryItem](docs/WithdrawHistoryItem.md)

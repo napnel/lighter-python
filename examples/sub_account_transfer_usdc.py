@@ -1,8 +1,7 @@
 import asyncio
 from utils import default_example_setup
 
-ETH_PRIVATE_KEY = "1234567812345678123456781234567812345678123456781234567812345678"
-TO_ACCOUNT_INDEX = 281474976710649
+TO_ACCOUNT_INDEX = 281474976710648
 
 async def main():
     client, api_client, _ = default_example_setup()
@@ -13,8 +12,7 @@ async def main():
         return
 
     # You can find more notes on transfers in the README.md file, under `Transfer Notes`
-    transfer_tx, response, err = await client.transfer(
-        ETH_PRIVATE_KEY,
+    transfer_tx, response, err = await client.transfer_same_master_account(
         to_account_index=TO_ACCOUNT_INDEX,
         asset_id=client.ASSET_ID_USDC,
         amount=100,  # decimals are added by sdk
@@ -26,6 +24,8 @@ async def main():
     if err is not None:
        raise Exception(f"error transferring {err}")
     print(transfer_tx, response)
+    await client.close()
+    await api_client.close()
 
 
 if __name__ == "__main__":
