@@ -212,8 +212,14 @@ class SignerClient:
     DEFAULT_NONCE = -1
     DEFAULT_API_KEY_INDEX = 255
 
-    USDC_TICKER_SCALE = 1e6
     ETH_TICKER_SCALE = 1e8
+    USDC_TICKER_SCALE = 1e6
+    LIT_TICKER_SCALE = 1e8
+    LINK_TICKER_SCALE = 1e8
+    UNI_TICKER_SCALE = 1e8
+    AAVE_TICKER_SCALE = 1e8
+    SKY_TICKER_SCALE = 1e8
+    LDO_TICKER_SCALE = 1e8
 
     ORDER_TYPE_LIMIT = 0
     ORDER_TYPE_MARKET = 1
@@ -250,8 +256,25 @@ class SignerClient:
     ROUTE_PERP = 0
     ROUTE_SPOT = 1
 
-    ASSET_ID_USDC = 3
     ASSET_ID_ETH = 1
+    ASSET_ID_LIT = 2
+    ASSET_ID_USDC = 3
+    ASSET_ID_LINK = 5
+    ASSET_ID_UNI = 6
+    ASSET_ID_AAVE = 7
+    ASSET_ID_SKY = 8
+    ASSET_ID_LDO = 9
+
+    ASSET_TO_TICKER_SCALE = {
+        ASSET_ID_ETH: ETH_TICKER_SCALE,
+        ASSET_ID_LIT: LIT_TICKER_SCALE,
+        ASSET_ID_USDC: USDC_TICKER_SCALE,
+        ASSET_ID_LINK: LINK_TICKER_SCALE,
+        ASSET_ID_UNI: UNI_TICKER_SCALE,
+        ASSET_ID_AAVE: AAVE_TICKER_SCALE,
+        ASSET_ID_SKY: SKY_TICKER_SCALE,
+        ASSET_ID_LDO: LDO_TICKER_SCALE,
+    }
 
     def __init__(
             self,
@@ -465,6 +488,9 @@ class SignerClient:
 
     def sign_transfer(self, eth_private_key: str, to_account_index: int, asset_id: int, route_from: int, route_to: int, usdc_amount: int, fee: int, memo: str, nonce: int = DEFAULT_NONCE, api_key_index: int = DEFAULT_API_KEY_INDEX) -> Union[Tuple[str, str, str, None], Tuple[None, None, None, str]]:
         return self.__decode_and_sign_tx_info(eth_private_key, self.signer.SignTransfer(to_account_index, asset_id, route_from, route_to, usdc_amount, fee, ctypes.c_char_p(memo.encode("utf-8")), nonce, api_key_index, self.account_index))
+
+    def sign_transfer_same_master_account(self, to_account_index: int, asset_id: int, route_from: int, route_to: int, usdc_amount: int, fee: int, memo: str, nonce: int = DEFAULT_NONCE, api_key_index: int = DEFAULT_API_KEY_INDEX) -> Union[Tuple[str, str, str, None], Tuple[None, None, None, str]]:
+        return self.__decode_tx_info(self.signer.SignTransfer(to_account_index, asset_id, route_from, route_to, usdc_amount, fee, ctypes.c_char_p(memo.encode("utf-8")), nonce, api_key_index, self.account_index))
 
     def sign_create_public_pool(self, operator_fee: int, initial_total_shares: int, min_operator_share_rate: int, nonce: int = DEFAULT_NONCE, api_key_index: int = DEFAULT_API_KEY_INDEX) -> Union[Tuple[str, str, str, None], Tuple[None, None, None, str]]:
         return self.__decode_tx_info(self.signer.SignCreatePublicPool(operator_fee, initial_total_shares, min_operator_share_rate, nonce, api_key_index, self.account_index))
@@ -743,10 +769,8 @@ class SignerClient:
 
     @process_api_key_and_nonce
     async def withdraw(self, asset_id: int, route_type: int, amount: float, nonce: int = DEFAULT_NONCE, api_key_index: int = DEFAULT_API_KEY_INDEX) -> Union[Tuple[Withdraw, RespSendTx, None], Tuple[None, None, str]]:
-        if asset_id == self.ASSET_ID_USDC:
-            amount = int(amount * self.USDC_TICKER_SCALE)
-        elif asset_id == self.ASSET_ID_ETH:
-            amount = int(amount * self.ETH_TICKER_SCALE)
+        if asset_id in self.ASSET_TO_TICKER_SCALE:
+            amount = int(amount * self.ASSET_TO_TICKER_SCALE[asset_id])
         else:
             raise ValueError(f"Unsupported asset id: {asset_id}")
 
@@ -796,14 +820,28 @@ class SignerClient:
 
     @process_api_key_and_nonce
     async def transfer(self, eth_private_key: str, to_account_index: int, asset_id: int, route_from: int, route_to: int, amount: float, fee: int, memo: str, nonce: int = DEFAULT_NONCE, api_key_index: int = DEFAULT_API_KEY_INDEX):
-        if asset_id == self.ASSET_ID_USDC:
-            amount = int(amount * self.USDC_TICKER_SCALE)
-        elif asset_id == self.ASSET_ID_ETH:
-            amount = int(amount * self.ETH_TICKER_SCALE)
+        if asset_id in self.ASSET_TO_TICKER_SCALE:
+            amount = int(amount * self.ASSET_TO_TICKER_SCALE[asset_id])
         else:
             raise ValueError(f"Unsupported asset id: {asset_id}")
 
         tx_type, tx_info, tx_hash, error = self.sign_transfer(eth_private_key, to_account_index, asset_id, route_from, route_to, amount, fee, memo, nonce, api_key_index)
+        if error is not None:
+            return None, None, error
+
+        logging.debug(f"Transfer TxHash: {tx_hash} TxInfo: {tx_info}")
+        api_response = await self.send_tx(tx_type=tx_type, tx_info=tx_info)
+        logging.debug(f"Transfer Send. TxResponse: {api_response}")
+        return tx_info, api_response, None
+
+    @process_api_key_and_nonce
+    async def transfer_same_master_account(self, to_account_index: int, asset_id: int, route_from: int, route_to: int, amount: float, fee: int, memo: str, nonce: int = DEFAULT_NONCE, api_key_index: int = DEFAULT_API_KEY_INDEX):
+        if asset_id in self.ASSET_TO_TICKER_SCALE:
+            amount = int(amount * self.ASSET_TO_TICKER_SCALE[asset_id])
+        else:
+            raise ValueError(f"Unsupported asset id: {asset_id}")
+
+        tx_type, tx_info, tx_hash, error = self.sign_transfer_same_master_account(to_account_index, asset_id, route_from, route_to, amount, fee, memo, nonce, api_key_index)
         if error is not None:
             return None, None, error
 
