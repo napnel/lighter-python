@@ -1,4 +1,5 @@
 import ctypes
+from fractions import Fraction
 from functools import wraps
 import inspect
 import json
@@ -585,8 +586,82 @@ class SignerClient:
             market_index,
             client_order_index,
             base_amount,
-            avg_execution_price,
+            price=avg_execution_price,
+            is_ask=is_ask,
+            order_type=self.ORDER_TYPE_MARKET,
+            time_in_force=self.ORDER_TIME_IN_FORCE_IMMEDIATE_OR_CANCEL,
+            order_expiry=self.DEFAULT_IOC_EXPIRY,
+            reduce_only=reduce_only,
+            nonce=nonce,
+            api_key_index=api_key_index,
+        )
+
+    # returns best price as integer
+    async def get_best_price(self, market_index, is_ask, ob_orders=None) -> int:
+        if ob_orders is None:
+            ob_orders = await self.order_api.order_book_orders(market_index, 1)
+        ideal_price = int((ob_orders.bids[0].price if is_ask else ob_orders.asks[0].price).replace(".", ""))
+        return ideal_price
+
+    async def get_potential_execution_price(self, market_index, amount, is_ask, is_amount_base=True, ob_orders=None) -> (float, int):
+        if ob_orders is None:
+            ob_orders = await self.order_api.order_book_orders(market_index, 100)
+        matched_usd_amount, matched_size = 0, 0
+        for ob_order in (ob_orders.bids if is_ask else ob_orders.asks):
+            if (is_amount_base and matched_size == amount) or (not is_amount_base and matched_usd_amount == amount):
+                break
+            curr_order_price = int(ob_order.price.replace(".", ""))
+            curr_order_size = int(ob_order.remaining_base_amount.replace(".", ""))
+            max_possible_order_size = amount - matched_size if is_amount_base else Fraction(amount - matched_usd_amount, curr_order_price)
+
+            to_be_used_order_size = min(max_possible_order_size, curr_order_size)
+            matched_usd_amount += curr_order_price * to_be_used_order_size
+            matched_size += to_be_used_order_size
+
+        potential_execution_price = matched_usd_amount / matched_size
+
+        return potential_execution_price, (matched_size if is_amount_base else matched_usd_amount)
+
+    async def create_market_order_quote_amount(
+            self,
+            market_index,
+            client_order_index,
+            quote_amount,
+            max_slippage,
             is_ask,
+            reduce_only: bool = False,
+            nonce: int = DEFAULT_NONCE,
+            api_key_index: int = DEFAULT_API_KEY_INDEX,
+            ideal_price=None
+    ):
+        quote_amount = int(quote_amount * 1e6)
+        ob_orders = await self.order_api.order_book_orders(market_index, 100)
+        if ideal_price is None:
+            logging.debug(
+                "Doing an API call to get the current ideal price. You can also provide it yourself to avoid this.")
+            ideal_price = await self.get_best_price(market_index, is_ask, ob_orders=ob_orders)
+        acceptable_execution_price = round(ideal_price * (1 + max_slippage * (-1 if is_ask else 1)))
+
+        potential_execution_price, matched_usd_amount = await self.get_potential_execution_price(
+            market_index,
+            quote_amount,
+            is_ask,
+            is_amount_base=False,
+            ob_orders=ob_orders
+        )
+
+        if (is_ask and potential_execution_price < acceptable_execution_price) or (not is_ask and potential_execution_price > acceptable_execution_price):
+            return None, None, "Excessive slippage"
+        if matched_usd_amount < quote_amount:
+            return None, None, "Cannot be sure slippage will be acceptable due to the high size"
+
+        base_amount = round(quote_amount / potential_execution_price)
+        return await self.create_order(
+            market_index,
+            client_order_index,
+            base_amount,
+            price=round(acceptable_execution_price), # just in case, limits size for slippage
+            is_ask=is_ask,
             order_type=self.ORDER_TYPE_MARKET,
             time_in_force=self.ORDER_TIME_IN_FORCE_IMMEDIATE_OR_CANCEL,
             order_expiry=self.DEFAULT_IOC_EXPIRY,
@@ -609,10 +684,9 @@ class SignerClient:
             ideal_price=None
     ) -> Union[Tuple[CreateOrder, RespSendTx, None], Tuple[None, None, str]]:
         if ideal_price is None:
-            order_book_orders = await self.order_api.order_book_orders(market_index, 1)
             logging.debug(
                 "Create market order limited slippage is doing an API call to get the current ideal price. You can also provide it yourself to avoid this.")
-            ideal_price = int((order_book_orders.bids[0].price if is_ask else order_book_orders.asks[0].price).replace(".", ""))
+            ideal_price = await self.get_best_price(market_index, is_ask)
 
         acceptable_execution_price = round(ideal_price * (1 + max_slippage * (-1 if is_ask else 1)))
         return await self.create_order(
@@ -642,21 +716,17 @@ class SignerClient:
             api_key_index: int = DEFAULT_API_KEY_INDEX,
             ideal_price=None
     ) -> Union[Tuple[CreateOrder, RespSendTx, None], Tuple[None, None, str]]:
-        order_book_orders = await self.order_api.order_book_orders(market_index, 100)
+        ob_orders = await self.order_api.order_book_orders(market_index, 100)
         if ideal_price is None:
-            ideal_price = int((order_book_orders.bids[0].price if is_ask else order_book_orders.asks[0].price).replace(".", ""))
+            ideal_price = await self.get_best_price(market_index, is_ask, ob_orders)
+        potential_execution_price, matched_size = await self.get_potential_execution_price(
+            market_index,
+            base_amount,
+            is_ask,
+            is_amount_base=True,
+            ob_orders=ob_orders
+        )
 
-        matched_usd_amount, matched_size = 0, 0
-        for order_book_order in (order_book_orders.bids if is_ask else order_book_orders.asks):
-            if matched_size == base_amount:
-                break
-            curr_order_price = int(order_book_order.price.replace(".", ""))
-            curr_order_size = int(order_book_order.remaining_base_amount.replace(".", ""))
-            to_be_used_order_size = min(base_amount - matched_size, curr_order_size)
-            matched_usd_amount += curr_order_price * to_be_used_order_size
-            matched_size += to_be_used_order_size
-
-        potential_execution_price = matched_usd_amount / matched_size
         acceptable_execution_price = ideal_price * (1 + max_slippage * (-1 if is_ask else 1))
         if (is_ask and potential_execution_price < acceptable_execution_price) or (not is_ask and potential_execution_price > acceptable_execution_price):
             return None, None, "Excessive slippage"

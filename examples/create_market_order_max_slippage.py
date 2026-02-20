@@ -13,7 +13,7 @@ async def main():
         base_amount=1000,  # 0.1 ETH
         max_slippage=0.01,  # 1%
         is_ask=True,
-        ideal_price=300000  # $3000
+        # ideal_price=300000  # $3000
     )
 
     print("Create Order Tx:", tx)
