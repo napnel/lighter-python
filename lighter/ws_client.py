@@ -115,17 +115,20 @@ class WsClient:
     def update_orders(self, new_orders, existing_orders):
         for new_order in new_orders:
             is_new_order = True
-            for existing_order in existing_orders:
+            # iterate over a copy so removal is safe
+            existing_order_copy = existing_orders[:]
+            for existing_order in existing_order_copy:
                 if new_order["price"] == existing_order["price"]:
                     is_new_order = False
                     existing_order["size"] = new_order["size"]
                     if float(new_order["size"]) == 0:
                         existing_orders.remove(existing_order)
-                    break
+
             if is_new_order:
                 existing_orders.append(new_order)
 
-        existing_orders = [
+        # final cleanup (in-place)
+        existing_orders[:] = [
             order for order in existing_orders if float(order["size"]) > 0
         ]
 
