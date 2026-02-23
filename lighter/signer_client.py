@@ -99,7 +99,7 @@ def get_libc() -> ctypes.CDLL:
 libc = get_libc()
 
 
-def decode_and_free(ptr: Any) -> str | None:
+def decode_and_free(ptr: Any) -> Optional[str]:
     if not ptr:
         return None
     try:
