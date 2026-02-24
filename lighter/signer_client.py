@@ -297,7 +297,7 @@ class SignerClient:
             nonce_management_type=nonce_manager.NonceManagerType.OPTIMISTIC,
     ):
         self.url = url
-        self.chain_id = 304 if "mainnet" in url else 300
+        self.chain_id = 304 if ("mainnet" in url or "api" in url) else 300
 
         self.validate_api_private_keys(api_private_keys)
         self.api_key_dict = api_private_keys
