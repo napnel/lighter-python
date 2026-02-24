@@ -19,6 +19,7 @@ from lighter import nonce_manager
 from lighter.models.resp_send_tx import RespSendTx
 from lighter.models.resp_send_tx_batch import RespSendTxBatch
 from lighter.transactions import CreateOrder, CancelOrder, Withdraw, CreateGroupedOrders
+from lighter.libc import free
 
 CODE_OK = 200
 
@@ -84,21 +85,6 @@ def __get_shared_library():
         )
 
 
-def get_libc() -> ctypes.CDLL:
-    libc_name = ctypes.util.find_library("c")
-    if not libc_name:
-        raise RuntimeError("Could not find C standard library")
-
-    libc = ctypes.CDLL(libc_name)
-    libc.free.argtypes = [ctypes.c_void_p]
-    libc.free.restype = None
-
-    return libc
-
-
-libc = get_libc()
-
-
 def decode_and_free(ptr: Any) -> Optional[str]:
     if not ptr:
         return None
@@ -110,7 +96,7 @@ def decode_and_free(ptr: Any) -> Optional[str]:
         return None
     finally:
         # Free the memory allocated by the C library
-        libc.free(ptr)
+        free(ptr)
 
 
 def __populate_shared_library_functions(signer):
