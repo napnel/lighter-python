@@ -1,4 +1,5 @@
 import ctypes
+import ctypes.util
 
 def get_libc() -> ctypes.CDLL:
     libc_name = ctypes.util.find_library("c")
