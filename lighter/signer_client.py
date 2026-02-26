@@ -655,7 +655,8 @@ class SignerClient:
         if matched_usd_amount < quote_amount:
             return None, None, "Cannot be sure slippage will be acceptable due to the high size"
 
-        base_amount = round(quote_amount / potential_execution_price)
+        # one can choose between int or round depending on purpose, doesn't really much
+        base_amount = int(quote_amount / potential_execution_price)
         return await self.create_order(
             market_index,
             client_order_index,
