@@ -21,6 +21,7 @@ Name | Type | Description | Notes
 **total_funding_paid_out** | **str** |  | [optional] 
 **margin_mode** | **int** |  | 
 **allocated_margin** | **str** |  | 
+**total_discount** | **str** |  | 
 
 ## Example
 

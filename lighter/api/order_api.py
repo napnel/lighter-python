@@ -26,6 +26,8 @@ from lighter.models.order_book_details import OrderBookDetails
 from lighter.models.order_book_orders import OrderBookOrders
 from lighter.models.order_books import OrderBooks
 from lighter.models.orders import Orders
+from lighter.models.resp_get_exchange_metrics import RespGetExchangeMetrics
+from lighter.models.resp_get_execute_stats import RespGetExecuteStats
 from lighter.models.trades import Trades
 
 from lighter.api_client import ApiClient, RequestSerialized
@@ -996,6 +998,317 @@ class OrderApi:
 
 
 
+    async def exchange_metrics(
+        self,
+        period: StrictStr,
+        kind: StrictStr,
+        filter: Optional[StrictStr] = None,
+        value: Optional[StrictStr] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RespGetExchangeMetrics:
+        """exchangeMetrics
+
+        Get exchange metrics
+
+        :param period: (required)
+        :type period: str
+        :param kind: (required)
+        :type kind: str
+        :param filter:
+        :type filter: str
+        :param value:
+        :type value: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._exchange_metrics_serialize(
+            period=period,
+            kind=kind,
+            filter=filter,
+            value=value,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "RespGetExchangeMetrics",
+            '400': "ResultCode",
+        }
+        response_data = await self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        await response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    async def exchange_metrics_with_http_info(
+        self,
+        period: StrictStr,
+        kind: StrictStr,
+        filter: Optional[StrictStr] = None,
+        value: Optional[StrictStr] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[RespGetExchangeMetrics]:
+        """exchangeMetrics
+
+        Get exchange metrics
+
+        :param period: (required)
+        :type period: str
+        :param kind: (required)
+        :type kind: str
+        :param filter:
+        :type filter: str
+        :param value:
+        :type value: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._exchange_metrics_serialize(
+            period=period,
+            kind=kind,
+            filter=filter,
+            value=value,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "RespGetExchangeMetrics",
+            '400': "ResultCode",
+        }
+        response_data = await self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        await response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    async def exchange_metrics_without_preload_content(
+        self,
+        period: StrictStr,
+        kind: StrictStr,
+        filter: Optional[StrictStr] = None,
+        value: Optional[StrictStr] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """exchangeMetrics
+
+        Get exchange metrics
+
+        :param period: (required)
+        :type period: str
+        :param kind: (required)
+        :type kind: str
+        :param filter:
+        :type filter: str
+        :param value:
+        :type value: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._exchange_metrics_serialize(
+            period=period,
+            kind=kind,
+            filter=filter,
+            value=value,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "RespGetExchangeMetrics",
+            '400': "ResultCode",
+        }
+        response_data = await self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _exchange_metrics_serialize(
+        self,
+        period,
+        kind,
+        filter,
+        value,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[str, Union[str, bytes]] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        # process the query parameters
+        if period is not None:
+            
+            _query_params.append(('period', period))
+            
+        if kind is not None:
+            
+            _query_params.append(('kind', kind))
+            
+        if filter is not None:
+            
+            _query_params.append(('filter', filter))
+            
+        if value is not None:
+            
+            _query_params.append(('value', value))
+            
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+
+        # authentication setting
+        _auth_settings: List[str] = [
+        ]
+
+        return self.api_client.param_serialize(
+            method='GET',
+            resource_path='/api/v1/exchangeMetrics',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
     async def exchange_stats(
         self,
         _request_timeout: Union[
@@ -1239,6 +1552,266 @@ class OrderApi:
 
 
 
+    async def execute_stats(
+        self,
+        period: StrictStr,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RespGetExecuteStats:
+        """executeStats
+
+        Get execute stats
+
+        :param period: (required)
+        :type period: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._execute_stats_serialize(
+            period=period,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "RespGetExecuteStats",
+            '400': "ResultCode",
+        }
+        response_data = await self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        await response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    async def execute_stats_with_http_info(
+        self,
+        period: StrictStr,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[RespGetExecuteStats]:
+        """executeStats
+
+        Get execute stats
+
+        :param period: (required)
+        :type period: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._execute_stats_serialize(
+            period=period,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "RespGetExecuteStats",
+            '400': "ResultCode",
+        }
+        response_data = await self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        await response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    async def execute_stats_without_preload_content(
+        self,
+        period: StrictStr,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """executeStats
+
+        Get execute stats
+
+        :param period: (required)
+        :type period: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._execute_stats_serialize(
+            period=period,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "RespGetExecuteStats",
+            '400': "ResultCode",
+        }
+        response_data = await self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _execute_stats_serialize(
+        self,
+        period,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[str, Union[str, bytes]] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        # process the query parameters
+        if period is not None:
+            
+            _query_params.append(('period', period))
+            
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+
+        # authentication setting
+        _auth_settings: List[str] = [
+        ]
+
+        return self.api_client.param_serialize(
+            method='GET',
+            resource_path='/api/v1/executeStats',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
     async def export(
         self,
         type: StrictStr,
@@ -1246,6 +1819,11 @@ class OrderApi:
         auth: Annotated[Optional[StrictStr], Field(description=" made optional to support header auth clients")] = None,
         account_index: Optional[StrictInt] = None,
         market_id: Optional[StrictInt] = None,
+        start_timestamp: Optional[Annotated[int, Field(le=1830297600000, strict=True, ge=1735689600000)]] = None,
+        end_timestamp: Optional[Annotated[int, Field(le=1830297600000, strict=True, ge=1735689600000)]] = None,
+        side: Optional[StrictStr] = None,
+        role: Optional[StrictStr] = None,
+        trade_type: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1273,6 +1851,16 @@ class OrderApi:
         :type account_index: int
         :param market_id:
         :type market_id: int
+        :param start_timestamp:
+        :type start_timestamp: int
+        :param end_timestamp:
+        :type end_timestamp: int
+        :param side:
+        :type side: str
+        :param role:
+        :type role: str
+        :param trade_type:
+        :type trade_type: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1301,6 +1889,11 @@ class OrderApi:
             auth=auth,
             account_index=account_index,
             market_id=market_id,
+            start_timestamp=start_timestamp,
+            end_timestamp=end_timestamp,
+            side=side,
+            role=role,
+            trade_type=trade_type,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1329,6 +1922,11 @@ class OrderApi:
         auth: Annotated[Optional[StrictStr], Field(description=" made optional to support header auth clients")] = None,
         account_index: Optional[StrictInt] = None,
         market_id: Optional[StrictInt] = None,
+        start_timestamp: Optional[Annotated[int, Field(le=1830297600000, strict=True, ge=1735689600000)]] = None,
+        end_timestamp: Optional[Annotated[int, Field(le=1830297600000, strict=True, ge=1735689600000)]] = None,
+        side: Optional[StrictStr] = None,
+        role: Optional[StrictStr] = None,
+        trade_type: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1356,6 +1954,16 @@ class OrderApi:
         :type account_index: int
         :param market_id:
         :type market_id: int
+        :param start_timestamp:
+        :type start_timestamp: int
+        :param end_timestamp:
+        :type end_timestamp: int
+        :param side:
+        :type side: str
+        :param role:
+        :type role: str
+        :param trade_type:
+        :type trade_type: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1384,6 +1992,11 @@ class OrderApi:
             auth=auth,
             account_index=account_index,
             market_id=market_id,
+            start_timestamp=start_timestamp,
+            end_timestamp=end_timestamp,
+            side=side,
+            role=role,
+            trade_type=trade_type,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1412,6 +2025,11 @@ class OrderApi:
         auth: Annotated[Optional[StrictStr], Field(description=" made optional to support header auth clients")] = None,
         account_index: Optional[StrictInt] = None,
         market_id: Optional[StrictInt] = None,
+        start_timestamp: Optional[Annotated[int, Field(le=1830297600000, strict=True, ge=1735689600000)]] = None,
+        end_timestamp: Optional[Annotated[int, Field(le=1830297600000, strict=True, ge=1735689600000)]] = None,
+        side: Optional[StrictStr] = None,
+        role: Optional[StrictStr] = None,
+        trade_type: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1439,6 +2057,16 @@ class OrderApi:
         :type account_index: int
         :param market_id:
         :type market_id: int
+        :param start_timestamp:
+        :type start_timestamp: int
+        :param end_timestamp:
+        :type end_timestamp: int
+        :param side:
+        :type side: str
+        :param role:
+        :type role: str
+        :param trade_type:
+        :type trade_type: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1467,6 +2095,11 @@ class OrderApi:
             auth=auth,
             account_index=account_index,
             market_id=market_id,
+            start_timestamp=start_timestamp,
+            end_timestamp=end_timestamp,
+            side=side,
+            role=role,
+            trade_type=trade_type,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1491,6 +2124,11 @@ class OrderApi:
         auth,
         account_index,
         market_id,
+        start_timestamp,
+        end_timestamp,
+        side,
+        role,
+        trade_type,
         _request_auth,
         _content_type,
         _headers,
@@ -1530,6 +2168,26 @@ class OrderApi:
         if type is not None:
             
             _query_params.append(('type', type))
+            
+        if start_timestamp is not None:
+            
+            _query_params.append(('start_timestamp', start_timestamp))
+            
+        if end_timestamp is not None:
+            
+            _query_params.append(('end_timestamp', end_timestamp))
+            
+        if side is not None:
+            
+            _query_params.append(('side', side))
+            
+        if role is not None:
+            
+            _query_params.append(('role', role))
+            
+        if trade_type is not None:
+            
+            _query_params.append(('trade_type', trade_type))
             
         # process the header parameters
         # process the form parameters

@@ -18,6 +18,7 @@ Name | Type | Description | Notes
 **status** | **int** |  | 
 **collateral** | **str** |  | 
 **transaction_time** | **int** |  | 
+**account_trading_mode** | **int** |  | 
 
 ## Example
 

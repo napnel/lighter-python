@@ -31,8 +31,10 @@ class MarketConfig(BaseModel):
     liquidation_mode: StrictInt
     force_reduce_only: StrictBool
     trading_hours: StrictStr
+    funding_fee_discounts_enabled: StrictBool
+    hidden: StrictBool
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["market_margin_mode", "insurance_fund_account_index", "liquidation_mode", "force_reduce_only", "trading_hours"]
+    __properties: ClassVar[List[str]] = ["market_margin_mode", "insurance_fund_account_index", "liquidation_mode", "force_reduce_only", "trading_hours", "funding_fee_discounts_enabled", "hidden"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -96,7 +98,9 @@ class MarketConfig(BaseModel):
             "insurance_fund_account_index": obj.get("insurance_fund_account_index"),
             "liquidation_mode": obj.get("liquidation_mode"),
             "force_reduce_only": obj.get("force_reduce_only"),
-            "trading_hours": obj.get("trading_hours")
+            "trading_hours": obj.get("trading_hours"),
+            "funding_fee_discounts_enabled": obj.get("funding_fee_discounts_enabled"),
+            "hidden": obj.get("hidden")
         })
         # store additional fields in additional_properties
         for _key in obj.keys():

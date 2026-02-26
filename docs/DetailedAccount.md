@@ -18,17 +18,20 @@ Name | Type | Description | Notes
 **status** | **int** |  | 
 **collateral** | **str** |  | 
 **transaction_time** | **int** |  | 
+**account_trading_mode** | **int** |  | 
 **account_index** | **int** |  | 
 **name** | **str** |  | 
 **description** | **str** |  | 
 **can_invite** | **bool** |  Remove After FE uses L1 meta endpoint | 
 **referral_points_percentage** | **str** |  Remove After FE uses L1 meta endpoint | 
+**created_at** | **int** |  | 
 **positions** | [**List[AccountPosition]**](AccountPosition.md) |  | 
 **assets** | [**List[AccountAsset]**](AccountAsset.md) |  | 
 **total_asset_value** | **str** |  | 
 **cross_asset_value** | **str** |  | 
 **pool_info** | [**PublicPoolInfo**](PublicPoolInfo.md) |  | 
 **shares** | [**List[PublicPoolShare]**](PublicPoolShare.md) |  | 
+**pending_unlocks** | [**List[PendingUnlock]**](PendingUnlock.md) |  | 
 
 ## Example
 

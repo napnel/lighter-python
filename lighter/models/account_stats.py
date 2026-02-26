@@ -17,7 +17,7 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, StrictStr
+from pydantic import BaseModel, ConfigDict, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List
 from lighter.models.account_margin_stats import AccountMarginStats
 from typing import Optional, Set
@@ -33,10 +33,11 @@ class AccountStats(BaseModel):
     available_balance: StrictStr
     margin_usage: StrictStr
     buying_power: StrictStr
+    account_trading_mode: StrictInt
     cross_stats: AccountMarginStats
     total_stats: AccountMarginStats
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["collateral", "portfolio_value", "leverage", "available_balance", "margin_usage", "buying_power", "cross_stats", "total_stats"]
+    __properties: ClassVar[List[str]] = ["collateral", "portfolio_value", "leverage", "available_balance", "margin_usage", "buying_power", "account_trading_mode", "cross_stats", "total_stats"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -108,6 +109,7 @@ class AccountStats(BaseModel):
             "available_balance": obj.get("available_balance"),
             "margin_usage": obj.get("margin_usage"),
             "buying_power": obj.get("buying_power"),
+            "account_trading_mode": obj.get("account_trading_mode"),
             "cross_stats": AccountMarginStats.from_dict(obj["cross_stats"]) if obj.get("cross_stats") is not None else None,
             "total_stats": AccountMarginStats.from_dict(obj["total_stats"]) if obj.get("total_stats") is not None else None
         })

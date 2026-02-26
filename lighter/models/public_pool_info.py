@@ -21,6 +21,7 @@ from pydantic import BaseModel, ConfigDict, StrictFloat, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Union
 from lighter.models.daily_return import DailyReturn
 from lighter.models.share_price import SharePrice
+from lighter.models.strategy import Strategy
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -37,8 +38,9 @@ class PublicPoolInfo(BaseModel):
     sharpe_ratio: Union[StrictFloat, StrictInt]
     daily_returns: List[DailyReturn]
     share_prices: List[SharePrice]
+    strategies: List[Strategy]
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["status", "operator_fee", "min_operator_share_rate", "total_shares", "operator_shares", "annual_percentage_yield", "sharpe_ratio", "daily_returns", "share_prices"]
+    __properties: ClassVar[List[str]] = ["status", "operator_fee", "min_operator_share_rate", "total_shares", "operator_shares", "annual_percentage_yield", "sharpe_ratio", "daily_returns", "share_prices", "strategies"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -95,6 +97,13 @@ class PublicPoolInfo(BaseModel):
                 if _item:
                     _items.append(_item.to_dict())
             _dict['share_prices'] = _items
+        # override the default output from pydantic by calling `to_dict()` of each item in strategies (list)
+        _items = []
+        if self.strategies:
+            for _item in self.strategies:
+                if _item:
+                    _items.append(_item.to_dict())
+            _dict['strategies'] = _items
         # puts key-value pairs in additional_properties in the top level
         if self.additional_properties is not None:
             for _key, _value in self.additional_properties.items():
@@ -120,7 +129,8 @@ class PublicPoolInfo(BaseModel):
             "annual_percentage_yield": obj.get("annual_percentage_yield"),
             "sharpe_ratio": obj.get("sharpe_ratio"),
             "daily_returns": [DailyReturn.from_dict(_item) for _item in obj["daily_returns"]] if obj.get("daily_returns") is not None else None,
-            "share_prices": [SharePrice.from_dict(_item) for _item in obj["share_prices"]] if obj.get("share_prices") is not None else None
+            "share_prices": [SharePrice.from_dict(_item) for _item in obj["share_prices"]] if obj.get("share_prices") is not None else None,
+            "strategies": [Strategy.from_dict(_item) for _item in obj["strategies"]] if obj.get("strategies") is not None else None
         })
         # store additional fields in additional_properties
         for _key in obj.keys():

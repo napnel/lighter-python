@@ -32,8 +32,12 @@ class AccountLimits(BaseModel):
     max_llp_amount: StrictStr
     user_tier: StrictStr
     can_create_public_pool: StrictBool
+    current_maker_fee_tick: StrictInt
+    current_taker_fee_tick: StrictInt
+    leased_lit: StrictStr
+    effective_lit_stakes: StrictStr
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["code", "message", "max_llp_percentage", "max_llp_amount", "user_tier", "can_create_public_pool"]
+    __properties: ClassVar[List[str]] = ["code", "message", "max_llp_percentage", "max_llp_amount", "user_tier", "can_create_public_pool", "current_maker_fee_tick", "current_taker_fee_tick", "leased_lit", "effective_lit_stakes"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -98,7 +102,11 @@ class AccountLimits(BaseModel):
             "max_llp_percentage": obj.get("max_llp_percentage"),
             "max_llp_amount": obj.get("max_llp_amount"),
             "user_tier": obj.get("user_tier"),
-            "can_create_public_pool": obj.get("can_create_public_pool")
+            "can_create_public_pool": obj.get("can_create_public_pool"),
+            "current_maker_fee_tick": obj.get("current_maker_fee_tick"),
+            "current_taker_fee_tick": obj.get("current_taker_fee_tick"),
+            "leased_lit": obj.get("leased_lit"),
+            "effective_lit_stakes": obj.get("effective_lit_stakes")
         })
         # store additional fields in additional_properties
         for _key in obj.keys():

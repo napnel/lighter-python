@@ -53,8 +53,10 @@ class Trade(BaseModel):
     maker_initial_margin_fraction_before: StrictInt
     maker_position_sign_changed: StrictBool
     transaction_time: StrictInt
+    ask_account_pnl: StrictStr
+    bid_account_pnl: StrictStr
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["trade_id", "tx_hash", "type", "market_id", "size", "price", "usd_amount", "ask_id", "bid_id", "ask_client_id", "bid_client_id", "ask_account_id", "bid_account_id", "is_maker_ask", "block_height", "timestamp", "taker_fee", "taker_position_size_before", "taker_entry_quote_before", "taker_initial_margin_fraction_before", "taker_position_sign_changed", "maker_fee", "maker_position_size_before", "maker_entry_quote_before", "maker_initial_margin_fraction_before", "maker_position_sign_changed", "transaction_time"]
+    __properties: ClassVar[List[str]] = ["trade_id", "tx_hash", "type", "market_id", "size", "price", "usd_amount", "ask_id", "bid_id", "ask_client_id", "bid_client_id", "ask_account_id", "bid_account_id", "is_maker_ask", "block_height", "timestamp", "taker_fee", "taker_position_size_before", "taker_entry_quote_before", "taker_initial_margin_fraction_before", "taker_position_sign_changed", "maker_fee", "maker_position_size_before", "maker_entry_quote_before", "maker_initial_margin_fraction_before", "maker_position_sign_changed", "transaction_time", "ask_account_pnl", "bid_account_pnl"]
 
     @field_validator('type')
     def type_validate_enum(cls, value):
@@ -147,7 +149,9 @@ class Trade(BaseModel):
             "maker_entry_quote_before": obj.get("maker_entry_quote_before"),
             "maker_initial_margin_fraction_before": obj.get("maker_initial_margin_fraction_before"),
             "maker_position_sign_changed": obj.get("maker_position_sign_changed"),
-            "transaction_time": obj.get("transaction_time")
+            "transaction_time": obj.get("transaction_time"),
+            "ask_account_pnl": obj.get("ask_account_pnl"),
+            "bid_account_pnl": obj.get("bid_account_pnl")
         })
         # store additional fields in additional_properties
         for _key in obj.keys():

@@ -748,6 +748,88 @@
         "description": "Get deposit history"
       }
     },
+    "/api/v1/exchangeMetrics": {
+      "get": {
+        "summary": "exchangeMetrics",
+        "operationId": "exchangeMetrics",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/RespGetExchangeMetrics"
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/ResultCode"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "period",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "enum": [
+              "h",
+              "d",
+              "w",
+              "m",
+              "q",
+              "y",
+              "all"
+            ]
+          },
+          {
+            "name": "kind",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "enum": [
+              "volume",
+              "maker_fee",
+              "taker_fee",
+              "liquidation_fee",
+              "trade_count",
+              "liquidation_count",
+              "liquidation_volume",
+              "inflow",
+              "outflow",
+              "transfer_fee",
+              "withdraw_fee",
+              "open_interest",
+              "account_count",
+              "active_account_count",
+              "tps"
+            ]
+          },
+          {
+            "name": "filter",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "enum": [
+              "byMarket"
+            ]
+          },
+          {
+            "name": "value",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "order"
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "description": "Get exchange metrics"
+      }
+    },
     "/api/v1/exchangeStats": {
       "get": {
         "summary": "exchangeStats",
@@ -770,6 +852,49 @@
           "order"
         ],
         "description": "Get exchange stats"
+      }
+    },
+    "/api/v1/executeStats": {
+      "get": {
+        "summary": "executeStats",
+        "operationId": "executeStats",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/RespGetExecuteStats"
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/ResultCode"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "period",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "enum": [
+              "d",
+              "w",
+              "m",
+              "q",
+              "y",
+              "all"
+            ]
+          }
+        ],
+        "tags": [
+          "order"
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "description": "Get execute stats"
       }
     },
     "/api/v1/export": {
@@ -830,6 +955,62 @@
               "funding",
               "trade"
             ]
+          },
+          {
+            "name": "start_timestamp",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int64",
+            "minimum": 1735689600000,
+            "maximum": 1830297600000
+          },
+          {
+            "name": "end_timestamp",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int64",
+            "minimum": 1735689600000,
+            "maximum": 1830297600000
+          },
+          {
+            "name": "side",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "enum": [
+              "all",
+              "long",
+              "short"
+            ],
+            "default": "all"
+          },
+          {
+            "name": "role",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "enum": [
+              "all",
+              "maker",
+              "taker"
+            ],
+            "default": "all"
+          },
+          {
+            "name": "trade_type",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "enum": [
+              "all",
+              "trade",
+              "liquidation",
+              "deleverage",
+              "market-settlement"
+            ],
+            "default": "all"
           }
         ],
         "tags": [
@@ -1146,6 +1327,94 @@
         "description": "Get L1 metadata"
       }
     },
+    "/api/v1/leaseOptions": {
+      "get": {
+        "summary": "leaseOptions",
+        "operationId": "leaseOptions",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/RespGetLeaseOptions"
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/ResultCode"
+            }
+          }
+        },
+        "tags": [
+          "account"
+        ],
+        "description": "Get lease options"
+      }
+    },
+    "/api/v1/leases": {
+      "get": {
+        "summary": "leases",
+        "operationId": "leases",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/RespGetLeases"
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/ResultCode"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "authorization",
+            "description": " make required after integ is done",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "auth",
+            "description": " made optional to support header auth clients",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "account_index",
+            "in": "query",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int64",
+            "default": "20"
+          }
+        ],
+        "tags": [
+          "account"
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "description": "Get leases"
+      }
+    },
     "/api/v1/liquidations": {
       "get": {
         "summary": "liquidations",
@@ -1217,6 +1486,49 @@
           "multipart/form-data"
         ],
         "description": "Get liquidation infos"
+      }
+    },
+    "/api/v1/litLease": {
+      "post": {
+        "summary": "litLease",
+        "operationId": "litLease",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/TxHash"
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/ResultCode"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ReqLITLease"
+            }
+          }
+        ],
+        "tags": [
+          "account"
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "description": "Submit LIT lease transfer"
       }
     },
     "/api/v1/nextNonce": {
@@ -1681,7 +1993,8 @@
               "all",
               "user",
               "protocol",
-              "account_index"
+              "account_index",
+              "stake"
             ]
           },
           {
@@ -1715,6 +2028,171 @@
           "multipart/form-data"
         ],
         "description": "Get public pools metadata"
+      }
+    },
+    "/api/v1/pushnotif/register": {
+      "post": {
+        "summary": "pushnotif_register",
+        "operationId": "pushnotif_register",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/ResultCode"
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/ResultCode"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ReqRegisterPushNotifToken"
+            }
+          }
+        ],
+        "tags": [
+          "pushnotif"
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "description": "Register device for push notifications"
+      }
+    },
+    "/api/v1/pushnotif/settings": {
+      "get": {
+        "summary": "get_pushnotif_settings",
+        "operationId": "get_pushnotif_settings",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/RespGetPushNotifSettings"
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/ResultCode"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "authorization",
+            "description": " make required after integ is done",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "auth",
+            "description": " made optional to support header auth clients",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "account_index",
+            "in": "query",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "name": "expo_token",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "pushnotif"
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "description": "Get push notification settings"
+      },
+      "post": {
+        "summary": "post_pushnotif_settings",
+        "operationId": "post_pushnotif_settings",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/ResultCode"
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/ResultCode"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ReqUpdatePushNotifSettings"
+            }
+          }
+        ],
+        "tags": [
+          "pushnotif"
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "description": "Update push notification settings"
+      }
+    },
+    "/api/v1/pushnotif/unregister": {
+      "post": {
+        "summary": "pushnotif_unregister",
+        "operationId": "pushnotif_unregister",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/ResultCode"
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/ResultCode"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ReqUnregisterPushNotifToken"
+            }
+          }
+        ],
+        "tags": [
+          "pushnotif"
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "description": "Unregister device from push notifications"
       }
     },
     "/api/v1/recentTrades": {
@@ -1760,6 +2238,59 @@
           "multipart/form-data"
         ],
         "description": "Get recent trades"
+      }
+    },
+    "/api/v1/referral/userReferrals": {
+      "get": {
+        "summary": "referral_userReferrals",
+        "operationId": "referral_userReferrals",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/UserReferrals"
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/ResultCode"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "auth",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "l1_address",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "referral"
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "description": "Get user referrals"
       }
     },
     "/api/v1/sendTx": {
@@ -1834,6 +2365,30 @@
           "multipart/form-data"
         ],
         "description": "You need to sign the transaction body before sending it to the server. More details can be found in the Get Started docs: [Get Started For Programmers](https://apidocs.lighter.xyz/docs/get-started-for-programmers)"
+      }
+    },
+    "/api/v1/systemConfig": {
+      "get": {
+        "summary": "systemConfig",
+        "operationId": "systemConfig",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/SystemConfig"
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/ResultCode"
+            }
+          }
+        },
+        "tags": [
+          "info"
+        ],
+        "description": "Get system configuration including pool indexes and lockup/cooldown periods"
       }
     },
     "/api/v1/tokens": {
@@ -2162,6 +2717,20 @@
             "in": "query",
             "required": false,
             "type": "string"
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "enum": [
+              "all",
+              "L2Transfer",
+              "L2MintShares",
+              "L2BurnShares",
+              "L2StakeAssets",
+              "L2UnstakeAssets"
+            ]
           }
         ],
         "tags": [
@@ -2490,6 +3059,11 @@
           "type": "integer",
           "format": "int64",
           "example": "1257894000000000"
+        },
+        "account_trading_mode": {
+          "type": "integer",
+          "format": "uint8",
+          "example": "1"
         }
       },
       "title": "Account",
@@ -2505,7 +3079,8 @@
         "available_balance",
         "status",
         "collateral",
-        "transaction_time"
+        "transaction_time",
+        "account_trading_mode"
       ]
     },
     "AccountApiKeys": {
@@ -2589,6 +3164,22 @@
           "type": "boolean",
           "format": "boolean",
           "example": "true"
+        },
+        "current_maker_fee_tick": {
+          "type": "integer",
+          "format": "int32",
+          "example": "0"
+        },
+        "current_taker_fee_tick": {
+          "type": "integer",
+          "format": "int32",
+          "example": "0"
+        },
+        "leased_lit": {
+          "type": "string"
+        },
+        "effective_lit_stakes": {
+          "type": "string"
         }
       },
       "title": "AccountLimits",
@@ -2597,7 +3188,11 @@
         "max_llp_percentage",
         "max_llp_amount",
         "user_tier",
-        "can_create_public_pool"
+        "can_create_public_pool",
+        "current_maker_fee_tick",
+        "current_taker_fee_tick",
+        "leased_lit",
+        "effective_lit_stakes"
       ]
     },
     "AccountMarginStats": {
@@ -2745,6 +3340,10 @@
         "referral_points_percentage": {
           "type": "string",
           "description": " Remove After FE uses L1 meta endpoint"
+        },
+        "created_at": {
+          "type": "integer",
+          "format": "int64"
         }
       },
       "title": "AccountMetadata",
@@ -2753,7 +3352,8 @@
         "name",
         "description",
         "can_invite",
-        "referral_points_percentage"
+        "referral_points_percentage",
+        "created_at"
       ]
     },
     "AccountMetadatas": {
@@ -2881,6 +3481,10 @@
         "allocated_margin": {
           "type": "string",
           "example": "46342"
+        },
+        "total_discount": {
+          "type": "string",
+          "example": "34.2"
         }
       },
       "title": "AccountPosition",
@@ -2899,7 +3503,8 @@
         "realized_pnl",
         "liquidation_price",
         "margin_mode",
-        "allocated_margin"
+        "allocated_margin",
+        "total_discount"
       ]
     },
     "AccountStats": {
@@ -2929,6 +3534,11 @@
           "type": "string",
           "example": "199955"
         },
+        "account_trading_mode": {
+          "type": "integer",
+          "format": "uint8",
+          "example": "1"
+        },
         "cross_stats": {
           "$ref": "#/definitions/AccountMarginStats"
         },
@@ -2944,6 +3554,7 @@
         "available_balance",
         "margin_usage",
         "buying_power",
+        "account_trading_mode",
         "cross_stats",
         "total_stats"
       ]
@@ -3647,6 +4258,11 @@
           "format": "int64",
           "example": "1257894000000000"
         },
+        "account_trading_mode": {
+          "type": "integer",
+          "format": "uint8",
+          "example": "1"
+        },
         "account_index": {
           "type": "integer",
           "format": "int64"
@@ -3665,6 +4281,10 @@
         "referral_points_percentage": {
           "type": "string",
           "description": " Remove After FE uses L1 meta endpoint"
+        },
+        "created_at": {
+          "type": "integer",
+          "format": "int64"
         },
         "positions": {
           "type": "array",
@@ -3694,6 +4314,12 @@
           "items": {
             "$ref": "#/definitions/PublicPoolShare"
           }
+        },
+        "pending_unlocks": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/PendingUnlock"
+          }
         }
       },
       "title": "DetailedAccount",
@@ -3710,17 +4336,20 @@
         "status",
         "collateral",
         "transaction_time",
+        "account_trading_mode",
         "account_index",
         "name",
         "description",
         "can_invite",
         "referral_points_percentage",
+        "created_at",
         "positions",
         "assets",
         "total_asset_value",
         "cross_asset_value",
         "pool_info",
-        "shares"
+        "shares",
+        "pending_unlocks"
       ]
     },
     "DetailedAccounts": {
@@ -3967,6 +4596,26 @@
         "verified_at"
       ]
     },
+    "ExchangeMetric": {
+      "type": "object",
+      "properties": {
+        "timestamp": {
+          "type": "integer",
+          "format": "int64",
+          "example": "1640995200"
+        },
+        "data": {
+          "type": "number",
+          "format": "double",
+          "example": "93566.25"
+        }
+      },
+      "title": "ExchangeMetric",
+      "required": [
+        "timestamp",
+        "data"
+      ]
+    },
     "ExchangeStats": {
       "type": "object",
       "properties": {
@@ -4008,6 +4657,27 @@
         "order_book_stats",
         "daily_usd_volume",
         "daily_trades_count"
+      ]
+    },
+    "ExecuteStat": {
+      "type": "object",
+      "properties": {
+        "timestamp": {
+          "type": "integer",
+          "format": "int64",
+          "example": "1640995200"
+        },
+        "slippage": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/SlippageResult"
+          }
+        }
+      },
+      "title": "ExecuteStat",
+      "required": [
+        "timestamp",
+        "slippage"
       ]
     },
     "ExportData": {
@@ -4192,6 +4862,76 @@
         "latestBlockNumber"
       ]
     },
+    "LeaseEntry": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "master_account_index": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "lease_amount": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "fee_amount": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "start": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "end": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "waiting_fee",
+            "leased",
+            "expired",
+            "canceled"
+          ]
+        },
+        "error": {
+          "type": "string"
+        }
+      },
+      "title": "LeaseEntry",
+      "required": [
+        "id",
+        "master_account_index",
+        "lease_amount",
+        "fee_amount",
+        "start",
+        "end",
+        "status",
+        "error"
+      ]
+    },
+    "LeaseOptionEntry": {
+      "type": "object",
+      "properties": {
+        "duration_days": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "annual_rate": {
+          "type": "number",
+          "format": "double"
+        }
+      },
+      "title": "LeaseOptionEntry",
+      "required": [
+        "duration_days",
+        "annual_rate"
+      ]
+    },
     "LiqTrade": {
       "type": "object",
       "properties": {
@@ -4339,6 +5079,14 @@
         },
         "trading_hours": {
           "type": "string"
+        },
+        "funding_fee_discounts_enabled": {
+          "type": "boolean",
+          "format": "boolean"
+        },
+        "hidden": {
+          "type": "boolean",
+          "format": "boolean"
         }
       },
       "title": "MarketConfig",
@@ -4347,7 +5095,9 @@
         "insurance_fund_account_index",
         "liquidation_mode",
         "force_reduce_only",
-        "trading_hours"
+        "trading_hours",
+        "funding_fee_discounts_enabled",
+        "hidden"
       ]
     },
     "NextNonce": {
@@ -4961,6 +5711,31 @@
         "orders"
       ]
     },
+    "PendingUnlock": {
+      "type": "object",
+      "properties": {
+        "unlock_timestamp": {
+          "type": "integer",
+          "format": "int64",
+          "example": "1640995200"
+        },
+        "asset_index": {
+          "type": "integer",
+          "format": "int16",
+          "example": "1"
+        },
+        "amount": {
+          "type": "string",
+          "example": "1"
+        }
+      },
+      "title": "PendingUnlock",
+      "required": [
+        "unlock_timestamp",
+        "asset_index",
+        "amount"
+      ]
+    },
     "PerpsMarketStats": {
       "type": "object",
       "properties": {
@@ -5223,6 +5998,10 @@
         },
         "market_config": {
           "$ref": "#/definitions/MarketConfig"
+        },
+        "strategy_index": {
+          "type": "integer",
+          "format": "uint8"
         }
       },
       "title": "PerpsOrderBookDetail",
@@ -5258,7 +6037,8 @@
         "daily_price_change",
         "open_interest",
         "daily_chart",
-        "market_config"
+        "market_config",
+        "strategy_index"
       ]
     },
     "PnLEntry": {
@@ -5314,7 +6094,27 @@
           "format": "double",
           "example": "12.0"
         },
+        "staking_pnl": {
+          "type": "number",
+          "format": "double",
+          "example": "12.0"
+        },
+        "staking_inflow": {
+          "type": "number",
+          "format": "double",
+          "example": "12.0"
+        },
+        "staking_outflow": {
+          "type": "number",
+          "format": "double",
+          "example": "12.0"
+        },
         "pool_total_shares": {
+          "type": "number",
+          "format": "double",
+          "example": "12.0"
+        },
+        "staked_lit": {
           "type": "number",
           "format": "double",
           "example": "12.0"
@@ -5332,7 +6132,11 @@
         "pool_pnl",
         "pool_inflow",
         "pool_outflow",
-        "pool_total_shares"
+        "staking_pnl",
+        "staking_inflow",
+        "staking_outflow",
+        "pool_total_shares",
+        "staked_lit"
       ]
     },
     "PositionFunding": {
@@ -5372,6 +6176,10 @@
             "long",
             "short"
           ]
+        },
+        "discount": {
+          "type": "string",
+          "example": "1"
         }
       },
       "title": "PositionFunding",
@@ -5382,7 +6190,8 @@
         "change",
         "rate",
         "position_size",
-        "position_side"
+        "position_side",
+        "discount"
       ]
     },
     "PositionFundings": {
@@ -5477,6 +6286,12 @@
           "items": {
             "$ref": "#/definitions/SharePrice"
           }
+        },
+        "strategies": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Strategy"
+          }
         }
       },
       "title": "PublicPoolInfo",
@@ -5489,7 +6304,8 @@
         "annual_percentage_yield",
         "sharpe_ratio",
         "daily_returns",
-        "share_prices"
+        "share_prices",
+        "strategies"
       ]
     },
     "PublicPoolMetadata": {
@@ -5552,6 +6368,14 @@
           "type": "string",
           "example": "19995"
         },
+        "total_spot_value": {
+          "type": "string",
+          "example": "19995"
+        },
+        "total_perps_value": {
+          "type": "string",
+          "example": "19995"
+        },
         "total_shares": {
           "type": "integer",
           "format": "int64",
@@ -5559,6 +6383,12 @@
         },
         "account_share": {
           "$ref": "#/definitions/PublicPoolShare"
+        },
+        "assets": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/AccountAsset"
+          }
         }
       },
       "title": "PublicPoolMetadata",
@@ -5575,7 +6405,10 @@
         "status",
         "operator_fee",
         "total_asset_value",
-        "total_shares"
+        "total_spot_value",
+        "total_perps_value",
+        "total_shares",
+        "assets"
       ]
     },
     "PublicPoolShare": {
@@ -5593,14 +6426,67 @@
         },
         "entry_usdc": {
           "type": "string",
+          "example": "3000",
+          "description": " For public pools and insurance fund"
+        },
+        "principal_amount": {
+          "type": "string",
           "example": "3000"
+        },
+        "entry_timestamp": {
+          "type": "integer",
+          "format": "int64",
+          "example": "3600000"
         }
       },
       "title": "PublicPoolShare",
       "required": [
         "public_pool_index",
         "shares_amount",
-        "entry_usdc"
+        "entry_usdc",
+        "principal_amount",
+        "entry_timestamp"
+      ]
+    },
+    "PushNotifDeliveryResult": {
+      "type": "object",
+      "properties": {
+        "expo_token": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        },
+        "error": {
+          "type": "string"
+        }
+      },
+      "title": "PushNotifDeliveryResult",
+      "required": [
+        "expo_token",
+        "status",
+        "error"
+      ]
+    },
+    "Referral": {
+      "type": "object",
+      "properties": {
+        "l1_address": {
+          "type": "string"
+        },
+        "referral_code": {
+          "type": "string"
+        },
+        "used_at": {
+          "type": "integer",
+          "format": "int64"
+        }
+      },
+      "title": "Referral",
+      "required": [
+        "l1_address",
+        "referral_code",
+        "used_at"
       ]
     },
     "ReqAckNotif": {
@@ -5687,6 +6573,47 @@
             "funding",
             "trade"
           ]
+        },
+        "start_timestamp": {
+          "type": "integer",
+          "format": "int64",
+          "maximum": 1830297600000,
+          "minimum": 1735689600000
+        },
+        "end_timestamp": {
+          "type": "integer",
+          "format": "int64",
+          "maximum": 1830297600000,
+          "minimum": 1735689600000
+        },
+        "side": {
+          "type": "string",
+          "enum": [
+            "all",
+            "long",
+            "short"
+          ],
+          "default": "all"
+        },
+        "role": {
+          "type": "string",
+          "enum": [
+            "all",
+            "maker",
+            "taker"
+          ],
+          "default": "all"
+        },
+        "trade_type": {
+          "type": "string",
+          "enum": [
+            "all",
+            "trade",
+            "liquidation",
+            "deleverage",
+            "market-settlement"
+          ],
+          "default": "all"
         }
       },
       "title": "ReqExportData",
@@ -6136,9 +7063,80 @@
         "l1_address"
       ]
     },
+    "ReqGetExchangeMetrics": {
+      "type": "object",
+      "properties": {
+        "period": {
+          "type": "string",
+          "enum": [
+            "h",
+            "d",
+            "w",
+            "m",
+            "q",
+            "y",
+            "all"
+          ]
+        },
+        "kind": {
+          "type": "string",
+          "enum": [
+            "volume",
+            "maker_fee",
+            "taker_fee",
+            "liquidation_fee",
+            "trade_count",
+            "liquidation_count",
+            "liquidation_volume",
+            "inflow",
+            "outflow",
+            "transfer_fee",
+            "withdraw_fee",
+            "open_interest",
+            "account_count",
+            "active_account_count",
+            "tps"
+          ]
+        },
+        "filter": {
+          "type": "string",
+          "enum": [
+            "byMarket"
+          ]
+        },
+        "value": {
+          "type": "string"
+        }
+      },
+      "title": "ReqGetExchangeMetrics",
+      "required": [
+        "period",
+        "kind"
+      ]
+    },
     "ReqGetExchangeStats": {
       "type": "object",
       "title": "ReqGetExchangeStats"
+    },
+    "ReqGetExecuteStats": {
+      "type": "object",
+      "properties": {
+        "period": {
+          "type": "string",
+          "enum": [
+            "d",
+            "w",
+            "m",
+            "q",
+            "y",
+            "all"
+          ]
+        }
+      },
+      "title": "ReqGetExecuteStats",
+      "required": [
+        "period"
+      ]
     },
     "ReqGetFastWithdrawInfo": {
       "type": "object",
@@ -6241,6 +7239,31 @@
       "title": "ReqGetLatestDeposit",
       "required": [
         "l1_address"
+      ]
+    },
+    "ReqGetLeases": {
+      "type": "object",
+      "properties": {
+        "auth": {
+          "type": "string",
+          "description": " made optional to support header auth clients"
+        },
+        "account_index": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "cursor": {
+          "type": "string"
+        },
+        "limit": {
+          "type": "integer",
+          "format": "int64",
+          "default": "20"
+        }
+      },
+      "title": "ReqGetLeases",
+      "required": [
+        "account_index"
       ]
     },
     "ReqGetLiquidationInfos": {
@@ -6407,7 +7430,8 @@
             "all",
             "user",
             "protocol",
-            "account_index"
+            "account_index",
+            "stake"
           ]
         },
         "index": {
@@ -6429,6 +7453,27 @@
       "required": [
         "index",
         "limit"
+      ]
+    },
+    "ReqGetPushNotifSettings": {
+      "type": "object",
+      "properties": {
+        "auth": {
+          "type": "string",
+          "description": " made optional to support header auth clients"
+        },
+        "account_index": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "expo_token": {
+          "type": "string"
+        }
+      },
+      "title": "ReqGetPushNotifSettings",
+      "required": [
+        "account_index",
+        "expo_token"
       ]
     },
     "ReqGetRangeWithCursor": {
@@ -6634,6 +7679,20 @@
         },
         "cursor": {
           "type": "string"
+        },
+        "type": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "enum": [
+            "all",
+            "L2Transfer",
+            "L2MintShares",
+            "L2BurnShares",
+            "L2StakeAssets",
+            "L2UnstakeAssets"
+          ]
         }
       },
       "title": "ReqGetTransferHistory",
@@ -6659,6 +7718,24 @@
       "required": [
         "by",
         "value"
+      ]
+    },
+    "ReqGetUserReferrals": {
+      "type": "object",
+      "properties": {
+        "auth": {
+          "type": "string"
+        },
+        "l1_address": {
+          "type": "string"
+        },
+        "cursor": {
+          "type": "string"
+        }
+      },
+      "title": "ReqGetUserReferrals",
+      "required": [
+        "l1_address"
       ]
     },
     "ReqGetWithdrawHistory": {
@@ -6687,6 +7764,27 @@
       "title": "ReqGetWithdrawHistory",
       "required": [
         "account_index"
+      ]
+    },
+    "ReqLITLease": {
+      "type": "object",
+      "properties": {
+        "tx_info": {
+          "type": "string"
+        },
+        "lease_amount": {
+          "type": "string"
+        },
+        "duration_days": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "title": "ReqLITLease",
+      "required": [
+        "tx_info",
+        "lease_amount",
+        "duration_days"
       ]
     },
     "ReqPostApiToken": {
@@ -6719,6 +7817,38 @@
         "account_index",
         "expiry",
         "sub_account_access"
+      ]
+    },
+    "ReqRegisterPushNotifToken": {
+      "type": "object",
+      "properties": {
+        "auth": {
+          "type": "string",
+          "description": " made optional to support header auth clients"
+        },
+        "account_index": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "expo_token": {
+          "type": "string"
+        },
+        "platform": {
+          "type": "string",
+          "enum": [
+            "ios",
+            "android"
+          ]
+        },
+        "app_version": {
+          "type": "string"
+        }
+      },
+      "title": "ReqRegisterPushNotifToken",
+      "required": [
+        "account_index",
+        "expo_token",
+        "platform"
       ]
     },
     "ReqRevokeApiToken": {
@@ -6775,6 +7905,53 @@
       "required": [
         "tx_types",
         "tx_infos"
+      ]
+    },
+    "ReqUnregisterPushNotifToken": {
+      "type": "object",
+      "properties": {
+        "auth": {
+          "type": "string",
+          "description": " made optional to support header auth clients"
+        },
+        "account_index": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "expo_token": {
+          "type": "string"
+        }
+      },
+      "title": "ReqUnregisterPushNotifToken",
+      "required": [
+        "account_index",
+        "expo_token"
+      ]
+    },
+    "ReqUpdatePushNotifSettings": {
+      "type": "object",
+      "properties": {
+        "auth": {
+          "type": "string",
+          "description": " made optional to support header auth clients"
+        },
+        "account_index": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "expo_token": {
+          "type": "string"
+        },
+        "enabled": {
+          "type": "boolean",
+          "format": "boolean"
+        }
+      },
+      "title": "ReqUpdatePushNotifSettings",
+      "required": [
+        "account_index",
+        "expo_token",
+        "enabled"
       ]
     },
     "RespChangeAccountTier": {
@@ -6840,6 +8017,57 @@
       "required": [
         "code",
         "bridges"
+      ]
+    },
+    "RespGetExchangeMetrics": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32",
+          "example": "200"
+        },
+        "message": {
+          "type": "string"
+        },
+        "metrics": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ExchangeMetric"
+          }
+        }
+      },
+      "title": "RespGetExchangeMetrics",
+      "required": [
+        "code",
+        "metrics"
+      ]
+    },
+    "RespGetExecuteStats": {
+      "type": "object",
+      "properties": {
+        "period": {
+          "type": "string",
+          "enum": [
+            "d",
+            "w",
+            "m",
+            "q",
+            "y",
+            "all"
+          ]
+        },
+        "result": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ExecuteStat"
+          }
+        }
+      },
+      "title": "RespGetExecuteStats",
+      "required": [
+        "period",
+        "result"
       ]
     },
     "RespGetFastBridgeInfo": {
@@ -6913,6 +8141,89 @@
       "required": [
         "code",
         "is_next_bridge_fast"
+      ]
+    },
+    "RespGetLeaseOptions": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32",
+          "example": "200"
+        },
+        "message": {
+          "type": "string"
+        },
+        "options": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/LeaseOptionEntry"
+          }
+        },
+        "lit_incentives_account_index": {
+          "type": "integer",
+          "format": "int64"
+        }
+      },
+      "title": "RespGetLeaseOptions",
+      "required": [
+        "code",
+        "options",
+        "lit_incentives_account_index"
+      ]
+    },
+    "RespGetLeases": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32",
+          "example": "200"
+        },
+        "message": {
+          "type": "string"
+        },
+        "leases": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/LeaseEntry"
+          }
+        },
+        "next_cursor": {
+          "type": "string"
+        }
+      },
+      "title": "RespGetLeases",
+      "required": [
+        "code",
+        "leases"
+      ]
+    },
+    "RespGetPushNotifSettings": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32",
+          "example": "200"
+        },
+        "message": {
+          "type": "string"
+        },
+        "account_index": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "enabled": {
+          "type": "boolean",
+          "format": "boolean"
+        }
+      },
+      "title": "RespGetPushNotifSettings",
+      "required": [
+        "code",
+        "account_index",
+        "enabled"
       ]
     },
     "RespPostApiToken": {
@@ -7243,6 +8554,68 @@
         "transaction_time"
       ]
     },
+    "SlippageResult": {
+      "type": "object",
+      "properties": {
+        "exchange": {
+          "type": "string",
+          "example": "lighter"
+        },
+        "market": {
+          "type": "string",
+          "example": "ETH"
+        },
+        "size_usd": {
+          "type": "integer",
+          "format": "int64",
+          "example": "1000"
+        },
+        "avg_slippage": {
+          "type": "number",
+          "format": "double",
+          "example": "0.5"
+        },
+        "data_count": {
+          "type": "integer",
+          "format": "int64",
+          "example": "100"
+        }
+      },
+      "title": "SlippageResult",
+      "required": [
+        "exchange",
+        "market",
+        "size_usd",
+        "avg_slippage",
+        "data_count"
+      ]
+    },
+    "SpotAvgEntryPrice": {
+      "type": "object",
+      "properties": {
+        "asset_id": {
+          "type": "integer",
+          "format": "int16"
+        },
+        "avg_entry_price": {
+          "type": "string"
+        },
+        "asset_size": {
+          "type": "string"
+        },
+        "last_trade_id": {
+          "type": "integer",
+          "format": "int64"
+        }
+      },
+      "title": "SpotAvgEntryPrice",
+      "required": [
+        "asset_id",
+        "avg_entry_price",
+        "asset_size",
+        "last_trade_id"
+      ]
+    },
     "SpotMarketStats": {
       "type": "object",
       "properties": {
@@ -7493,6 +8866,19 @@
         "timestamp"
       ]
     },
+    "Strategy": {
+      "type": "object",
+      "properties": {
+        "collateral": {
+          "type": "string",
+          "example": "199955"
+        }
+      },
+      "title": "Strategy",
+      "required": [
+        "collateral"
+      ]
+    },
     "SubAccounts": {
       "type": "object",
       "properties": {
@@ -7521,6 +8907,53 @@
         "code",
         "l1_address",
         "sub_accounts"
+      ]
+    },
+    "SystemConfig": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32",
+          "example": "200"
+        },
+        "message": {
+          "type": "string"
+        },
+        "liquidity_pool_index": {
+          "type": "integer",
+          "format": "int64",
+          "example": "1"
+        },
+        "staking_pool_index": {
+          "type": "integer",
+          "format": "int64",
+          "example": "2"
+        },
+        "funding_fee_rebate_account_index": {
+          "type": "integer",
+          "format": "int64",
+          "example": "2"
+        },
+        "liquidity_pool_cooldown_period": {
+          "type": "integer",
+          "format": "int64",
+          "example": "86400"
+        },
+        "staking_pool_lockup_period": {
+          "type": "integer",
+          "format": "int64",
+          "example": "604800"
+        }
+      },
+      "title": "SystemConfig",
+      "required": [
+        "code",
+        "liquidity_pool_index",
+        "staking_pool_index",
+        "funding_fee_rebate_account_index",
+        "liquidity_pool_cooldown_period",
+        "staking_pool_lockup_period"
       ]
     },
     "Ticker": {
@@ -7678,6 +9111,14 @@
           "type": "integer",
           "format": "int64",
           "example": "1257894000000000"
+        },
+        "ask_account_pnl": {
+          "type": "string",
+          "example": "1967"
+        },
+        "bid_account_pnl": {
+          "type": "string",
+          "example": "1967"
         }
       },
       "title": "Trade",
@@ -7708,7 +9149,9 @@
         "maker_entry_quote_before",
         "maker_initial_margin_fraction_before",
         "maker_position_sign_changed",
-        "transaction_time"
+        "transaction_time",
+        "ask_account_pnl",
+        "bid_account_pnl"
       ]
     },
     "Trades": {
@@ -7821,7 +9264,13 @@
             "L2BurnSharesOutflow",
             "L2MintSharesInflow",
             "L2MintSharesOutflow",
-            "L2SelfTransfer"
+            "L2SelfTransfer",
+            "L2StakeAssetInflow",
+            "L2StakeAssetOutflow",
+            "L2UnstakeAssetInflow",
+            "L2UnstakeAssetOutflow",
+            "L2ForceBurnSharesInflow",
+            "L2ForceBurnSharesOutflow"
           ]
         },
         "from_l1_address": {
@@ -7922,6 +9371,34 @@
       "required": [
         "code",
         "tx_hash"
+      ]
+    },
+    "UserReferrals": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32",
+          "example": "200"
+        },
+        "message": {
+          "type": "string"
+        },
+        "cursor": {
+          "type": "string"
+        },
+        "referrals": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Referral"
+          }
+        }
+      },
+      "title": "UserReferrals",
+      "required": [
+        "code",
+        "cursor",
+        "referrals"
       ]
     },
     "ValidatorInfo": {

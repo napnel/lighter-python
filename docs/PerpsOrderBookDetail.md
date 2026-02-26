@@ -37,6 +37,7 @@ Name | Type | Description | Notes
 **open_interest** | **float** |  | 
 **daily_chart** | **Dict[str, float]** |  | 
 **market_config** | [**MarketConfig**](MarketConfig.md) |  | 
+**strategy_index** | **int** |  | 
 
 ## Example
 

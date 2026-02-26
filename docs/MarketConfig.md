@@ -10,6 +10,8 @@ Name | Type | Description | Notes
 **liquidation_mode** | **int** |  | 
 **force_reduce_only** | **bool** |  | 
 **trading_hours** | **str** |  | 
+**funding_fee_discounts_enabled** | **bool** |  | 
+**hidden** | **bool** |  | 
 
 ## Example
 

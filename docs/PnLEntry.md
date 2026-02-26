@@ -15,7 +15,11 @@ Name | Type | Description | Notes
 **pool_pnl** | **float** |  | 
 **pool_inflow** | **float** |  | 
 **pool_outflow** | **float** |  | 
+**staking_pnl** | **float** |  | 
+**staking_inflow** | **float** |  | 
+**staking_outflow** | **float** |  | 
 **pool_total_shares** | **float** |  | 
+**staked_lit** | **float** |  | 
 
 ## Example
 

@@ -36,9 +36,13 @@ class PnLEntry(BaseModel):
     pool_pnl: Union[StrictFloat, StrictInt]
     pool_inflow: Union[StrictFloat, StrictInt]
     pool_outflow: Union[StrictFloat, StrictInt]
+    staking_pnl: Union[StrictFloat, StrictInt]
+    staking_inflow: Union[StrictFloat, StrictInt]
+    staking_outflow: Union[StrictFloat, StrictInt]
     pool_total_shares: Union[StrictFloat, StrictInt]
+    staked_lit: Union[StrictFloat, StrictInt]
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["timestamp", "trade_pnl", "trade_spot_pnl", "inflow", "outflow", "spot_outflow", "spot_inflow", "pool_pnl", "pool_inflow", "pool_outflow", "pool_total_shares"]
+    __properties: ClassVar[List[str]] = ["timestamp", "trade_pnl", "trade_spot_pnl", "inflow", "outflow", "spot_outflow", "spot_inflow", "pool_pnl", "pool_inflow", "pool_outflow", "staking_pnl", "staking_inflow", "staking_outflow", "pool_total_shares", "staked_lit"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -108,7 +112,11 @@ class PnLEntry(BaseModel):
             "pool_pnl": obj.get("pool_pnl"),
             "pool_inflow": obj.get("pool_inflow"),
             "pool_outflow": obj.get("pool_outflow"),
-            "pool_total_shares": obj.get("pool_total_shares")
+            "staking_pnl": obj.get("staking_pnl"),
+            "staking_inflow": obj.get("staking_inflow"),
+            "staking_outflow": obj.get("staking_outflow"),
+            "pool_total_shares": obj.get("pool_total_shares"),
+            "staked_lit": obj.get("staked_lit")
         })
         # store additional fields in additional_properties
         for _key in obj.keys():
