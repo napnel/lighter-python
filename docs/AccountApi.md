@@ -12,7 +12,10 @@ Method | HTTP request | Description
 [**change_account_tier**](AccountApi.md#change_account_tier) | **POST** /api/v1/changeAccountTier | changeAccountTier
 [**faucet**](AccountApi.md#faucet) | **GET** /api/v1/faucet | faucet
 [**l1_metadata**](AccountApi.md#l1_metadata) | **GET** /api/v1/l1Metadata | l1Metadata
+[**lease_options**](AccountApi.md#lease_options) | **GET** /api/v1/leaseOptions | leaseOptions
+[**leases**](AccountApi.md#leases) | **GET** /api/v1/leases | leases
 [**liquidations**](AccountApi.md#liquidations) | **GET** /api/v1/liquidations | liquidations
+[**lit_lease**](AccountApi.md#lit_lease) | **POST** /api/v1/litLease | litLease
 [**pnl**](AccountApi.md#pnl) | **GET** /api/v1/pnl | pnl
 [**position_funding**](AccountApi.md#position_funding) | **GET** /api/v1/positionFunding | positionFunding
 [**public_pools_metadata**](AccountApi.md#public_pools_metadata) | **GET** /api/v1/publicPoolsMetadata | publicPoolsMetadata
@@ -599,6 +602,148 @@ No authorization required
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
+# **lease_options**
+> RespGetLeaseOptions lease_options()
+
+leaseOptions
+
+Get lease options
+
+### Example
+
+
+```python
+import lighter
+from lighter.models.resp_get_lease_options import RespGetLeaseOptions
+from lighter.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://mainnet.zklighter.elliot.ai
+# See configuration.py for a list of all supported configuration parameters.
+configuration = lighter.Configuration(
+    host = "https://mainnet.zklighter.elliot.ai"
+)
+
+
+# Enter a context with an instance of the API client
+async with lighter.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = lighter.AccountApi(api_client)
+
+    try:
+        # leaseOptions
+        api_response = await api_instance.lease_options()
+        print("The response of AccountApi->lease_options:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling AccountApi->lease_options: %s\n" % e)
+```
+
+
+
+### Parameters
+
+This endpoint does not need any parameter.
+
+### Return type
+
+[**RespGetLeaseOptions**](RespGetLeaseOptions.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**400** | Bad request |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **leases**
+> RespGetLeases leases(account_index, authorization=authorization, auth=auth, cursor=cursor, limit=limit)
+
+leases
+
+Get leases
+
+### Example
+
+
+```python
+import lighter
+from lighter.models.resp_get_leases import RespGetLeases
+from lighter.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://mainnet.zklighter.elliot.ai
+# See configuration.py for a list of all supported configuration parameters.
+configuration = lighter.Configuration(
+    host = "https://mainnet.zklighter.elliot.ai"
+)
+
+
+# Enter a context with an instance of the API client
+async with lighter.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = lighter.AccountApi(api_client)
+    account_index = 56 # int | 
+    authorization = 'authorization_example' # str |  make required after integ is done (optional)
+    auth = 'auth_example' # str |  made optional to support header auth clients (optional)
+    cursor = 'cursor_example' # str |  (optional)
+    limit = 20 # int |  (optional) (default to 20)
+
+    try:
+        # leases
+        api_response = await api_instance.leases(account_index, authorization=authorization, auth=auth, cursor=cursor, limit=limit)
+        print("The response of AccountApi->leases:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling AccountApi->leases: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **account_index** | **int**|  | 
+ **authorization** | **str**|  make required after integ is done | [optional] 
+ **auth** | **str**|  made optional to support header auth clients | [optional] 
+ **cursor** | **str**|  | [optional] 
+ **limit** | **int**|  | [optional] [default to 20]
+
+### Return type
+
+[**RespGetLeases**](RespGetLeases.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**400** | Bad request |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
 # **liquidations**
 > LiquidationInfos liquidations(account_index, limit, authorization=authorization, auth=auth, market_id=market_id, cursor=cursor)
 
@@ -667,6 +812,81 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**400** | Bad request |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **lit_lease**
+> TxHash lit_lease(tx_info, lease_amount, duration_days, authorization=authorization)
+
+litLease
+
+Submit LIT lease transfer
+
+### Example
+
+
+```python
+import lighter
+from lighter.models.tx_hash import TxHash
+from lighter.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://mainnet.zklighter.elliot.ai
+# See configuration.py for a list of all supported configuration parameters.
+configuration = lighter.Configuration(
+    host = "https://mainnet.zklighter.elliot.ai"
+)
+
+
+# Enter a context with an instance of the API client
+async with lighter.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = lighter.AccountApi(api_client)
+    tx_info = 'tx_info_example' # str | 
+    lease_amount = 'lease_amount_example' # str | 
+    duration_days = 56 # int | 
+    authorization = 'authorization_example' # str |  (optional)
+
+    try:
+        # litLease
+        api_response = await api_instance.lit_lease(tx_info, lease_amount, duration_days, authorization=authorization)
+        print("The response of AccountApi->lit_lease:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling AccountApi->lit_lease: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **tx_info** | **str**|  | 
+ **lease_amount** | **str**|  | 
+ **duration_days** | **int**|  | 
+ **authorization** | **str**|  | [optional] 
+
+### Return type
+
+[**TxHash**](TxHash.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: multipart/form-data
  - **Accept**: application/json
 
 ### HTTP response details

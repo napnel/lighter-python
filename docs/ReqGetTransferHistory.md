@@ -8,6 +8,7 @@ Name | Type | Description | Notes
 **auth** | **str** |  made optional to support header auth clients | [optional] 
 **account_index** | **int** |  | 
 **cursor** | **str** |  | [optional] 
+**type** | **List[str]** |  | [optional] 
 
 ## Example
 

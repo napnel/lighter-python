@@ -19,6 +19,7 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List, Optional
+from typing_extensions import Annotated
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -30,14 +31,49 @@ class ReqExportData(BaseModel):
     account_index: Optional[StrictInt] = -1
     market_id: Optional[StrictInt] = None
     type: StrictStr
+    start_timestamp: Optional[Annotated[int, Field(le=1830297600000, strict=True, ge=1735689600000)]] = None
+    end_timestamp: Optional[Annotated[int, Field(le=1830297600000, strict=True, ge=1735689600000)]] = None
+    side: Optional[StrictStr] = 'all'
+    role: Optional[StrictStr] = 'all'
+    trade_type: Optional[StrictStr] = 'all'
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["auth", "account_index", "market_id", "type"]
+    __properties: ClassVar[List[str]] = ["auth", "account_index", "market_id", "type", "start_timestamp", "end_timestamp", "side", "role", "trade_type"]
 
     @field_validator('type')
     def type_validate_enum(cls, value):
         """Validates the enum"""
         if value not in set(['funding', 'trade']):
             raise ValueError("must be one of enum values ('funding', 'trade')")
+        return value
+
+    @field_validator('side')
+    def side_validate_enum(cls, value):
+        """Validates the enum"""
+        if value is None:
+            return value
+
+        if value not in set(['all', 'long', 'short']):
+            raise ValueError("must be one of enum values ('all', 'long', 'short')")
+        return value
+
+    @field_validator('role')
+    def role_validate_enum(cls, value):
+        """Validates the enum"""
+        if value is None:
+            return value
+
+        if value not in set(['all', 'maker', 'taker']):
+            raise ValueError("must be one of enum values ('all', 'maker', 'taker')")
+        return value
+
+    @field_validator('trade_type')
+    def trade_type_validate_enum(cls, value):
+        """Validates the enum"""
+        if value is None:
+            return value
+
+        if value not in set(['all', 'trade', 'liquidation', 'deleverage', 'market-settlement']):
+            raise ValueError("must be one of enum values ('all', 'trade', 'liquidation', 'deleverage', 'market-settlement')")
         return value
 
     model_config = ConfigDict(
@@ -101,7 +137,12 @@ class ReqExportData(BaseModel):
             "auth": obj.get("auth"),
             "account_index": obj.get("account_index") if obj.get("account_index") is not None else -1,
             "market_id": obj.get("market_id"),
-            "type": obj.get("type")
+            "type": obj.get("type"),
+            "start_timestamp": obj.get("start_timestamp"),
+            "end_timestamp": obj.get("end_timestamp"),
+            "side": obj.get("side") if obj.get("side") is not None else 'all',
+            "role": obj.get("role") if obj.get("role") is not None else 'all',
+            "trade_type": obj.get("trade_type") if obj.get("trade_type") is not None else 'all'
         })
         # store additional fields in additional_properties
         for _key in obj.keys():

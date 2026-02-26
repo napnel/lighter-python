@@ -14,6 +14,7 @@ Name | Type | Description | Notes
 **sharpe_ratio** | **float** |  | 
 **daily_returns** | [**List[DailyReturn]**](DailyReturn.md) |  | 
 **share_prices** | [**List[SharePrice]**](SharePrice.md) |  | 
+**strategies** | [**List[Strategy]**](Strategy.md) |  | 
 
 ## Example
 

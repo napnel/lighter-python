@@ -33,8 +33,9 @@ class PositionFunding(BaseModel):
     rate: StrictStr
     position_size: StrictStr
     position_side: StrictStr
+    discount: StrictStr
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["timestamp", "market_id", "funding_id", "change", "rate", "position_size", "position_side"]
+    __properties: ClassVar[List[str]] = ["timestamp", "market_id", "funding_id", "change", "rate", "position_size", "position_side", "discount"]
 
     @field_validator('position_side')
     def position_side_validate_enum(cls, value):
@@ -107,7 +108,8 @@ class PositionFunding(BaseModel):
             "change": obj.get("change"),
             "rate": obj.get("rate"),
             "position_size": obj.get("position_size"),
-            "position_side": obj.get("position_side")
+            "position_side": obj.get("position_side"),
+            "discount": obj.get("discount")
         })
         # store additional fields in additional_properties
         for _key in obj.keys():

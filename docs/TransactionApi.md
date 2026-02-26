@@ -309,7 +309,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **transfer_history**
-> TransferHistory transfer_history(account_index, authorization=authorization, auth=auth, cursor=cursor)
+> TransferHistory transfer_history(account_index, authorization=authorization, auth=auth, cursor=cursor, type=type)
 
 transfer_history
 
@@ -339,10 +339,11 @@ async with lighter.ApiClient(configuration) as api_client:
     authorization = 'authorization_example' # str |  make required after integ is done (optional)
     auth = 'auth_example' # str |  made optional to support header auth clients (optional)
     cursor = 'cursor_example' # str |  (optional)
+    type = 'type_example' # str |  (optional)
 
     try:
         # transfer_history
-        api_response = await api_instance.transfer_history(account_index, authorization=authorization, auth=auth, cursor=cursor)
+        api_response = await api_instance.transfer_history(account_index, authorization=authorization, auth=auth, cursor=cursor, type=type)
         print("The response of TransactionApi->transfer_history:\n")
         pprint(api_response)
     except Exception as e:
@@ -360,6 +361,7 @@ Name | Type | Description  | Notes
  **authorization** | **str**|  make required after integ is done | [optional] 
  **auth** | **str**|  made optional to support header auth clients | [optional] 
  **cursor** | **str**|  | [optional] 
+ **type** | **str**|  | [optional] 
 
 ### Return type
 

@@ -19,6 +19,7 @@ import json
 
 from pydantic import BaseModel, ConfigDict, StrictFloat, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional, Union
+from lighter.models.account_asset import AccountAsset
 from lighter.models.public_pool_share import PublicPoolShare
 from typing import Optional, Set
 from typing_extensions import Self
@@ -40,10 +41,13 @@ class PublicPoolMetadata(BaseModel):
     status: StrictInt
     operator_fee: StrictStr
     total_asset_value: StrictStr
+    total_spot_value: StrictStr
+    total_perps_value: StrictStr
     total_shares: StrictInt
     account_share: Optional[PublicPoolShare] = None
+    assets: List[AccountAsset]
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["code", "message", "account_index", "created_at", "master_account_index", "account_type", "name", "l1_address", "annual_percentage_yield", "sharpe_ratio", "status", "operator_fee", "total_asset_value", "total_shares", "account_share"]
+    __properties: ClassVar[List[str]] = ["code", "message", "account_index", "created_at", "master_account_index", "account_type", "name", "l1_address", "annual_percentage_yield", "sharpe_ratio", "status", "operator_fee", "total_asset_value", "total_spot_value", "total_perps_value", "total_shares", "account_share", "assets"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -89,6 +93,13 @@ class PublicPoolMetadata(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of account_share
         if self.account_share:
             _dict['account_share'] = self.account_share.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of each item in assets (list)
+        _items = []
+        if self.assets:
+            for _item in self.assets:
+                if _item:
+                    _items.append(_item.to_dict())
+            _dict['assets'] = _items
         # puts key-value pairs in additional_properties in the top level
         if self.additional_properties is not None:
             for _key, _value in self.additional_properties.items():
@@ -119,8 +130,11 @@ class PublicPoolMetadata(BaseModel):
             "status": obj.get("status"),
             "operator_fee": obj.get("operator_fee"),
             "total_asset_value": obj.get("total_asset_value"),
+            "total_spot_value": obj.get("total_spot_value"),
+            "total_perps_value": obj.get("total_perps_value"),
             "total_shares": obj.get("total_shares"),
-            "account_share": PublicPoolShare.from_dict(obj["account_share"]) if obj.get("account_share") is not None else None
+            "account_share": PublicPoolShare.from_dict(obj["account_share"]) if obj.get("account_share") is not None else None,
+            "assets": [AccountAsset.from_dict(_item) for _item in obj["assets"]] if obj.get("assets") is not None else None
         })
         # store additional fields in additional_properties
         for _key in obj.keys():

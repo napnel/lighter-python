@@ -1260,6 +1260,7 @@ class TransactionApi:
         authorization: Annotated[Optional[StrictStr], Field(description=" make required after integ is done")] = None,
         auth: Annotated[Optional[StrictStr], Field(description=" made optional to support header auth clients")] = None,
         cursor: Optional[StrictStr] = None,
+        type: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1285,6 +1286,8 @@ class TransactionApi:
         :type auth: str
         :param cursor:
         :type cursor: str
+        :param type:
+        :type type: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1312,6 +1315,7 @@ class TransactionApi:
             authorization=authorization,
             auth=auth,
             cursor=cursor,
+            type=type,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1339,6 +1343,7 @@ class TransactionApi:
         authorization: Annotated[Optional[StrictStr], Field(description=" make required after integ is done")] = None,
         auth: Annotated[Optional[StrictStr], Field(description=" made optional to support header auth clients")] = None,
         cursor: Optional[StrictStr] = None,
+        type: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1364,6 +1369,8 @@ class TransactionApi:
         :type auth: str
         :param cursor:
         :type cursor: str
+        :param type:
+        :type type: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1391,6 +1398,7 @@ class TransactionApi:
             authorization=authorization,
             auth=auth,
             cursor=cursor,
+            type=type,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1418,6 +1426,7 @@ class TransactionApi:
         authorization: Annotated[Optional[StrictStr], Field(description=" make required after integ is done")] = None,
         auth: Annotated[Optional[StrictStr], Field(description=" made optional to support header auth clients")] = None,
         cursor: Optional[StrictStr] = None,
+        type: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1443,6 +1452,8 @@ class TransactionApi:
         :type auth: str
         :param cursor:
         :type cursor: str
+        :param type:
+        :type type: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1470,6 +1481,7 @@ class TransactionApi:
             authorization=authorization,
             auth=auth,
             cursor=cursor,
+            type=type,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1493,6 +1505,7 @@ class TransactionApi:
         authorization,
         auth,
         cursor,
+        type,
         _request_auth,
         _content_type,
         _headers,
@@ -1528,6 +1541,10 @@ class TransactionApi:
         if cursor is not None:
             
             _query_params.append(('cursor', cursor))
+            
+        if type is not None:
+            
+            _query_params.append(('type', type))
             
         # process the header parameters
         # process the form parameters

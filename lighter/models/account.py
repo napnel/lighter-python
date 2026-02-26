@@ -39,8 +39,9 @@ class Account(BaseModel):
     status: StrictInt
     collateral: StrictStr
     transaction_time: StrictInt
+    account_trading_mode: StrictInt
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["code", "message", "account_type", "index", "l1_address", "cancel_all_time", "total_order_count", "total_isolated_order_count", "pending_order_count", "available_balance", "status", "collateral", "transaction_time"]
+    __properties: ClassVar[List[str]] = ["code", "message", "account_type", "index", "l1_address", "cancel_all_time", "total_order_count", "total_isolated_order_count", "pending_order_count", "available_balance", "status", "collateral", "transaction_time", "account_trading_mode"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -112,7 +113,8 @@ class Account(BaseModel):
             "available_balance": obj.get("available_balance"),
             "status": obj.get("status"),
             "collateral": obj.get("collateral"),
-            "transaction_time": obj.get("transaction_time")
+            "transaction_time": obj.get("transaction_time"),
+            "account_trading_mode": obj.get("account_trading_mode")
         })
         # store additional fields in additional_properties
         for _key in obj.keys():

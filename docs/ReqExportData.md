@@ -9,6 +9,11 @@ Name | Type | Description | Notes
 **account_index** | **int** |  | [optional] [default to -1]
 **market_id** | **int** |  | [optional] 
 **type** | **str** |  | 
+**start_timestamp** | **int** |  | [optional] 
+**end_timestamp** | **int** |  | [optional] 
+**side** | **str** |  | [optional] [default to 'all']
+**role** | **str** |  | [optional] [default to 'all']
+**trade_type** | **str** |  | [optional] [default to 'all']
 
 ## Example
 

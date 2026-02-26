@@ -12,6 +12,7 @@ Name | Type | Description | Notes
 **rate** | **str** |  | 
 **position_size** | **str** |  | 
 **position_side** | **str** |  | 
+**discount** | **str** |  | 
 
 ## Example
 

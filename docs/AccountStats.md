@@ -11,6 +11,7 @@ Name | Type | Description | Notes
 **available_balance** | **str** |  | 
 **margin_usage** | **str** |  | 
 **buying_power** | **str** |  | 
+**account_trading_mode** | **int** |  | 
 **cross_stats** | [**AccountMarginStats**](AccountMarginStats.md) |  | 
 **total_stats** | [**AccountMarginStats**](AccountMarginStats.md) |  | 
 

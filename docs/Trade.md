@@ -32,6 +32,8 @@ Name | Type | Description | Notes
 **maker_initial_margin_fraction_before** | **int** |  | 
 **maker_position_sign_changed** | **bool** |  | 
 **transaction_time** | **int** |  | 
+**ask_account_pnl** | **str** |  | 
+**bid_account_pnl** | **str** |  | 
 
 ## Example
 

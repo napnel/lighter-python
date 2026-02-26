@@ -7,7 +7,9 @@ Method | HTTP request | Description
 [**account_active_orders**](OrderApi.md#account_active_orders) | **GET** /api/v1/accountActiveOrders | accountActiveOrders
 [**account_inactive_orders**](OrderApi.md#account_inactive_orders) | **GET** /api/v1/accountInactiveOrders | accountInactiveOrders
 [**asset_details**](OrderApi.md#asset_details) | **GET** /api/v1/assetDetails | assetDetails
+[**exchange_metrics**](OrderApi.md#exchange_metrics) | **GET** /api/v1/exchangeMetrics | exchangeMetrics
 [**exchange_stats**](OrderApi.md#exchange_stats) | **GET** /api/v1/exchangeStats | exchangeStats
+[**execute_stats**](OrderApi.md#execute_stats) | **GET** /api/v1/executeStats | executeStats
 [**export**](OrderApi.md#export) | **GET** /api/v1/export | export
 [**order_book_details**](OrderApi.md#order_book_details) | **GET** /api/v1/orderBookDetails | orderBookDetails
 [**order_book_orders**](OrderApi.md#order_book_orders) | **GET** /api/v1/orderBookOrders | orderBookOrders
@@ -243,6 +245,81 @@ No authorization required
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
+# **exchange_metrics**
+> RespGetExchangeMetrics exchange_metrics(period, kind, filter=filter, value=value)
+
+exchangeMetrics
+
+Get exchange metrics
+
+### Example
+
+
+```python
+import lighter
+from lighter.models.resp_get_exchange_metrics import RespGetExchangeMetrics
+from lighter.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://mainnet.zklighter.elliot.ai
+# See configuration.py for a list of all supported configuration parameters.
+configuration = lighter.Configuration(
+    host = "https://mainnet.zklighter.elliot.ai"
+)
+
+
+# Enter a context with an instance of the API client
+async with lighter.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = lighter.OrderApi(api_client)
+    period = 'period_example' # str | 
+    kind = 'kind_example' # str | 
+    filter = 'filter_example' # str |  (optional)
+    value = 'value_example' # str |  (optional)
+
+    try:
+        # exchangeMetrics
+        api_response = await api_instance.exchange_metrics(period, kind, filter=filter, value=value)
+        print("The response of OrderApi->exchange_metrics:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling OrderApi->exchange_metrics: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **period** | **str**|  | 
+ **kind** | **str**|  | 
+ **filter** | **str**|  | [optional] 
+ **value** | **str**|  | [optional] 
+
+### Return type
+
+[**RespGetExchangeMetrics**](RespGetExchangeMetrics.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**400** | Bad request |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
 # **exchange_stats**
 > ExchangeStats exchange_stats()
 
@@ -308,8 +385,77 @@ No authorization required
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
+# **execute_stats**
+> RespGetExecuteStats execute_stats(period)
+
+executeStats
+
+Get execute stats
+
+### Example
+
+
+```python
+import lighter
+from lighter.models.resp_get_execute_stats import RespGetExecuteStats
+from lighter.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://mainnet.zklighter.elliot.ai
+# See configuration.py for a list of all supported configuration parameters.
+configuration = lighter.Configuration(
+    host = "https://mainnet.zklighter.elliot.ai"
+)
+
+
+# Enter a context with an instance of the API client
+async with lighter.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = lighter.OrderApi(api_client)
+    period = 'period_example' # str | 
+
+    try:
+        # executeStats
+        api_response = await api_instance.execute_stats(period)
+        print("The response of OrderApi->execute_stats:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling OrderApi->execute_stats: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **period** | **str**|  | 
+
+### Return type
+
+[**RespGetExecuteStats**](RespGetExecuteStats.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**400** | Bad request |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
 # **export**
-> ExportData export(type, authorization=authorization, auth=auth, account_index=account_index, market_id=market_id)
+> ExportData export(type, authorization=authorization, auth=auth, account_index=account_index, market_id=market_id, start_timestamp=start_timestamp, end_timestamp=end_timestamp, side=side, role=role, trade_type=trade_type)
 
 export
 
@@ -340,10 +486,15 @@ async with lighter.ApiClient(configuration) as api_client:
     auth = 'auth_example' # str |  made optional to support header auth clients (optional)
     account_index = -1 # int |  (optional) (default to -1)
     market_id = 255 # int |  (optional) (default to 255)
+    start_timestamp = 56 # int |  (optional)
+    end_timestamp = 56 # int |  (optional)
+    side = all # str |  (optional) (default to all)
+    role = all # str |  (optional) (default to all)
+    trade_type = all # str |  (optional) (default to all)
 
     try:
         # export
-        api_response = await api_instance.export(type, authorization=authorization, auth=auth, account_index=account_index, market_id=market_id)
+        api_response = await api_instance.export(type, authorization=authorization, auth=auth, account_index=account_index, market_id=market_id, start_timestamp=start_timestamp, end_timestamp=end_timestamp, side=side, role=role, trade_type=trade_type)
         print("The response of OrderApi->export:\n")
         pprint(api_response)
     except Exception as e:
@@ -362,6 +513,11 @@ Name | Type | Description  | Notes
  **auth** | **str**|  made optional to support header auth clients | [optional] 
  **account_index** | **int**|  | [optional] [default to -1]
  **market_id** | **int**|  | [optional] [default to 255]
+ **start_timestamp** | **int**|  | [optional] 
+ **end_timestamp** | **int**|  | [optional] 
+ **side** | **str**|  | [optional] [default to all]
+ **role** | **str**|  | [optional] [default to all]
+ **trade_type** | **str**|  | [optional] [default to all]
 
 ### Return type
 

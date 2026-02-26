@@ -9,6 +9,8 @@ from lighter.api.funding_api import FundingApi
 from lighter.api.info_api import InfoApi
 from lighter.api.notification_api import NotificationApi
 from lighter.api.order_api import OrderApi
+from lighter.api.pushnotif_api import PushnotifApi
+from lighter.api.referral_api import ReferralApi
 from lighter.api.root_api import RootApi
 from lighter.api.transaction_api import TransactionApi
 

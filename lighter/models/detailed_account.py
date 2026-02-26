@@ -21,6 +21,7 @@ from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt, Strict
 from typing import Any, ClassVar, Dict, List, Optional
 from lighter.models.account_asset import AccountAsset
 from lighter.models.account_position import AccountPosition
+from lighter.models.pending_unlock import PendingUnlock
 from lighter.models.public_pool_info import PublicPoolInfo
 from lighter.models.public_pool_share import PublicPoolShare
 from typing import Optional, Set
@@ -43,19 +44,22 @@ class DetailedAccount(BaseModel):
     status: StrictInt
     collateral: StrictStr
     transaction_time: StrictInt
+    account_trading_mode: StrictInt
     account_index: StrictInt
     name: StrictStr
     description: StrictStr
     can_invite: StrictBool = Field(description=" Remove After FE uses L1 meta endpoint")
     referral_points_percentage: StrictStr = Field(description=" Remove After FE uses L1 meta endpoint")
+    created_at: StrictInt
     positions: List[AccountPosition]
     assets: List[AccountAsset]
     total_asset_value: StrictStr
     cross_asset_value: StrictStr
     pool_info: PublicPoolInfo
     shares: List[PublicPoolShare]
+    pending_unlocks: List[PendingUnlock]
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["code", "message", "account_type", "index", "l1_address", "cancel_all_time", "total_order_count", "total_isolated_order_count", "pending_order_count", "available_balance", "status", "collateral", "transaction_time", "account_index", "name", "description", "can_invite", "referral_points_percentage", "positions", "assets", "total_asset_value", "cross_asset_value", "pool_info", "shares"]
+    __properties: ClassVar[List[str]] = ["code", "message", "account_type", "index", "l1_address", "cancel_all_time", "total_order_count", "total_isolated_order_count", "pending_order_count", "available_balance", "status", "collateral", "transaction_time", "account_trading_mode", "account_index", "name", "description", "can_invite", "referral_points_percentage", "created_at", "positions", "assets", "total_asset_value", "cross_asset_value", "pool_info", "shares", "pending_unlocks"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -122,6 +126,13 @@ class DetailedAccount(BaseModel):
                 if _item:
                     _items.append(_item.to_dict())
             _dict['shares'] = _items
+        # override the default output from pydantic by calling `to_dict()` of each item in pending_unlocks (list)
+        _items = []
+        if self.pending_unlocks:
+            for _item in self.pending_unlocks:
+                if _item:
+                    _items.append(_item.to_dict())
+            _dict['pending_unlocks'] = _items
         # puts key-value pairs in additional_properties in the top level
         if self.additional_properties is not None:
             for _key, _value in self.additional_properties.items():
@@ -152,17 +163,20 @@ class DetailedAccount(BaseModel):
             "status": obj.get("status"),
             "collateral": obj.get("collateral"),
             "transaction_time": obj.get("transaction_time"),
+            "account_trading_mode": obj.get("account_trading_mode"),
             "account_index": obj.get("account_index"),
             "name": obj.get("name"),
             "description": obj.get("description"),
             "can_invite": obj.get("can_invite"),
             "referral_points_percentage": obj.get("referral_points_percentage"),
+            "created_at": obj.get("created_at"),
             "positions": [AccountPosition.from_dict(_item) for _item in obj["positions"]] if obj.get("positions") is not None else None,
             "assets": [AccountAsset.from_dict(_item) for _item in obj["assets"]] if obj.get("assets") is not None else None,
             "total_asset_value": obj.get("total_asset_value"),
             "cross_asset_value": obj.get("cross_asset_value"),
             "pool_info": PublicPoolInfo.from_dict(obj["pool_info"]) if obj.get("pool_info") is not None else None,
-            "shares": [PublicPoolShare.from_dict(_item) for _item in obj["shares"]] if obj.get("shares") is not None else None
+            "shares": [PublicPoolShare.from_dict(_item) for _item in obj["shares"]] if obj.get("shares") is not None else None,
+            "pending_unlocks": [PendingUnlock.from_dict(_item) for _item in obj["pending_unlocks"]] if obj.get("pending_unlocks") is not None else None
         })
         # store additional fields in additional_properties
         for _key in obj.keys():

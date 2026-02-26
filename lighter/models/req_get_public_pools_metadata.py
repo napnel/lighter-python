@@ -41,8 +41,8 @@ class ReqGetPublicPoolsMetadata(BaseModel):
         if value is None:
             return value
 
-        if value not in set(['all', 'user', 'protocol', 'account_index']):
-            raise ValueError("must be one of enum values ('all', 'user', 'protocol', 'account_index')")
+        if value not in set(['all', 'user', 'protocol', 'account_index', 'stake']):
+            raise ValueError("must be one of enum values ('all', 'user', 'protocol', 'account_index', 'stake')")
         return value
 
     model_config = ConfigDict(

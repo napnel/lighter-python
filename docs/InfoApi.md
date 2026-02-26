@@ -4,9 +4,75 @@ All URIs are relative to *https://mainnet.zklighter.elliot.ai*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
+[**system_config**](InfoApi.md#system_config) | **GET** /api/v1/systemConfig | systemConfig
 [**transfer_fee_info**](InfoApi.md#transfer_fee_info) | **GET** /api/v1/transferFeeInfo | transferFeeInfo
 [**withdrawal_delay**](InfoApi.md#withdrawal_delay) | **GET** /api/v1/withdrawalDelay | withdrawalDelay
 
+
+# **system_config**
+> SystemConfig system_config()
+
+systemConfig
+
+Get system configuration including pool indexes and lockup/cooldown periods
+
+### Example
+
+
+```python
+import lighter
+from lighter.models.system_config import SystemConfig
+from lighter.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://mainnet.zklighter.elliot.ai
+# See configuration.py for a list of all supported configuration parameters.
+configuration = lighter.Configuration(
+    host = "https://mainnet.zklighter.elliot.ai"
+)
+
+
+# Enter a context with an instance of the API client
+async with lighter.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = lighter.InfoApi(api_client)
+
+    try:
+        # systemConfig
+        api_response = await api_instance.system_config()
+        print("The response of InfoApi->system_config:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling InfoApi->system_config: %s\n" % e)
+```
+
+
+
+### Parameters
+
+This endpoint does not need any parameter.
+
+### Return type
+
+[**SystemConfig**](SystemConfig.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A successful response. |  -  |
+**400** | Bad request |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **transfer_fee_info**
 > TransferFeeInfo transfer_fee_info(account_index, authorization=authorization, auth=auth, to_account_index=to_account_index)

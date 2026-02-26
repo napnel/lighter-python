@@ -18,8 +18,11 @@ Name | Type | Description | Notes
 **status** | **int** |  | 
 **operator_fee** | **str** |  | 
 **total_asset_value** | **str** |  | 
+**total_spot_value** | **str** |  | 
+**total_perps_value** | **str** |  | 
 **total_shares** | **int** |  | 
 **account_share** | [**PublicPoolShare**](PublicPoolShare.md) |  | [optional] 
+**assets** | [**List[AccountAsset]**](AccountAsset.md) |  | 
 
 ## Example
 
