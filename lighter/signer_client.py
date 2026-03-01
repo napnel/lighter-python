@@ -66,7 +66,7 @@ def __get_shared_library():
     is_mac = platform.system() == "Darwin"
     is_windows = platform.system() == "Windows"
     is_x64 = platform.machine().lower() in ("amd64", "x86_64")
-    is_arm = platform.machine().lower() == "arm64"
+    is_arm = platform.machine().lower() in ("arm64", "aarch64")
 
     current_file_directory = os.path.dirname(os.path.abspath(__file__))
     path_to_signer_folders = os.path.join(current_file_directory, "signers")
